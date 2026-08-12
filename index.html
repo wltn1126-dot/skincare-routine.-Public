@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>내 스킨케어 루틴</title>
+<style>
+  :root{
+    --bg:#faf7f5;
+    --card:#ffffff;
+    --card-border:#eee1de;
+    --text:#3a2f2d;
+    --sub:#8a7a76;
+    --accent:#d98a86;
+    --accent-soft:#f6e2df;
+    --blue:#8fb3c9;
+    --blue-soft:#e4eff4;
+    --green:#8fb99a;
+    --green-soft:#e6f2e9;
+    --yellow:#e0b25b;
+    --yellow-soft:#faf0dd;
+    --purple:#a48fc9;
+    --purple-soft:#eee7f7;
+    --danger:#c9705f;
+    --danger-soft:#f8e5e0;
+    --shadow: 0 2px 10px rgba(60,40,35,0.06);
+    --radius:16px;
+  }
+  [data-theme="dark"]{
+    --bg:#221c1b;
+    --card:#2c2422;
+    --card-border:#3d332f;
+    --text:#f1e7e3;
+    --sub:#b5a49e;
+    --accent:#e6a09b;
+    --accent-soft:#4a332f;
+    --blue:#9dc3d8;
+    --blue-soft:#2b3a41;
+    --green:#a3cbb0;
+    --green-soft:#2a3a2f;
+    --yellow:#e8c37c;
+    --yellow-soft:#453a26;
+    --purple:#bcabdd;
+    --purple-soft:#382f47;
+    --danger:#e08b7a;
+    --danger-soft:#4a2e28;
+    --shadow: 0 2px 12px rgba(0,0,0,0.35);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+    line-height:1.5;
+    padding-bottom:60px;
+  }
+  header{
+    position:sticky; top:0; z-index:20;
+    background:var(--bg);
+    padding:18px 20px 0;
+    border-bottom:1px solid var(--card-border);
+  }
+  .header-top{
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;
+    max-width:960px; margin:0 auto;
+  }
+  h1{font-size:1.35rem; margin:0; display:flex; align-items:center; gap:8px;}
+  .sub-date{color:var(--sub); font-size:0.85rem; margin-top:2px;}
+  .theme-toggle{
+    border:1px solid var(--card-border); background:var(--card); color:var(--text);
+    border-radius:20px; padding:6px 14px; cursor:pointer; font-size:0.85rem;
+  }
+  nav{
+    max-width:960px; margin:14px auto 0; display:flex; gap:4px; overflow-x:auto;
+  }
+  nav button{
+    flex:0 0 auto;
+    background:none; border:none; color:var(--sub);
+    padding:10px 16px; font-size:0.92rem; cursor:pointer;
+    border-bottom:3px solid transparent;
+    font-weight:600;
+    white-space:nowrap;
+  }
+  nav button.active{color:var(--accent); border-bottom:3px solid var(--accent);}
+  main{max-width:960px; margin:20px auto; padding:0 20px;}
+  .tab{display:none;}
+  .tab.active{display:block;}
+  .card{
+    background:var(--card); border:1px solid var(--card-border); border-radius:var(--radius);
+    box-shadow:var(--shadow); padding:16px 18px; margin-bottom:14px;
+  }
+  .today-banner{
+    background:linear-gradient(135deg,var(--accent-soft),var(--purple-soft));
+    border:1px solid var(--card-border); border-radius:var(--radius);
+    padding:16px 18px; margin-bottom:18px;
+  }
+  .today-banner .label{font-size:0.78rem; color:var(--sub); font-weight:600;}
+  .today-banner .day{font-size:1.2rem; font-weight:700; margin:2px 0 8px;}
+  .badge{
+    display:inline-block; padding:3px 10px; border-radius:999px; font-size:0.75rem; font-weight:600;
+    margin:2px 4px 2px 0;
+  }
+  .b-blue{background:var(--blue-soft); color:var(--blue);}
+  .b-green{background:var(--green-soft); color:var(--green);}
+  .b-yellow{background:var(--yellow-soft); color:var(--yellow);}
+  .b-purple{background:var(--purple-soft); color:var(--purple);}
+  .b-danger{background:var(--danger-soft); color:var(--danger);}
+  .b-accent{background:var(--accent-soft); color:var(--accent);}
+  .week-grid{
+    display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:14px;
+  }
+  .day-card{
+    background:var(--card); border:1px solid var(--card-border); border-radius:var(--radius);
+    padding:14px 16px; box-shadow:var(--shadow); position:relative;
+  }
+  .day-card.today{border-color:var(--accent); box-shadow:0 0 0 2px var(--accent) inset;}
+  .day-card h3{margin:0 0 8px; font-size:1.05rem;}
+  .day-row{margin-bottom:8px;}
+  .day-row .k{font-size:0.72rem; color:var(--sub); font-weight:600; margin-bottom:3px;}
+  .day-row .v{font-size:0.88rem;}
+  .empty-v{color:var(--sub); font-style:italic; font-size:0.82rem;}
+  .legend{display:flex; gap:14px; flex-wrap:wrap; margin-bottom:16px; font-size:0.8rem; color:var(--sub);}
+  .legend span{display:inline-flex; align-items:center; gap:5px;}
+  .dot{width:9px; height:9px; border-radius:50%; display:inline-block;}
+  .warn-card{
+    background:var(--danger-soft); border:1px solid var(--danger); border-radius:var(--radius);
+    padding:12px 16px; margin-bottom:18px; font-size:0.86rem; color:var(--text);
+  }
+  .warn-card b{color:var(--danger);}
+  .section-title{font-size:1.05rem; font-weight:700; margin:22px 0 10px;}
+  .product-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:14px;}
+  .product-card h4{margin:0 0 6px; font-size:1rem;}
+  .product-card .status{margin-bottom:8px;}
+  .product-card .note{font-size:0.85rem; color:var(--sub); margin-bottom:8px;}
+  .chip-row{display:flex; flex-wrap:wrap; gap:6px;}
+  .chip{
+    background:var(--blue-soft); color:var(--blue); font-size:0.72rem; padding:3px 9px; border-radius:8px;
+    cursor:pointer; border:none; font-weight:600;
+  }
+  .ing-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:12px;}
+  .ing-card{
+    background:var(--card); border:1px solid var(--card-border); border-radius:var(--radius);
+    padding:14px 16px; cursor:pointer; box-shadow:var(--shadow); transition:transform .1s;
+  }
+  .ing-card:hover{transform:translateY(-2px); border-color:var(--accent);}
+  .ing-card h4{margin:0 0 8px; font-size:0.95rem;}
+  table{width:100%; border-collapse:collapse; font-size:0.85rem;}
+  th,td{text-align:left; padding:8px 10px; border-bottom:1px solid var(--card-border); vertical-align:top;}
+  th{color:var(--sub); font-weight:600; font-size:0.78rem;}
+  .modal-bg{
+    display:none; position:fixed; inset:0; background:rgba(0,0,0,0.45); z-index:100;
+    align-items:center; justify-content:center; padding:20px;
+  }
+  .modal-bg.show{display:flex;}
+  .modal{
+    background:var(--card); border-radius:var(--radius); padding:24px; max-width:480px; width:100%;
+    max-height:80vh; overflow-y:auto; box-shadow:var(--shadow); border:1px solid var(--card-border);
+  }
+  .modal h3{margin-top:0;}
+  .modal .close{
+    float:right; background:none; border:none; font-size:1.2rem; cursor:pointer; color:var(--sub);
+  }
+  .modal .mech-block{background:var(--purple-soft); border-radius:10px; padding:12px 14px; margin-top:10px; font-size:0.88rem;}
+  .edit-block{margin-bottom:22px;}
+  .edit-block h3{font-size:1rem; border-bottom:1px solid var(--card-border); padding-bottom:6px;}
+  .edit-row{
+    display:grid; grid-template-columns:90px 1fr 1fr 1fr; gap:8px; margin-bottom:8px; align-items:center;
+  }
+  .edit-row.product-row{grid-template-columns:1.2fr 1fr 2fr 1.3fr;}
+  .edit-row.ing-row{grid-template-columns:1fr 1.5fr 2fr;}
+  .edit-row input, .edit-row select, .edit-row textarea{
+    width:100%; padding:7px 9px; border-radius:8px; border:1px solid var(--card-border);
+    background:var(--bg); color:var(--text); font-size:0.82rem; font-family:inherit;
+  }
+  .edit-row textarea{resize:vertical; min-height:36px;}
+  .edit-label{font-size:0.75rem; color:var(--sub); font-weight:700;}
+  .btn{
+    background:var(--accent); color:#fff; border:none; padding:9px 16px; border-radius:10px;
+    cursor:pointer; font-size:0.85rem; font-weight:600; margin-right:8px; margin-top:6px;
+  }
+  .btn.secondary{background:var(--card); color:var(--text); border:1px solid var(--card-border);}
+  .btn.danger{background:var(--danger);}
+  .toast{
+    position:fixed; bottom:24px; left:50%; transform:translateX(-50%);
+    background:var(--text); color:var(--bg); padding:10px 20px; border-radius:10px;
+    font-size:0.85rem; z-index:200; opacity:0; pointer-events:none; transition:opacity .25s;
+  }
+  .toast.show{opacity:1;}
+  .idea-card{border-left:4px solid var(--purple);}
+  .field-actions{margin-top:14px;}
+  .small-note{font-size:0.75rem; color:var(--sub); margin-top:4px;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <div>
+      <h1>🧴 내 스킨케어 루틴</h1>
+      <div class="sub-date" id="todayLabel"></div>
+    </div>
+    <button class="theme-toggle" id="themeToggle">🌙 다크모드</button>
+  </div>
+  <nav>
+    <button data-tab="routine" class="active">📅 루틴</button>
+    <button data-tab="products">🧪 제품</button>
+    <button data-tab="ingredients">🔬 성분</button>
+    <button data-tab="ideas">💡 아이디어</button>
+    <button data-tab="edit">✏️ 편집</button>
+  </nav>
+</header>
+
+<main>
+
+  <!-- ROUTINE TAB -->
+  <section class="tab active" id="tab-routine">
+    <div class="today-banner" id="todayBanner"></div>
+    <div class="legend">
+      <span><i class="dot" style="background:var(--blue)"></i>약알칼리 클렌저 (라곰)</span>
+      <span><i class="dot" style="background:var(--green)"></i>약산성 클렌저 (메이크프렘)</span>
+      <span><i class="dot" style="background:var(--yellow)"></i>핵심 케어 (액티브 성분)</span>
+      <span><i class="dot" style="background:var(--purple)"></i>기기 / 팩</span>
+    </div>
+    <div class="week-grid" id="weekGrid"></div>
+    <div class="warn-card">
+      ⚠️ <b>병용 주의</b> — 레티놀(금)과 락틱애씨드 AHA(화)는 각질층 자극이 겹칠 수 있어 같은 날 사용을 피하는 게 좋아요. 현재 루틴은 이미 다른 요일로 분리되어 있어요. 모델링팩·스크럽 등 물리적 각질 케어도 AHA/레티놀 사용일과는 하루 이상 간격을 두는 것을 추천해요.
+    </div>
+  </section>
+
+  <!-- PRODUCTS TAB -->
+  <section class="tab" id="tab-products">
+    <div class="section-title">사용 중 제품</div>
+    <div class="product-grid" id="productGrid"></div>
+  </section>
+
+  <!-- INGREDIENTS TAB -->
+  <section class="tab" id="tab-ingredients">
+    <div class="section-title">핵심 성분 요약 <span class="small-note">(클릭하면 상세 효과·기전을 볼 수 있어요)</span></div>
+    <div class="ing-grid" id="ingGrid"></div>
+
+    <div class="section-title">제품별 함유 성분</div>
+    <div class="card" style="overflow-x:auto;">
+      <table id="mapTable">
+        <thead><tr><th>제품</th><th>주요 성분</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- IDEAS TAB -->
+  <section class="tab" id="tab-ideas">
+    <div class="section-title">추가하면 좋을 아이디어</div>
+    <div class="card idea-card"><b>🔄 재구매 상태 트래킹</b><div class="small-note">제품 카드에 이미 넣어둔 "사용중 / 교체예정 / 단종예정 / 재구매X / 가끔사용" 뱃지를 활용해서, 다 쓸 때쯤 재구매 리스트만 따로 뽑아볼 수 있어요.</div></div>
+    <div class="card idea-card"><b>⚠️ 성분 궁합 경고</b><div class="small-note">레티놀 × AHA, 고농도 비타민C × 나이아신아마이드처럼 같이 쓰면 자극적일 수 있는 조합을 자동으로 표시 (루틴 탭 하단 경고 카드로 우선 반영했어요).</div></div>
+    <div class="card idea-card"><b>📦 개봉일 / 유통기한 관리</b><div class="small-note">편집 탭에 제품별 "개봉일" 필드를 추가하면 원료(특히 원액류)의 사용기한을 계산해서 알려줄 수 있어요. 다음 업데이트로 추가 가능.</div></div>
+    <div class="card idea-card"><b>📸 피부 컨디션 기록</b><div class="small-note">요일별 루틴 옆에 그날그날 피부 상태(트러블/당김/컨디션 좋음)를 짧게 메모해두면, 어떤 루틴이 잘 맞는지 나중에 비교하기 좋아요.</div></div>
+    <div class="card idea-card"><b>🌗 다크모드</b><div class="small-note">오른쪽 상단 버튼으로 이미 적용했어요. 저녁에 스킨케어 기록할 때 눈부심 없이 볼 수 있어요.</div></div>
+    <div class="card idea-card"><b>💾 데이터 내보내기/가져오기</b><div class="small-note">편집 탭 하단에서 지금까지 수정한 내용을 JSON 파일로 백업하거나, 다른 기기에서 불러올 수 있어요.</div></div>
+  </section>
+
+  <!-- EDIT TAB -->
+  <section class="tab" id="tab-edit">
+    <div class="section-title">편집 화면</div>
+    <p class="small-note">여기서 수정한 내용은 이 브라우저에 자동 저장돼요 (다른 기기와는 공유되지 않아요 — 내보내기로 백업하세요).</p>
+
+    <div class="edit-block">
+      <h3>📅 요일별 루틴 수정</h3>
+      <div id="editRoutine"></div>
+    </div>
+
+    <div class="edit-block">
+      <h3>🧪 제품 정보 수정</h3>
+      <div id="editProducts"></div>
+    </div>
+
+    <div class="edit-block">
+      <h3>🔬 성분 정보 수정</h3>
+      <div id="editIngredients"></div>
+    </div>
+
+    <div class="field-actions">
+      <button class="btn" id="saveBtn">💾 저장하기</button>
+      <button class="btn secondary" id="exportBtn">⬇️ 내보내기 (JSON)</button>
+      <button class="btn secondary" id="importBtn">⬆️ 가져오기 (JSON)</button>
+      <button class="btn danger" id="resetBtn">↺ 기본값으로 초기화</button>
+      <input type="file" id="importFile" accept="application/json" style="display:none;">
+    </div>
+  </section>
+
+</main>
+
+<div class="modal-bg" id="modalBg">
+  <div class="modal">
+    <button class="close" id="modalClose">✕</button>
+    <h3 id="modalTitle"></h3>
+    <div id="modalTags"></div>
+    <div class="mech-block" id="modalMech"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const STORAGE_KEY = "skincare_tracker_v1";
+
+const DEFAULT_DATA = {
+  days: [
+    {day:"월", cleanser:"클렌징밀크 → 라곰 폼클렌저", cleanserType:"alkaline", core:"", device:"알로에젤 + 미니튠"},
+    {day:"화", cleanser:"클렌징밀크 → 메이크프렘 폼", cleanserType:"acidic", core:"락틱애씨드 5%+HA", device:"모델링팩"},
+    {day:"수", cleanser:"클렌징밀크 → 라곰 폼클렌저", cleanserType:"alkaline", core:"", device:"알로에젤 + 미니튠"},
+    {day:"목", cleanser:"클렌징밀크 → 메이크프렘 폼", cleanserType:"acidic", core:"", device:"알로에젤 + 미니튠"},
+    {day:"금", cleanser:"클렌징밀크 → 라곰 폼클렌저", cleanserType:"alkaline", core:"레티놀", device:""},
+    {day:"토", cleanser:"클렌징밀크 → 메이크프렘 폼", cleanserType:"acidic", core:"", device:"모델링팩"},
+    {day:"일", cleanser:"메이크프렘 폼 → 블랙슈가 스크럽", cleanserType:"acidic", core:"", device:"알로에젤 + 미니튠"}
+  ],
+  products: [
+    {name:"VT 시카 토너", status:"교체예정", note:"나노레시피 원액과 섞어 쓰기 좋았지만, 향료 없는 라운드랩 독도 토너로 교체 예정.", ingredients:["센텔라아시아티카 추출물"]},
+    {name:"더랩바이블랑두 그린플라로이드 크림", status:"단종예정", note:"잘 썼지만 제로이드 MD 로션과 제형이 겹쳐서 정리 예정.", ingredients:["마데카소사이드", "판테놀"]},
+    {name:"제로이드 MD 로션", status:"사용중", note:"", ingredients:["세라마이드"]},
+    {name:"더마팩토리 베타시토스테롤 크림", status:"재구매X", note:"사은품으로 받아 가끔만 사용. 재구매 의사 없음.", ingredients:["베타시토스테롤"]},
+    {name:"아로마티카 알로에젤", status:"사용중", note:"알로에팩·모델링팩 베이스로 사용하며 나노레시피 원액과 섞어 씀.", ingredients:["알로에베라"]},
+    {name:"디오디너리 나이아신아마이드 10%+징크", status:"사용중", note:"아침 로션과 섞어서 사용.", ingredients:["나이아신아마이드", "징크PCA"]},
+    {name:"나노레시피 구아이아줄렌", status:"재구매X", note:"토너에 섞거나 알로에팩에 사용. 마데카소사이드와 효과가 겹쳐서 재구매 안 함.", ingredients:["구아이아줄렌"]},
+    {name:"나노레시피 세라마이드", status:"재구매X", note:"알로에팩·모델링팩에 사용. 제로이드 로션과 겹쳐서 재구매 안 함.", ingredients:["세라마이드"]},
+    {name:"나노레시피 히알루론산 (저/고분자)", status:"사용중", note:"알로에팩·모델링팩·토너에 두루 사용. 계속 재구매 예정.", ingredients:["히알루론산(저분자)", "히알루론산(고분자)"]},
+    {name:"디오디너리 락틱애씨드 5%+HA", status:"사용중", note:"주 1회 저녁 사용 후 모델링팩 병행.", ingredients:["락틱애씨드", "히알루론산(저분자)"]},
+    {name:"쿼드쎄라 미니튠", status:"사용중", note:"알로에젤 바른 뒤 사용 예정, 주 3회.", ingredients:[]},
+    {name:"린제이 티트리 모델링팩", status:"사용중", note:"미니튠 안 쓰는 날 주 2~3회.", ingredients:["티트리 추출물"]},
+    {name:"스킨푸드 블랙슈가 퍼펙트 에센셜 스크럽", status:"사용중", note:"주 1회 사용.", ingredients:["흑설탕 스크럽 입자"]},
+    {name:"라곰 마이크로 폼클렌저", status:"사용중", note:"약알칼리, 저녁에만 주 3회 사용.", ingredients:[]},
+    {name:"메이크프렘 세이프미 릴리프 모이스처 클렌징 밀크", status:"사용중", note:"평일 화장 지울 때 1차 클렌징으로 사용.", ingredients:[]},
+    {name:"메이크프렘 세이프미 릴리프 모이스처 클렌징폼", status:"사용중", note:"약산성, 라곰 안 쓰는 날 저녁 주 4회 사용.", ingredients:[]}
+  ],
+  ingredients: [
+    {name:"나이아신아마이드 10%+징크", tags:["미백","모공","피지조절","진정"],
+     mechanism:"표피 각질형성세포에서 멜라노좀이 각질세포로 전달되는 것을 억제해 미백에 도움을 주고, 피지선 자극을 줄여 모공·피지 조절에 기여해요. 세라마이드 등 지질 합성을 촉진해 장벽 강화에도 도움이 됩니다. 징크(아연)는 항균·피지조절 작용이 있어 트러블 진정에 함께 작용해요."},
+    {name:"히알루론산 (저/고분자)", tags:["보습","수분감","탄력보조"],
+     mechanism:"고분자 히알루론산은 피부 표면에 얇은 필름(보습막)을 형성해 수분 증발을 막아주고, 저분자 히알루론산은 각질층 더 깊이 침투해 즉각적인 수분감과 촉촉함을 줘요. 저/고분자를 함께 쓰면 표면 보습막 + 속보습 두 가지 효과를 동시에 챙길 수 있어요."},
+    {name:"락틱애씨드 5%+HA", tags:["각질케어","미백","보습","톤개선"],
+     mechanism:"AHA(알파하이드록시애씨드) 계열로 각질세포 사이 결합력을 약화시켜 오래된 각질이 자연스럽게 탈락하도록 도와 턴오버를 정상화해요. 그 결과 칙칙함이 개선되고 미백·톤업 효과가 나타나며, 락틱애씨드 자체가 피부 천연보습인자(NMF) 성분이라 각질케어와 동시에 보습 효과도 있어요."},
+    {name:"구아이아줄렌", tags:["진정","항염","붉은기완화"],
+     mechanism:"카모마일에서 유래한 짙은 파란색 성분(아줄렌)으로, 염증 매개물질 생성을 억제해 붉은기와 자극을 가라앉히는 데 도움을 줘요. 모세혈관 확장으로 인한 홍조성 붉은기 완화에도 자주 사용됩니다."},
+    {name:"세라마이드", tags:["보습","장벽강화","저자극"],
+     mechanism:"각질층을 구성하는 지질 성분 중 하나로, 피부 장벽(라멜라 구조)을 재구성해 수분이 빠져나가는 것(경피수분손실, TEWL)을 막아줘요. 장벽이 튼튼해지면 외부 자극에 대한 민감도도 낮아져요."},
+    {name:"마데카소사이드", tags:["진정","재생","장벽강화"],
+     mechanism:"센텔라아시아티카(병풀)에서 추출되는 성분으로, 콜라겐 합성을 촉진해 상처·자극 부위의 재생을 돕고 항염 작용으로 진정 효과를 줘요. 장벽 강화 효과도 있어 구아이아줄렌·세라마이드와 기능이 일부 겹쳐요."},
+    {name:"레티놀", tags:["주름개선","모공","각질턴오버","트러블"],
+     mechanism:"비타민A 유도체로, 표피 턴오버(각질 교체 주기)를 촉진하고 진피에서 콜라겐 생성을 자극해 주름 개선·모공 관리에 효과적이에요. 초기 사용 시 각질이 얇아지며 자극(레티노이드 반응, 홍조·건조)이 나타날 수 있어 저녁 단독 사용과 보습 병행이 중요해요."}
+  ]
+};
+
+let storageAvailable = true;
+function loadData(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(raw) return JSON.parse(raw);
+  }catch(e){ storageAvailable = false; }
+  return JSON.parse(JSON.stringify(DEFAULT_DATA));
+}
+function saveData(data){
+  try{
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  }catch(e){ storageAvailable = false; }
+}
+
+let state = loadData();
+
+// ---------- THEME ----------
+const themeToggle = document.getElementById('themeToggle');
+function applyTheme(t){
+  document.documentElement.setAttribute('data-theme', t);
+  themeToggle.textContent = t === 'dark' ? '☀️ 라이트모드' : '🌙 다크모드';
+  try{ localStorage.setItem('skincare_theme', t); }catch(e){}
+}
+let savedTheme = 'light';
+try{ savedTheme = localStorage.getItem('skincare_theme') || 'light'; }catch(e){}
+applyTheme(savedTheme);
+themeToggle.addEventListener('click', ()=>{
+  const cur = document.documentElement.getAttribute('data-theme');
+  applyTheme(cur === 'dark' ? 'light' : 'dark');
+});
+
+// ---------- TABS ----------
+document.querySelectorAll('nav button').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
+  });
+});
+
+// ---------- TODAY ----------
+const KOR_DAYS = ["일","월","화","수","목","금","토"];
+function getTodayIdx(){ return new Date().getDay(); } // 0=Sun
+function renderToday(){
+  const now = new Date();
+  document.getElementById('todayLabel').textContent =
+    now.getFullYear()+"년 "+(now.getMonth()+1)+"월 "+now.getDate()+"일 ("+KOR_DAYS[now.getDay()]+")";
+  const todayKor = KOR_DAYS[now.getDay()];
+  const info = state.days.find(d=>d.day===todayKor);
+  const banner = document.getElementById('todayBanner');
+  if(info){
+    banner.innerHTML = `
+      <div class="label">오늘의 루틴 · ${todayKor}요일</div>
+      <div class="day">${info.cleanser}</div>
+      ${info.core ? `<span class="badge b-yellow">✨ ${info.core}</span>` : ''}
+      ${info.device ? `<span class="badge b-purple">🧖 ${info.device}</span>` : ''}
+      ${(!info.core && !info.device) ? '<span class="badge b-blue">기본 클렌징만</span>' : ''}
+    `;
+  }
+}
+
+// ---------- ROUTINE ----------
+function renderWeek(){
+  const grid = document.getElementById('weekGrid');
+  const todayKor = KOR_DAYS[getTodayIdx()];
+  grid.innerHTML = state.days.map(d=>{
+    const typeBadge = d.cleanserType === 'alkaline'
+      ? '<span class="badge b-blue">약알칼리</span>'
+      : '<span class="badge b-green">약산성</span>';
+    return `
+      <div class="day-card ${d.day===todayKor?'today':''}">
+        <h3>${d.day}요일</h3>
+        <div class="day-row">
+          <div class="k">클렌징 ${typeBadge}</div>
+          <div class="v">${d.cleanser}</div>
+        </div>
+        <div class="day-row">
+          <div class="k">핵심 케어</div>
+          <div class="v">${d.core ? '<span class="badge b-yellow">'+d.core+'</span>' : '<span class="empty-v">—</span>'}</div>
+        </div>
+        <div class="day-row">
+          <div class="k">기기 / 팩</div>
+          <div class="v">${d.device ? '<span class="badge b-purple">'+d.device+'</span>' : '<span class="empty-v">—</span>'}</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// ---------- PRODUCTS ----------
+const STATUS_STYLE = {
+  "사용중": "b-green",
+  "교체예정": "b-yellow",
+  "단종예정": "b-danger",
+  "재구매X": "b-danger",
+  "가끔사용": "b-blue"
+};
+function renderProducts(){
+  const grid = document.getElementById('productGrid');
+  grid.innerHTML = state.products.map(p=>`
+    <div class="card product-card">
+      <h4>${p.name}</h4>
+      <div class="status"><span class="badge ${STATUS_STYLE[p.status]||'b-blue'}">${p.status}</span></div>
+      ${p.note ? `<div class="note">${p.note}</div>` : ''}
+      ${p.ingredients && p.ingredients.length ? `<div class="chip-row">${p.ingredients.map(i=>`<button class="chip" onclick="openIngredientByName('${i.replace(/'/g,"\\'")}')">${i}</button>`).join('')}</div>` : ''}
+    </div>
+  `).join('');
+}
+
+// ---------- INGREDIENTS ----------
+function renderIngredients(){
+  const grid = document.getElementById('ingGrid');
+  grid.innerHTML = state.ingredients.map((ing, idx)=>`
+    <div class="ing-card" onclick="openIngredient(${idx})">
+      <h4>${ing.name}</h4>
+      <div>${ing.tags.map(t=>`<span class="badge b-accent">${t}</span>`).join('')}</div>
+    </div>
+  `).join('');
+
+  const tbody = document.querySelector('#mapTable tbody');
+  tbody.innerHTML = state.products.filter(p=>p.ingredients && p.ingredients.length).map(p=>`
+    <tr><td>${p.name}</td><td>${p.ingredients.map(i=>`<span class="badge b-blue">${i}</span>`).join(' ')}</td></tr>
+  `).join('');
+}
+
+function openIngredient(idx){
+  const ing = state.ingredients[idx];
+  document.getElementById('modalTitle').textContent = ing.name;
+  document.getElementById('modalTags').innerHTML = ing.tags.map(t=>`<span class="badge b-accent">${t}</span>`).join('');
+  document.getElementById('modalMech').textContent = ing.mechanism;
+  document.getElementById('modalBg').classList.add('show');
+}
+function openIngredientByName(name){
+  const idx = state.ingredients.findIndex(i=>name.includes(i.name) || i.name.includes(name));
+  if(idx>=0) openIngredient(idx);
+  else{
+    document.getElementById('modalTitle').textContent = name;
+    document.getElementById('modalTags').innerHTML = '';
+    document.getElementById('modalMech').textContent = '아직 등록된 상세 정보가 없어요. 편집 탭에서 성분을 추가해보세요.';
+    document.getElementById('modalBg').classList.add('show');
+  }
+}
+document.getElementById('modalClose').addEventListener('click', ()=>{
+  document.getElementById('modalBg').classList.remove('show');
+});
+document.getElementById('modalBg').addEventListener('click', (e)=>{
+  if(e.target.id==='modalBg') e.target.classList.remove('show');
+});
+
+// ---------- EDIT TAB ----------
+function renderEditRoutine(){
+  const el = document.getElementById('editRoutine');
+  el.innerHTML = `
+    <div class="edit-row" style="grid-template-columns:90px 1fr 1fr 1fr;">
+      <div class="edit-label">요일</div>
+      <div class="edit-label">클렌징</div>
+      <div class="edit-label">핵심 케어</div>
+      <div class="edit-label">기기 / 팩</div>
+    </div>
+  ` + state.days.map((d,i)=>`
+    <div class="edit-row" style="grid-template-columns:90px 1fr 1fr 1fr;">
+      <div>${d.day}<br><select onchange="state.days[${i}].cleanserType=this.value" style="margin-top:4px;">
+        <option value="alkaline" ${d.cleanserType==='alkaline'?'selected':''}>약알칼리</option>
+        <option value="acidic" ${d.cleanserType==='acidic'?'selected':''}>약산성</option>
+      </select></div>
+      <textarea onchange="state.days[${i}].cleanser=this.value">${d.cleanser}</textarea>
+      <textarea onchange="state.days[${i}].core=this.value">${d.core}</textarea>
+      <textarea onchange="state.days[${i}].device=this.value">${d.device}</textarea>
+    </div>
+  `).join('');
+}
+
+function renderEditProducts(){
+  const el = document.getElementById('editProducts');
+  el.innerHTML = state.products.map((p,i)=>`
+    <div class="edit-row product-row">
+      <input value="${p.name}" onchange="state.products[${i}].name=this.value">
+      <select onchange="state.products[${i}].status=this.value">
+        ${["사용중","교체예정","단종예정","재구매X","가끔사용"].map(s=>`<option ${p.status===s?'selected':''}>${s}</option>`).join('')}
+      </select>
+      <textarea onchange="state.products[${i}].note=this.value">${p.note||''}</textarea>
+      <input placeholder="성분,쉼표로구분" value="${(p.ingredients||[]).join(', ')}" onchange="state.products[${i}].ingredients=this.value.split(',').map(s=>s.trim()).filter(Boolean)">
+    </div>
+  `).join('') + `<button class="btn secondary" onclick="addProduct()">+ 제품 추가</button>`;
+}
+function addProduct(){
+  state.products.push({name:"새 제품", status:"사용중", note:"", ingredients:[]});
+  renderEditProducts();
+}
+
+function renderEditIngredients(){
+  const el = document.getElementById('editIngredients');
+  el.innerHTML = state.ingredients.map((ing,i)=>`
+    <div class="edit-row ing-row">
+      <input value="${ing.name}" onchange="state.ingredients[${i}].name=this.value">
+      <input placeholder="태그,쉼표로구분" value="${ing.tags.join(', ')}" onchange="state.ingredients[${i}].tags=this.value.split(',').map(s=>s.trim()).filter(Boolean)">
+      <textarea onchange="state.ingredients[${i}].mechanism=this.value">${ing.mechanism}</textarea>
+    </div>
+  `).join('') + `<button class="btn secondary" onclick="addIngredient()">+ 성분 추가</button>`;
+}
+function addIngredient(){
+  state.ingredients.push({name:"새 성분", tags:[], mechanism:""});
+  renderEditIngredients();
+}
+
+// ---------- SAVE / EXPORT / IMPORT / RESET ----------
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 1800);
+}
+document.getElementById('saveBtn').addEventListener('click', ()=>{
+  saveData(state);
+  renderAll();
+  showToast(storageAvailable ? '저장되었습니다 ✅' : '이 화면에서는 저장이 지원되지 않아요. 내보내기로 백업하세요.');
+});
+document.getElementById('exportBtn').addEventListener('click', ()=>{
+  const blob = new Blob([JSON.stringify(state, null, 2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'skincare_data.json';
+  a.click();
+  URL.revokeObjectURL(url);
+});
+document.getElementById('importBtn').addEventListener('click', ()=>{
+  document.getElementById('importFile').click();
+});
+document.getElementById('importFile').addEventListener('change', (e)=>{
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = (ev)=>{
+    try{
+      const parsed = JSON.parse(ev.target.result);
+      state = parsed;
+      saveData(state);
+      renderAll();
+      showToast('불러오기 완료 ✅');
+    }catch(err){
+      showToast('JSON 파일을 읽을 수 없어요');
+    }
+  };
+  reader.readAsText(file);
+});
+document.getElementById('resetBtn').addEventListener('click', ()=>{
+  if(confirm('편집한 내용을 모두 지우고 기본값으로 되돌릴까요?')){
+    state = JSON.parse(JSON.stringify(DEFAULT_DATA));
+    saveData(state);
+    renderAll();
+    showToast('기본값으로 초기화되었습니다');
+  }
+});
+
+function renderAll(){
+  renderToday();
+  renderWeek();
+  renderProducts();
+  renderIngredients();
+  renderEditRoutine();
+  renderEditProducts();
+  renderEditIngredients();
+}
+renderAll();
+</script>
+</body>
+</html>
