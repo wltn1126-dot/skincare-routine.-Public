@@ -6,331 +6,444 @@
 <title>내 스킨케어 루틴</title>
 <style>
   :root{
-    --bg:#faf7f5;
+    --paper:#eef1ec;
     --card:#ffffff;
-    --card-border:#eee1de;
-    --text:#3a2f2d;
-    --sub:#8a7a76;
-    --accent:#d98a86;
-    --accent-soft:#f6e2df;
-    --blue:#8fb3c9;
-    --blue-soft:#e4eff4;
-    --green:#8fb99a;
-    --green-soft:#e6f2e9;
-    --yellow:#e0b25b;
-    --yellow-soft:#faf0dd;
-    --purple:#a48fc9;
-    --purple-soft:#eee7f7;
-    --danger:#c9705f;
-    --danger-soft:#f8e5e0;
-    --shadow: 0 2px 10px rgba(60,40,35,0.06);
+    --line:#d9dfd6;
+    --ink:#24302a;
+    --sub:#68766c;
+    --accent:#b8586a;
+    --accent-soft:#f4e2e3;
+    --alkaline:#5f84a1;
+    --alkaline-soft:#e2ebf1;
+    --acidic:#5f9370;
+    --acidic-soft:#e2eee3;
+    --active:#b98b31;
+    --active-soft:#f4e9d3;
+    --device:#7a689e;
+    --device-soft:#e9e4f3;
+    --pack:#3f8f86;
+    --pack-soft:#dcece9;
+    --scrub:#bd7a3c;
+    --scrub-soft:#f3e6d5;
+    --danger:#af5a4b;
+    --danger-soft:#f4e0da;
+    --shadow: 0 1px 2px rgba(36,48,42,0.04), 0 6px 20px rgba(36,48,42,0.06);
+    --shadow-lift: 0 4px 4px rgba(36,48,42,0.04), 0 12px 28px rgba(36,48,42,0.10);
     --radius:16px;
+    --mono: ui-monospace, "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    --sans: "Pretendard Variable", Pretendard, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
   }
-  [data-theme="dark"]{
-    --bg:#221c1b;
-    --card:#2c2422;
-    --card-border:#3d332f;
-    --text:#f1e7e3;
-    --sub:#b5a49e;
-    --accent:#e6a09b;
-    --accent-soft:#4a332f;
-    --blue:#9dc3d8;
-    --blue-soft:#2b3a41;
-    --green:#a3cbb0;
-    --green-soft:#2a3a2f;
-    --yellow:#e8c37c;
-    --yellow-soft:#453a26;
-    --purple:#bcabdd;
-    --purple-soft:#382f47;
-    --danger:#e08b7a;
-    --danger-soft:#4a2e28;
-    --shadow: 0 2px 12px rgba(0,0,0,0.35);
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#1b201c;
+      --card:#242b25;
+      --line:#38423b;
+      --ink:#eef1ec;
+      --sub:#a2ac9f;
+      --accent:#e08c9a;
+      --accent-soft:#402c30;
+      --alkaline:#8fb7d1;
+      --alkaline-soft:#28353f;
+      --acidic:#8fc39c;
+      --acidic-soft:#26362a;
+      --active:#e0b25f;
+      --active-soft:#40361f;
+      --device:#b3a0d6;
+      --device-soft:#352d47;
+      --pack:#7fc0ba;
+      --pack-soft:#25403c;
+      --scrub:#e2a06a;
+      --scrub-soft:#40301f;
+      --danger:#e08a76;
+      --danger-soft:#402d26;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 6px 20px rgba(0,0,0,0.35);
+      --shadow-lift: 0 4px 4px rgba(0,0,0,0.28), 0 14px 30px rgba(0,0,0,0.4);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#1b201c;
+    --card:#242b25;
+    --line:#38423b;
+    --ink:#eef1ec;
+    --sub:#a2ac9f;
+    --accent:#e08c9a;
+    --accent-soft:#402c30;
+    --alkaline:#8fb7d1;
+    --alkaline-soft:#28353f;
+    --acidic:#8fc39c;
+    --acidic-soft:#26362a;
+    --active:#e0b25f;
+    --active-soft:#40361f;
+    --device:#b3a0d6;
+    --device-soft:#352d47;
+    --pack:#7fc0ba;
+    --pack-soft:#25403c;
+    --scrub:#e2a06a;
+    --scrub-soft:#40301f;
+    --danger:#e08a76;
+    --danger-soft:#402d26;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 6px 20px rgba(0,0,0,0.35);
+    --shadow-lift: 0 4px 4px rgba(0,0,0,0.28), 0 14px 30px rgba(0,0,0,0.4);
   }
   *{box-sizing:border-box;}
   body{
-    margin:0;
-    background:var(--bg);
-    color:var(--text);
-    font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
-    line-height:1.5;
-    padding-bottom:60px;
+    margin:0; background:var(--paper); color:var(--ink); font-family:var(--sans);
+    line-height:1.55;
   }
-  header{
-    position:sticky; top:0; z-index:20;
-    background:var(--bg);
-    padding:18px 20px 0;
-    border-bottom:1px solid var(--card-border);
+  .wrap{max-width:920px; margin:0 auto; padding:0 20px 64px;}
+  .top{
+    position:sticky; top:0; z-index:30; background:var(--paper);
+    border-bottom:1px solid var(--line); padding-top:22px;
   }
-  .header-top{
-    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;
-    max-width:960px; margin:0 auto;
+  .top-inner{max-width:920px; margin:0 auto; padding:0 20px;}
+  .eyebrow{
+    font-family:var(--mono); font-size:0.68rem; letter-spacing:0.12em; text-transform:uppercase;
+    color:var(--accent); font-weight:600; margin:0 0 4px;
   }
-  h1{font-size:1.35rem; margin:0; display:flex; align-items:center; gap:8px;}
-  .sub-date{color:var(--sub); font-size:0.85rem; margin-top:2px;}
+  .head-row{display:flex; justify-content:space-between; align-items:flex-end; gap:12px; flex-wrap:wrap;}
+  h1{font-size:1.5rem; margin:0 0 2px; font-weight:800; letter-spacing:-0.01em; text-wrap:balance;}
+  .head-date{font-family:var(--mono); font-size:0.78rem; color:var(--sub);}
   .theme-toggle{
-    border:1px solid var(--card-border); background:var(--card); color:var(--text);
-    border-radius:20px; padding:6px 14px; cursor:pointer; font-size:0.85rem;
+    border:1px solid var(--line); background:var(--card); color:var(--ink);
+    border-radius:20px; padding:7px 14px; cursor:pointer; font-size:0.8rem; font-family:var(--sans);
+    transition:background .12s;
   }
-  nav{
-    max-width:960px; margin:14px auto 0; display:flex; gap:4px; overflow-x:auto;
+  .theme-toggle:hover{background:var(--paper);}
+  .theme-toggle:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible{
+    outline:2px solid var(--accent); outline-offset:2px;
   }
+  nav{display:flex; gap:4px; margin-top:16px; padding-bottom:14px; overflow-x:auto;}
   nav button{
-    flex:0 0 auto;
-    background:none; border:none; color:var(--sub);
-    padding:10px 16px; font-size:0.92rem; cursor:pointer;
-    border-bottom:3px solid transparent;
-    font-weight:600;
-    white-space:nowrap;
+    flex:0 0 auto; background:none; border:none; color:var(--sub); font-family:var(--sans);
+    padding:8px 16px; font-size:0.86rem; cursor:pointer; border-radius:999px;
+    font-weight:600; white-space:nowrap; transition:background .15s, color .15s;
   }
-  nav button.active{color:var(--accent); border-bottom:3px solid var(--accent);}
-  main{max-width:960px; margin:20px auto; padding:0 20px;}
+  nav button:hover{color:var(--ink); background:var(--line);}
+  nav button.active{color:var(--accent); background:var(--accent-soft);}
+  nav button.active:hover{color:var(--accent); background:var(--accent-soft);}
+  main{padding-top:22px;}
   .tab{display:none;}
   .tab.active{display:block;}
+
   .card{
-    background:var(--card); border:1px solid var(--card-border); border-radius:var(--radius);
-    box-shadow:var(--shadow); padding:16px 18px; margin-bottom:14px;
+    background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+    box-shadow:var(--shadow); padding:18px 20px;
   }
-  .today-banner{
-    background:linear-gradient(135deg,var(--accent-soft),var(--purple-soft));
-    border:1px solid var(--card-border); border-radius:var(--radius);
-    padding:16px 18px; margin-bottom:18px;
-  }
-  .today-banner .label{font-size:0.78rem; color:var(--sub); font-weight:600;}
-  .today-banner .day{font-size:1.2rem; font-weight:700; margin:2px 0 8px;}
   .badge{
-    display:inline-block; padding:3px 10px; border-radius:999px; font-size:0.75rem; font-weight:600;
-    margin:2px 4px 2px 0;
+    display:inline-flex; align-items:center; gap:4px; padding:3px 10px; border-radius:999px;
+    font-size:0.74rem; font-weight:600; margin:2px 6px 2px 0;
   }
-  .b-blue{background:var(--blue-soft); color:var(--blue);}
-  .b-green{background:var(--green-soft); color:var(--green);}
-  .b-yellow{background:var(--yellow-soft); color:var(--yellow);}
-  .b-purple{background:var(--purple-soft); color:var(--purple);}
+  .b-alkaline{background:var(--alkaline-soft); color:var(--alkaline);}
+  .b-acidic{background:var(--acidic-soft); color:var(--acidic);}
+  .b-active{background:var(--active-soft); color:var(--active);}
+  .b-device{background:var(--device-soft); color:var(--device);}
   .b-danger{background:var(--danger-soft); color:var(--danger);}
   .b-accent{background:var(--accent-soft); color:var(--accent);}
-  .week-grid{
-    display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:14px;
+
+  /* ---- home / weekly log ---- */
+  .week-nav{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:16px; flex-wrap:wrap;}
+  .week-nav .range{font-size:0.98rem; font-weight:700;}
+  .week-nav .range .tag{font-family:var(--mono); font-weight:500; font-size:0.74rem; color:var(--accent); margin-left:8px;}
+  .week-nav-btns{display:flex; gap:6px;}
+  .week-nav-btns button{
+    border:1px solid var(--line); background:var(--card); color:var(--ink); border-radius:8px;
+    padding:6px 12px; font-size:0.8rem; cursor:pointer; font-family:var(--sans); transition:background .12s;
   }
+  .week-nav-btns button:hover{background:var(--paper);}
+
+  .section-block{margin-bottom:24px;}
+  .section-title{font-size:1.02rem; font-weight:800; margin:0 0 12px; letter-spacing:-0.01em;}
+  .section-title .count{font-family:var(--mono); font-weight:500; font-size:0.78rem; color:var(--sub); margin-left:6px;}
+
+  .progress-list{display:flex; flex-direction:column; gap:18px;}
+  .progress-row{display:grid; grid-template-columns:1fr; gap:8px;}
+  .progress-top{display:flex; justify-content:space-between; align-items:center; gap:10px;}
+  .progress-label{font-size:0.92rem; font-weight:700; display:flex; align-items:center; gap:9px;}
+  .cat-dot{width:9px; height:9px; border-radius:50%; flex:0 0 auto;}
+  .progress-count{display:flex; align-items:center; gap:8px; font-variant-numeric:tabular-nums;}
+  .progress-count .num{font-family:var(--mono); font-size:1rem; font-weight:700; color:var(--ink);}
+  .progress-count .of{font-family:var(--mono); font-size:0.78rem; color:var(--sub);}
+  .done-pill{
+    background:var(--acidic-soft); color:var(--acidic); font-size:0.68rem; font-weight:700;
+    padding:2px 9px; border-radius:999px; letter-spacing:0.02em;
+  }
+  .progress-track{height:8px; border-radius:999px; background:var(--paper); border:1px solid var(--line); overflow:hidden;}
+  .progress-fill{height:100%; border-radius:999px; transition:width .25s ease;}
+  .progress-fill.done{background:var(--acidic);}
+
+  .week-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:12px;}
   .day-card{
-    background:var(--card); border:1px solid var(--card-border); border-radius:var(--radius);
-    padding:14px 16px; box-shadow:var(--shadow); position:relative;
+    background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+    padding:15px 17px; box-shadow:var(--shadow); position:relative; display:flex; flex-direction:column; gap:10px;
+    transition:box-shadow .15s, border-color .15s;
   }
-  .day-card.today{border-color:var(--accent); box-shadow:0 0 0 2px var(--accent) inset;}
-  .day-card h3{margin:0 0 8px; font-size:1.05rem;}
-  .day-row{margin-bottom:8px;}
-  .day-row .k{font-size:0.72rem; color:var(--sub); font-weight:600; margin-bottom:3px;}
-  .day-row .v{font-size:0.88rem;}
-  .empty-v{color:var(--sub); font-style:italic; font-size:0.82rem;}
-  .legend{display:flex; gap:14px; flex-wrap:wrap; margin-bottom:16px; font-size:0.8rem; color:var(--sub);}
-  .legend span{display:inline-flex; align-items:center; gap:5px;}
-  .dot{width:9px; height:9px; border-radius:50%; display:inline-block;}
-  .warn-card{
-    background:var(--danger-soft); border:1px solid var(--danger); border-radius:var(--radius);
-    padding:12px 16px; margin-bottom:18px; font-size:0.86rem; color:var(--text);
+  .day-card:hover{box-shadow:var(--shadow-lift);}
+  .day-card.today{border-color:var(--accent); box-shadow:0 0 0 1.5px var(--accent);}
+  .day-card.editing{border-color:var(--device); box-shadow:0 0 0 1.5px var(--device);}
+  .day-card h3{margin:0; font-size:0.98rem; display:flex; align-items:baseline; gap:8px;}
+  .day-card h3 .idx{font-family:var(--mono); font-size:0.72rem; color:var(--sub); font-weight:500;}
+  .today-pill{
+    position:absolute; top:-9px; right:14px; background:var(--accent); color:#fff;
+    font-size:0.64rem; font-weight:700; padding:2px 9px; border-radius:999px; letter-spacing:0.03em;
   }
-  .warn-card b{color:var(--danger);}
-  .section-title{font-size:1.05rem; font-weight:700; margin:22px 0 10px;}
-  .product-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:14px;}
-  .product-card h4{margin:0 0 6px; font-size:1rem;}
-  .product-card .status{margin-bottom:8px;}
-  .product-card .note{font-size:0.85rem; color:var(--sub); margin-bottom:8px;}
+  .day-note{font-size:0.78rem; color:var(--sub); font-style:italic;}
   .chip-row{display:flex; flex-wrap:wrap; gap:6px;}
+  .empty-v{color:var(--sub); font-size:0.82rem;}
+  .day-edit-btn{
+    align-self:flex-start; background:var(--paper); border:1px solid var(--line); color:var(--ink);
+    border-radius:8px; padding:6px 12px; font-size:0.78rem; cursor:pointer; font-family:var(--sans); font-weight:600;
+    transition:background .12s, border-color .12s;
+  }
+  .day-edit-btn:hover{border-color:var(--device);}
+  .day-edit-btn.on{background:var(--device-soft); color:var(--device); border-color:var(--device);}
+
+  .day-editor{
+    margin-top:16px; background:var(--card); border:1px solid var(--device); border-radius:var(--radius);
+    padding:18px 20px; box-shadow:var(--shadow);
+  }
+  .day-editor .editor-head{display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;}
+  .day-editor .editor-head b{font-size:1rem;}
+  .day-editor .close-editor{background:none; border:none; font-size:1.05rem; cursor:pointer; color:var(--sub);}
+  .toggle-grid{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px;}
+  .toggle-chip{
+    border:1px solid var(--line); background:var(--paper); color:var(--ink); border-radius:999px;
+    padding:6px 13px; font-size:0.8rem; cursor:pointer; font-family:var(--sans); font-weight:600;
+  }
+  .toggle-chip.on{background:var(--acidic-soft); color:var(--acidic); border-color:var(--acidic);}
+  .editor-sub{font-size:0.7rem; color:var(--sub); text-transform:uppercase; letter-spacing:0.05em; font-family:var(--mono); font-weight:700; margin:12px 0 8px;}
+  .editor-sub:first-of-type{margin-top:0;}
+  .day-editor textarea{
+    width:100%; padding:9px 11px; border-radius:8px; border:1px solid var(--line);
+    background:var(--paper); color:var(--ink); font-size:0.84rem; font-family:var(--sans); min-height:44px; resize:vertical;
+  }
+
+  .product-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:12px;}
+  .product-card{border-top:3px solid var(--line); border-radius:var(--radius); transition:box-shadow .15s;}
+  .product-card:hover{box-shadow:var(--shadow-lift);}
+  .product-card.st-사용중{border-top-color:var(--acidic);}
+  .product-card.st-교체예정{border-top-color:var(--active);}
+  .product-card.st-단종예정{border-top-color:var(--danger);}
+  .product-card.st-재구매X{border-top-color:var(--danger);}
+  .product-card.st-가끔사용{border-top-color:var(--alkaline);}
+  .product-card h4{margin:0 0 8px; font-size:0.94rem; font-weight:700; text-wrap:balance;}
+  .product-card .status{margin-bottom:8px;}
+  .product-card .note{font-size:0.82rem; color:var(--sub); margin-bottom:10px;}
+  .product-card .target-note{font-size:0.74rem; color:var(--device); font-family:var(--mono); margin-bottom:8px;}
   .chip{
-    background:var(--blue-soft); color:var(--blue); font-size:0.72rem; padding:3px 9px; border-radius:8px;
-    cursor:pointer; border:none; font-weight:600;
+    background:var(--alkaline-soft); color:var(--alkaline); font-size:0.7rem; padding:3px 9px; border-radius:7px;
+    cursor:pointer; border:none; font-weight:600; font-family:var(--sans); transition:filter .12s;
   }
-  .ing-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:12px;}
+  .chip:hover{filter:brightness(0.94);}
+
+  .ing-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(190px,1fr)); gap:10px;}
   .ing-card{
-    background:var(--card); border:1px solid var(--card-border); border-radius:var(--radius);
-    padding:14px 16px; cursor:pointer; box-shadow:var(--shadow); transition:transform .1s;
+    background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+    padding:14px 16px; cursor:pointer; box-shadow:var(--shadow); transition:transform .12s, border-color .12s;
+    text-align:left; font-family:inherit; color:inherit; width:100%;
   }
-  .ing-card:hover{transform:translateY(-2px); border-color:var(--accent);}
-  .ing-card h4{margin:0 0 8px; font-size:0.95rem;}
-  table{width:100%; border-collapse:collapse; font-size:0.85rem;}
-  th,td{text-align:left; padding:8px 10px; border-bottom:1px solid var(--card-border); vertical-align:top;}
-  th{color:var(--sub); font-weight:600; font-size:0.78rem;}
+  .ing-card:hover{transform:translateY(-2px); border-color:var(--accent); box-shadow:var(--shadow-lift);}
+  .ing-card h4{margin:0 0 9px; font-size:0.9rem; font-weight:700;}
+
+  table{width:100%; border-collapse:collapse; font-size:0.84rem;}
+  th,td{text-align:left; padding:9px 10px; border-bottom:1px solid var(--line); vertical-align:top;}
+  th{color:var(--sub); font-weight:700; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.04em; font-family:var(--mono);}
+  .table-wrap{overflow-x:auto;}
+
   .modal-bg{
-    display:none; position:fixed; inset:0; background:rgba(0,0,0,0.45); z-index:100;
+    display:none; position:fixed; inset:0; background:rgba(20,24,20,0.5); z-index:100;
     align-items:center; justify-content:center; padding:20px;
   }
   .modal-bg.show{display:flex;}
   .modal{
-    background:var(--card); border-radius:var(--radius); padding:24px; max-width:480px; width:100%;
-    max-height:80vh; overflow-y:auto; box-shadow:var(--shadow); border:1px solid var(--card-border);
+    background:var(--card); border-radius:var(--radius); padding:26px; max-width:460px; width:100%;
+    max-height:80vh; overflow-y:auto; box-shadow:var(--shadow); border:1px solid var(--line);
   }
-  .modal h3{margin-top:0;}
-  .modal .close{
-    float:right; background:none; border:none; font-size:1.2rem; cursor:pointer; color:var(--sub);
-  }
-  .modal .mech-block{background:var(--purple-soft); border-radius:10px; padding:12px 14px; margin-top:10px; font-size:0.88rem;}
-  .edit-block{margin-bottom:22px;}
-  .edit-block h3{font-size:1rem; border-bottom:1px solid var(--card-border); padding-bottom:6px;}
-  .edit-row{
-    display:grid; grid-template-columns:90px 1fr 1fr 1fr; gap:8px; margin-bottom:8px; align-items:center;
-  }
-  .edit-row.product-row{grid-template-columns:1.2fr 1fr 2fr 1.3fr;}
-  .edit-row.ing-row{grid-template-columns:1fr 1.5fr 2fr;}
+  .modal-head{display:flex; justify-content:space-between; align-items:flex-start; gap:12px;}
+  .modal h3{margin:0; font-size:1.15rem; font-weight:800;}
+  .modal .close{background:none; border:none; font-size:1.1rem; cursor:pointer; color:var(--sub); line-height:1; padding:2px;}
+  .modal .mech-block{background:var(--device-soft); border-radius:10px; padding:14px 16px; margin-top:14px; font-size:0.87rem; color:var(--ink);}
+  .modal .mech-label{font-family:var(--mono); font-size:0.68rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--device); font-weight:700; margin-bottom:6px;}
+
+  .idea-card{border-left:3px solid var(--device); margin-bottom:10px;}
+  .idea-card b{font-size:0.9rem;}
+  .idea-card .small-note{margin-top:5px;}
+
+  .edit-block{margin-bottom:26px;}
+  .edit-block h3{font-size:0.98rem; font-weight:800; border-bottom:1px solid var(--line); padding-bottom:8px; margin-bottom:12px;}
+  .edit-row{display:grid; grid-template-columns:1.2fr 1fr 2fr 1.3fr 0.8fr; gap:8px; margin-bottom:8px; align-items:start;}
+  .edit-row.ing-row{grid-template-columns:1fr 1.4fr 2fr;}
   .edit-row input, .edit-row select, .edit-row textarea{
-    width:100%; padding:7px 9px; border-radius:8px; border:1px solid var(--card-border);
-    background:var(--bg); color:var(--text); font-size:0.82rem; font-family:inherit;
+    width:100%; padding:8px 10px; border-radius:8px; border:1px solid var(--line);
+    background:var(--paper); color:var(--ink); font-size:0.82rem; font-family:var(--sans);
   }
-  .edit-row textarea{resize:vertical; min-height:36px;}
-  .edit-label{font-size:0.75rem; color:var(--sub); font-weight:700;}
+  .edit-row textarea{resize:vertical; min-height:38px;}
+  .edit-label{font-size:0.68rem; color:var(--sub); font-weight:700; text-transform:uppercase; letter-spacing:0.04em; font-family:var(--mono);}
+
   .btn{
-    background:var(--accent); color:#fff; border:none; padding:9px 16px; border-radius:10px;
-    cursor:pointer; font-size:0.85rem; font-weight:600; margin-right:8px; margin-top:6px;
+    background:var(--accent); color:#fff; border:none; padding:10px 16px; border-radius:10px;
+    cursor:pointer; font-size:0.84rem; font-weight:700; margin-right:8px; margin-top:8px; font-family:var(--sans);
+    transition:filter .12s, box-shadow .12s;
   }
-  .btn.secondary{background:var(--card); color:var(--text); border:1px solid var(--card-border);}
+  .btn:hover{filter:brightness(1.06); box-shadow:var(--shadow-lift);}
+  .btn.secondary{background:var(--card); color:var(--ink); border:1px solid var(--line);}
+  .btn.secondary:hover{background:var(--paper);}
   .btn.danger{background:var(--danger);}
+
   .toast{
     position:fixed; bottom:24px; left:50%; transform:translateX(-50%);
-    background:var(--text); color:var(--bg); padding:10px 20px; border-radius:10px;
-    font-size:0.85rem; z-index:200; opacity:0; pointer-events:none; transition:opacity .25s;
+    background:var(--ink); color:var(--paper); padding:11px 20px; border-radius:10px;
+    font-size:0.84rem; z-index:200; opacity:0; pointer-events:none; transition:opacity .25s;
   }
   .toast.show{opacity:1;}
-  .idea-card{border-left:4px solid var(--purple);}
-  .field-actions{margin-top:14px;}
-  .small-note{font-size:0.75rem; color:var(--sub); margin-top:4px;}
+  .small-note{font-size:0.76rem; color:var(--sub); margin-top:4px;}
+  .field-actions{margin-top:16px;}
 </style>
 </head>
 <body>
 
-<header>
-  <div class="header-top">
-    <div>
-      <h1>🧴 내 스킨케어 루틴</h1>
-      <div class="sub-date" id="todayLabel"></div>
+<div class="top">
+  <div class="top-inner">
+    <div class="head-row">
+      <div>
+        <div class="eyebrow">Personal skincare log</div>
+        <h1>내 스킨케어 루틴</h1>
+        <div class="head-date" id="todayLabel"></div>
+      </div>
+      <button class="theme-toggle" id="themeToggle">🌙 다크모드</button>
     </div>
-    <button class="theme-toggle" id="themeToggle">🌙 다크모드</button>
+    <nav>
+      <button data-tab="home" class="active">이번주</button>
+      <button data-tab="products">제품</button>
+      <button data-tab="ingredients">성분</button>
+      <button data-tab="ideas">아이디어</button>
+      <button data-tab="edit">편집</button>
+    </nav>
   </div>
-  <nav>
-    <button data-tab="routine" class="active">📅 루틴</button>
-    <button data-tab="products">🧪 제품</button>
-    <button data-tab="ingredients">🔬 성분</button>
-    <button data-tab="ideas">💡 아이디어</button>
-    <button data-tab="edit">✏️ 편집</button>
-  </nav>
-</header>
+</div>
 
+<div class="wrap">
 <main>
 
-  <!-- ROUTINE TAB -->
-  <section class="tab active" id="tab-routine">
-    <div class="today-banner" id="todayBanner"></div>
-    <div class="legend">
-      <span><i class="dot" style="background:var(--blue)"></i>약알칼리 클렌저 (라곰)</span>
-      <span><i class="dot" style="background:var(--green)"></i>약산성 클렌저 (메이크프렘)</span>
-      <span><i class="dot" style="background:var(--yellow)"></i>핵심 케어 (액티브 성분)</span>
-      <span><i class="dot" style="background:var(--purple)"></i>기기 / 팩</span>
+  <!-- HOME / WEEKLY LOG TAB -->
+  <section class="tab active" id="tab-home">
+    <div class="section-block">
+      <div class="week-nav">
+        <div class="range" id="weekRangeLabel"></div>
+        <div class="week-nav-btns">
+          <button id="prevWeekBtn">‹ 이전주</button>
+          <button id="thisWeekBtn">이번주</button>
+          <button id="nextWeekBtn">다음주 ›</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="section-title">이번주 목표 대비 사용 현황</div>
+        <div class="progress-list" id="progressList"></div>
+      </div>
     </div>
-    <div class="week-grid" id="weekGrid"></div>
-    <div class="warn-card">
-      ⚠️ <b>병용 주의</b> — 레티놀(금)과 락틱애씨드 AHA(화)는 각질층 자극이 겹칠 수 있어 같은 날 사용을 피하는 게 좋아요. 현재 루틴은 이미 다른 요일로 분리되어 있어요. 모델링팩·스크럽 등 물리적 각질 케어도 AHA/레티놀 사용일과는 하루 이상 간격을 두는 것을 추천해요.
+
+    <div class="section-block">
+      <div class="section-title">요일별 사용 기록<span class="small-note" style="font-weight:400;"> — 요일 카드의 "+ 기록"을 눌러 그날 쓴 제품을 체크하세요</span></div>
+      <div class="week-grid" id="weekLogGrid"></div>
+      <div id="dayEditorWrap"></div>
     </div>
   </section>
 
   <!-- PRODUCTS TAB -->
   <section class="tab" id="tab-products">
-    <div class="section-title">사용 중 제품</div>
+    <div class="section-title">사용 중 제품<span class="count" id="productCount"></span></div>
     <div class="product-grid" id="productGrid"></div>
   </section>
 
   <!-- INGREDIENTS TAB -->
   <section class="tab" id="tab-ingredients">
-    <div class="section-title">핵심 성분 요약 <span class="small-note">(클릭하면 상세 효과·기전을 볼 수 있어요)</span></div>
-    <div class="ing-grid" id="ingGrid"></div>
-
-    <div class="section-title">제품별 함유 성분</div>
-    <div class="card" style="overflow-x:auto;">
-      <table id="mapTable">
-        <thead><tr><th>제품</th><th>주요 성분</th></tr></thead>
-        <tbody></tbody>
-      </table>
+    <div class="section-block">
+      <div class="section-title">핵심 성분 요약 <span class="small-note" style="font-weight:400;">— 클릭하면 상세 효과·기전을 볼 수 있어요</span></div>
+      <div class="ing-grid" id="ingGrid"></div>
+    </div>
+    <div class="section-block">
+      <div class="section-title">제품별 함유 성분</div>
+      <div class="card table-wrap">
+        <table id="mapTable">
+          <thead><tr><th>제품</th><th>주요 성분</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
     </div>
   </section>
 
   <!-- IDEAS TAB -->
   <section class="tab" id="tab-ideas">
     <div class="section-title">추가하면 좋을 아이디어</div>
-    <div class="card idea-card"><b>🔄 재구매 상태 트래킹</b><div class="small-note">제품 카드에 이미 넣어둔 "사용중 / 교체예정 / 단종예정 / 재구매X / 가끔사용" 뱃지를 활용해서, 다 쓸 때쯤 재구매 리스트만 따로 뽑아볼 수 있어요.</div></div>
-    <div class="card idea-card"><b>⚠️ 성분 궁합 경고</b><div class="small-note">레티놀 × AHA, 고농도 비타민C × 나이아신아마이드처럼 같이 쓰면 자극적일 수 있는 조합을 자동으로 표시 (루틴 탭 하단 경고 카드로 우선 반영했어요).</div></div>
-    <div class="card idea-card"><b>📦 개봉일 / 유통기한 관리</b><div class="small-note">편집 탭에 제품별 "개봉일" 필드를 추가하면 원료(특히 원액류)의 사용기한을 계산해서 알려줄 수 있어요. 다음 업데이트로 추가 가능.</div></div>
-    <div class="card idea-card"><b>📸 피부 컨디션 기록</b><div class="small-note">요일별 루틴 옆에 그날그날 피부 상태(트러블/당김/컨디션 좋음)를 짧게 메모해두면, 어떤 루틴이 잘 맞는지 나중에 비교하기 좋아요.</div></div>
-    <div class="card idea-card"><b>🌗 다크모드</b><div class="small-note">오른쪽 상단 버튼으로 이미 적용했어요. 저녁에 스킨케어 기록할 때 눈부심 없이 볼 수 있어요.</div></div>
-    <div class="card idea-card"><b>💾 데이터 내보내기/가져오기</b><div class="small-note">편집 탭 하단에서 지금까지 수정한 내용을 JSON 파일로 백업하거나, 다른 기기에서 불러올 수 있어요.</div></div>
+    <div class="card idea-card"><b>🔄 재구매 상태 트래킹</b><div class="small-note">제품 카드의 "사용중 / 교체예정 / 단종예정 / 재구매X / 가끔사용" 상태를 활용해서, 다 쓸 때쯤 재구매 리스트만 따로 뽑아볼 수 있어요.</div></div>
+    <div class="card idea-card"><b>⚠️ 성분 궁합 경고</b><div class="small-note">같은 날 레티놀류와 AHA(락틱애씨드)를 함께 기록하면 자동으로 주의 표시를 띄우는 기능. 다음 업데이트 후보예요.</div></div>
+    <div class="card idea-card"><b>📦 개봉일 / 유통기한 관리</b><div class="small-note">편집 탭에 제품별 "개봉일" 필드를 추가하면 원액류의 사용기한을 계산해서 알려줄 수 있어요.</div></div>
+    <div class="card idea-card"><b>📈 주간 목표 확장</b><div class="small-note">지금은 주간 사용 목표(예: 미니튠 3회)를 편집 탭에서 숫자로 설정하는데, 나중엔 월간 통계나 연속 사용일(스트릭)까지 보여줄 수 있어요.</div></div>
+    <div class="card idea-card"><b>🌗 다크모드</b><div class="small-note">오른쪽 상단 버튼으로 이미 적용했어요. 저녁에 기록할 때 눈부심 없이 볼 수 있어요.</div></div>
+    <div class="card idea-card"><b>💾 데이터 내보내기/가져오기</b><div class="small-note">편집 탭 하단에서 지금까지의 기록을 JSON 파일로 백업하거나, 다른 기기에서 불러올 수 있어요.</div></div>
   </section>
 
   <!-- EDIT TAB -->
   <section class="tab" id="tab-edit">
     <div class="section-title">편집 화면</div>
-    <p class="small-note">여기서 수정한 내용은 이 브라우저에 자동 저장돼요 (다른 기기와는 공유되지 않아요 — 내보내기로 백업하세요).</p>
+    <p class="small-note">여기서 수정한 내용(제품/성분/목표)은 이 브라우저에 자동 저장돼요. 요일별 사용 기록은 홈 탭에서 바로 체크하면 즉시 저장됩니다.</p>
 
     <div class="edit-block">
-      <h3>📅 요일별 루틴 수정</h3>
-      <div id="editRoutine"></div>
-    </div>
-
-    <div class="edit-block">
-      <h3>🧪 제품 정보 수정</h3>
+      <h3>제품 정보 · 주간 목표 수정</h3>
       <div id="editProducts"></div>
     </div>
 
     <div class="edit-block">
-      <h3>🔬 성분 정보 수정</h3>
+      <h3>성분 정보 수정</h3>
       <div id="editIngredients"></div>
     </div>
 
     <div class="field-actions">
-      <button class="btn" id="saveBtn">💾 저장하기</button>
-      <button class="btn secondary" id="exportBtn">⬇️ 내보내기 (JSON)</button>
-      <button class="btn secondary" id="importBtn">⬆️ 가져오기 (JSON)</button>
-      <button class="btn danger" id="resetBtn">↺ 기본값으로 초기화</button>
+      <button class="btn" id="saveBtn">저장하기</button>
+      <button class="btn secondary" id="exportBtn">내보내기 (JSON)</button>
+      <button class="btn secondary" id="importBtn">가져오기 (JSON)</button>
+      <button class="btn danger" id="clearWeekBtn">이번주 기록 지우기</button>
+      <button class="btn danger" id="resetBtn">기본값으로 초기화</button>
       <input type="file" id="importFile" accept="application/json" style="display:none;">
     </div>
   </section>
 
 </main>
+</div>
 
 <div class="modal-bg" id="modalBg">
   <div class="modal">
-    <button class="close" id="modalClose">✕</button>
-    <h3 id="modalTitle"></h3>
+    <div class="modal-head">
+      <h3 id="modalTitle"></h3>
+      <button class="close" id="modalClose">✕</button>
+    </div>
     <div id="modalTags"></div>
-    <div class="mech-block" id="modalMech"></div>
+    <div class="mech-block"><div class="mech-label">작용 기전</div><div id="modalMech"></div></div>
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-const STORAGE_KEY = "skincare_tracker_v1";
+const STORAGE_KEY = "skincare_tracker_v2";
 
 const DEFAULT_DATA = {
-  days: [
-    {day:"월", cleanser:"클렌징밀크 → 라곰 폼클렌저", cleanserType:"alkaline", core:"", device:"알로에젤 + 미니튠"},
-    {day:"화", cleanser:"클렌징밀크 → 메이크프렘 폼", cleanserType:"acidic", core:"락틱애씨드 5%+HA", device:"모델링팩"},
-    {day:"수", cleanser:"클렌징밀크 → 라곰 폼클렌저", cleanserType:"alkaline", core:"", device:"알로에젤 + 미니튠"},
-    {day:"목", cleanser:"클렌징밀크 → 메이크프렘 폼", cleanserType:"acidic", core:"", device:"알로에젤 + 미니튠"},
-    {day:"금", cleanser:"클렌징밀크 → 라곰 폼클렌저", cleanserType:"alkaline", core:"레티놀", device:""},
-    {day:"토", cleanser:"클렌징밀크 → 메이크프렘 폼", cleanserType:"acidic", core:"", device:"모델링팩"},
-    {day:"일", cleanser:"메이크프렘 폼 → 블랙슈가 스크럽", cleanserType:"acidic", core:"", device:"알로에젤 + 미니튠"}
-  ],
   products: [
-    {name:"VT 시카 토너", status:"교체예정", note:"나노레시피 원액과 섞어 쓰기 좋았지만, 향료 없는 라운드랩 독도 토너로 교체 예정.", ingredients:["센텔라아시아티카 추출물"]},
-    {name:"더랩바이블랑두 그린플라로이드 크림", status:"단종예정", note:"잘 썼지만 제로이드 MD 로션과 제형이 겹쳐서 정리 예정.", ingredients:["마데카소사이드", "판테놀"]},
-    {name:"제로이드 MD 로션", status:"사용중", note:"", ingredients:["세라마이드"]},
-    {name:"더마팩토리 베타시토스테롤 크림", status:"재구매X", note:"사은품으로 받아 가끔만 사용. 재구매 의사 없음.", ingredients:["베타시토스테롤"]},
-    {name:"아로마티카 알로에젤", status:"사용중", note:"알로에팩·모델링팩 베이스로 사용하며 나노레시피 원액과 섞어 씀.", ingredients:["알로에베라"]},
-    {name:"디오디너리 나이아신아마이드 10%+징크", status:"사용중", note:"아침 로션과 섞어서 사용.", ingredients:["나이아신아마이드", "징크PCA"]},
-    {name:"나노레시피 구아이아줄렌", status:"재구매X", note:"토너에 섞거나 알로에팩에 사용. 마데카소사이드와 효과가 겹쳐서 재구매 안 함.", ingredients:["구아이아줄렌"]},
-    {name:"나노레시피 세라마이드", status:"재구매X", note:"알로에팩·모델링팩에 사용. 제로이드 로션과 겹쳐서 재구매 안 함.", ingredients:["세라마이드"]},
-    {name:"나노레시피 히알루론산 (저/고분자)", status:"사용중", note:"알로에팩·모델링팩·토너에 두루 사용. 계속 재구매 예정.", ingredients:["히알루론산(저분자)", "히알루론산(고분자)"]},
-    {name:"디오디너리 락틱애씨드 5%+HA", status:"사용중", note:"주 1회 저녁 사용 후 모델링팩 병행.", ingredients:["락틱애씨드", "히알루론산(저분자)"]},
-    {name:"쿼드쎄라 미니튠", status:"사용중", note:"알로에젤 바른 뒤 사용 예정, 주 3회.", ingredients:[]},
-    {name:"린제이 티트리 모델링팩", status:"사용중", note:"미니튠 안 쓰는 날 주 2~3회.", ingredients:["티트리 추출물"]},
-    {name:"스킨푸드 블랙슈가 퍼펙트 에센셜 스크럽", status:"사용중", note:"주 1회 사용.", ingredients:["흑설탕 스크럽 입자"]},
-    {name:"라곰 마이크로 폼클렌저", status:"사용중", note:"약알칼리, 저녁에만 주 3회 사용.", ingredients:[]},
-    {name:"메이크프렘 세이프미 릴리프 모이스처 클렌징 밀크", status:"사용중", note:"평일 화장 지울 때 1차 클렌징으로 사용.", ingredients:[]},
-    {name:"메이크프렘 세이프미 릴리프 모이스처 클렌징폼", status:"사용중", note:"약산성, 라곰 안 쓰는 날 저녁 주 4회 사용.", ingredients:[]}
+    {name:"VT 시카 토너", status:"교체예정", note:"나노레시피 원액과 섞어 쓰기 좋았지만, 향료 없는 라운드랩 독도 토너로 교체 예정.", ingredients:["센텔라아시아티카 추출물"], weeklyTarget:null},
+    {name:"더랩바이블랑두 그린플라로이드 크림", status:"단종예정", note:"잘 썼지만 제로이드 MD 로션과 제형이 겹쳐서 정리 예정.", ingredients:["마데카소사이드", "판테놀"], weeklyTarget:null},
+    {name:"제로이드 MD 로션", status:"사용중", note:"", ingredients:["세라마이드"], weeklyTarget:null},
+    {name:"더마팩토리 베타시토스테롤 크림", status:"재구매X", note:"사은품으로 받아 가끔만 사용. 재구매 의사 없음.", ingredients:["베타시토스테롤"], weeklyTarget:null},
+    {name:"아로마티카 알로에젤", status:"사용중", note:"알로에팩·모델링팩 베이스로 사용하며 나노레시피 원액과 섞어 씀.", ingredients:["알로에베라"], weeklyTarget:null},
+    {name:"디오디너리 나이아신아마이드 10%+징크", status:"사용중", note:"아침 로션과 섞어서 사용.", ingredients:["나이아신아마이드", "징크PCA"], weeklyTarget:null},
+    {name:"나노레시피 구아이아줄렌", status:"재구매X", note:"토너에 섞거나 알로에팩에 사용. 마데카소사이드와 효과가 겹쳐서 재구매 안 함.", ingredients:["구아이아줄렌"], weeklyTarget:null},
+    {name:"나노레시피 세라마이드", status:"재구매X", note:"알로에팩·모델링팩에 사용. 제로이드 로션과 겹쳐서 재구매 안 함.", ingredients:["세라마이드"], weeklyTarget:null},
+    {name:"나노레시피 히알루론산 (저/고분자)", status:"사용중", note:"알로에팩·모델링팩·토너에 두루 사용. 계속 재구매 예정.", ingredients:["히알루론산(저분자)", "히알루론산(고분자)"], weeklyTarget:null},
+    {name:"디오디너리 락틱애씨드 5%+HA", status:"사용중", note:"저녁 사용 후 모델링팩 병행.", ingredients:["락틱애씨드", "히알루론산(저분자)"], weeklyTarget:null},
+    {name:"쿼드쎄라 미니튠", status:"사용중", note:"알로에젤 바른 뒤 사용.", ingredients:[], weeklyTarget:3},
+    {name:"린제이 티트리 모델링팩", status:"사용중", note:"미니튠 안 쓰는 날 사용.", ingredients:["티트리 추출물"], weeklyTarget:3},
+    {name:"스킨푸드 블랙슈가 퍼펙트 에센셜 스크럽", status:"사용중", note:"", ingredients:["흑설탕 스크럽 입자"], weeklyTarget:1},
+    {name:"라곰 마이크로 폼클렌저", status:"사용중", note:"약알칼리, 저녁에만 사용.", ingredients:[], weeklyTarget:null},
+    {name:"메이크프렘 세이프미 릴리프 모이스처 클렌징 밀크", status:"사용중", note:"평일 화장 지울 때 1차 클렌징으로 사용.", ingredients:[], weeklyTarget:null},
+    {name:"메이크프렘 세이프미 릴리프 모이스처 클렌징폼", status:"사용중", note:"약산성, 라곰 안 쓰는 날 저녁 사용.", ingredients:[], weeklyTarget:null}
   ],
   ingredients: [
     {name:"나이아신아마이드 10%+징크", tags:["미백","모공","피지조절","진정"],
@@ -347,16 +460,22 @@ const DEFAULT_DATA = {
      mechanism:"센텔라아시아티카(병풀)에서 추출되는 성분으로, 콜라겐 합성을 촉진해 상처·자극 부위의 재생을 돕고 항염 작용으로 진정 효과를 줘요. 장벽 강화 효과도 있어 구아이아줄렌·세라마이드와 기능이 일부 겹쳐요."},
     {name:"레티놀", tags:["주름개선","모공","각질턴오버","트러블"],
      mechanism:"비타민A 유도체로, 표피 턴오버(각질 교체 주기)를 촉진하고 진피에서 콜라겐 생성을 자극해 주름 개선·모공 관리에 효과적이에요. 초기 사용 시 각질이 얇아지며 자극(레티노이드 반응, 홍조·건조)이 나타날 수 있어 저녁 단독 사용과 보습 병행이 중요해요."}
-  ]
+  ],
+  usageLog: {}
 };
 
 let storageAvailable = true;
 function loadData(){
+  let data = null;
   try{
     const raw = localStorage.getItem(STORAGE_KEY);
-    if(raw) return JSON.parse(raw);
+    if(raw) data = JSON.parse(raw);
   }catch(e){ storageAvailable = false; }
-  return JSON.parse(JSON.stringify(DEFAULT_DATA));
+  if(!data) data = JSON.parse(JSON.stringify(DEFAULT_DATA));
+  if(!data.usageLog) data.usageLog = {};
+  if(!data.products) data.products = JSON.parse(JSON.stringify(DEFAULT_DATA.products));
+  if(!data.ingredients) data.ingredients = JSON.parse(JSON.stringify(DEFAULT_DATA.ingredients));
+  return data;
 }
 function saveData(data){
   try{
@@ -365,20 +484,24 @@ function saveData(data){
 }
 
 let state = loadData();
+let weekOffset = 0;
+let editingDate = null;
 
 // ---------- THEME ----------
 const themeToggle = document.getElementById('themeToggle');
 function applyTheme(t){
-  document.documentElement.setAttribute('data-theme', t);
-  themeToggle.textContent = t === 'dark' ? '☀️ 라이트모드' : '🌙 다크모드';
-  try{ localStorage.setItem('skincare_theme', t); }catch(e){}
+  if(t){ document.documentElement.setAttribute('data-theme', t); } else { document.documentElement.removeAttribute('data-theme'); }
+  const effectiveDark = t === 'dark' || (!t && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  themeToggle.textContent = effectiveDark ? '☀️ 라이트모드' : '🌙 다크모드';
+  try{ if(t) localStorage.setItem('skincare_theme', t); else localStorage.removeItem('skincare_theme'); }catch(e){}
 }
-let savedTheme = 'light';
-try{ savedTheme = localStorage.getItem('skincare_theme') || 'light'; }catch(e){}
+let savedTheme = null;
+try{ savedTheme = localStorage.getItem('skincare_theme'); }catch(e){}
 applyTheme(savedTheme);
 themeToggle.addEventListener('click', ()=>{
-  const cur = document.documentElement.getAttribute('data-theme');
-  applyTheme(cur === 'dark' ? 'light' : 'dark');
+  const curDark = document.documentElement.getAttribute('data-theme') === 'dark' ||
+    (!document.documentElement.getAttribute('data-theme') && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  applyTheme(curDark ? 'light' : 'dark');
 });
 
 // ---------- TABS ----------
@@ -391,88 +514,190 @@ document.querySelectorAll('nav button').forEach(btn=>{
   });
 });
 
-// ---------- TODAY ----------
+// ---------- DATE HELPERS ----------
 const KOR_DAYS = ["일","월","화","수","목","금","토"];
-function getTodayIdx(){ return new Date().getDay(); } // 0=Sun
-function renderToday(){
-  const now = new Date();
-  document.getElementById('todayLabel').textContent =
-    now.getFullYear()+"년 "+(now.getMonth()+1)+"월 "+now.getDate()+"일 ("+KOR_DAYS[now.getDay()]+")";
-  const todayKor = KOR_DAYS[now.getDay()];
-  const info = state.days.find(d=>d.day===todayKor);
-  const banner = document.getElementById('todayBanner');
-  if(info){
-    banner.innerHTML = `
-      <div class="label">오늘의 루틴 · ${todayKor}요일</div>
-      <div class="day">${info.cleanser}</div>
-      ${info.core ? `<span class="badge b-yellow">✨ ${info.core}</span>` : ''}
-      ${info.device ? `<span class="badge b-purple">🧖 ${info.device}</span>` : ''}
-      ${(!info.core && !info.device) ? '<span class="badge b-blue">기본 클렌징만</span>' : ''}
-    `;
-  }
+function pad2(n){ return String(n).padStart(2,'0'); }
+function dateKey(d){ return d.getFullYear()+'-'+pad2(d.getMonth()+1)+'-'+pad2(d.getDate()); }
+function startOfWeek(d){
+  const nd = new Date(d);
+  const day = nd.getDay();
+  const diff = (day === 0 ? -6 : 1 - day);
+  nd.setDate(nd.getDate() + diff);
+  nd.setHours(0,0,0,0);
+  return nd;
+}
+function getWeekDates(){
+  const base = new Date();
+  base.setDate(base.getDate() + weekOffset*7);
+  const mon = startOfWeek(base);
+  return Array.from({length:7}, (_,i)=>{ const d = new Date(mon); d.setDate(mon.getDate()+i); return d; });
 }
 
-// ---------- ROUTINE ----------
-function renderWeek(){
-  const grid = document.getElementById('weekGrid');
-  const todayKor = KOR_DAYS[getTodayIdx()];
-  grid.innerHTML = state.days.map(d=>{
-    const typeBadge = d.cleanserType === 'alkaline'
-      ? '<span class="badge b-blue">약알칼리</span>'
-      : '<span class="badge b-green">약산성</span>';
+// ---------- HOME / WEEKLY LOG ----------
+const PROGRESS_COLOR = {
+  "쿼드쎄라 미니튠": "device",
+  "린제이 티트리 모델링팩": "pack",
+  "스킨푸드 블랙슈가 퍼펙트 에센셜 스크럽": "scrub"
+};
+function colorFor(name){ return PROGRESS_COLOR[name] || "device"; }
+
+function renderHome(){
+  const dates = getWeekDates();
+  const todayKey = dateKey(new Date());
+
+  const rangeLabel = `${dates[0].getMonth()+1}월 ${dates[0].getDate()}일 – ${dates[6].getMonth()+1}월 ${dates[6].getDate()}일`;
+  document.getElementById('weekRangeLabel').innerHTML =
+    rangeLabel + (weekOffset===0 ? '<span class="tag">이번주</span>' : '');
+
+  const targets = state.products.filter(p=>p.weeklyTarget);
+  const progressHtml = targets.map(p=>{
+    const count = dates.filter(d=>{
+      const entry = state.usageLog[dateKey(d)];
+      return entry && entry.products && entry.products.includes(p.name);
+    }).length;
+    const pct = Math.min(100, Math.round(count/p.weeklyTarget*100));
+    const done = count >= p.weeklyTarget;
+    const colorVar = colorFor(p.name);
     return `
-      <div class="day-card ${d.day===todayKor?'today':''}">
-        <h3>${d.day}요일</h3>
-        <div class="day-row">
-          <div class="k">클렌징 ${typeBadge}</div>
-          <div class="v">${d.cleanser}</div>
+      <div class="progress-row">
+        <div class="progress-top">
+          <div class="progress-label"><span class="cat-dot" style="background:var(--${colorVar})"></span>${p.name}</div>
+          <div class="progress-count"><span class="num">${count}</span><span class="of">/${p.weeklyTarget}회</span>${done ? '<span class="done-pill">완료</span>' : ''}</div>
         </div>
-        <div class="day-row">
-          <div class="k">핵심 케어</div>
-          <div class="v">${d.core ? '<span class="badge b-yellow">'+d.core+'</span>' : '<span class="empty-v">—</span>'}</div>
-        </div>
-        <div class="day-row">
-          <div class="k">기기 / 팩</div>
-          <div class="v">${d.device ? '<span class="badge b-purple">'+d.device+'</span>' : '<span class="empty-v">—</span>'}</div>
-        </div>
+        <div class="progress-track"><div class="progress-fill ${done?'done':''}" style="width:${pct}%; ${done?'':`background:var(--${colorVar})`}"></div></div>
       </div>
     `;
   }).join('');
+  document.getElementById('progressList').innerHTML = progressHtml ||
+    '<div class="empty-v">편집 탭에서 제품에 주간 목표 횟수를 설정하면 여기에 진행률이 표시돼요.</div>';
+
+  const grid = document.getElementById('weekLogGrid');
+  grid.innerHTML = dates.map(d=>{
+    const key = dateKey(d);
+    const entry = state.usageLog[key];
+    const used = (entry && entry.products) || [];
+    const note = (entry && entry.note) || '';
+    const isToday = key === todayKey;
+    const isEditing = key === editingDate;
+    return `
+      <div class="day-card ${isToday?'today':''} ${isEditing?'editing':''}">
+        ${isToday ? '<span class="today-pill">오늘</span>' : ''}
+        <h3>${KOR_DAYS[d.getDay()]}요일 <span class="idx">${d.getMonth()+1}/${d.getDate()}</span></h3>
+        <div class="chip-row">
+          ${used.length ? used.map(u=>`<span class="badge b-alkaline">${u}</span>`).join('') : '<span class="empty-v">기록 없음</span>'}
+        </div>
+        ${note ? `<div class="day-note">📝 ${note}</div>` : ''}
+        <button class="day-edit-btn ${isEditing?'on':''}" data-date="${key}">${isEditing ? '닫기' : '+ 기록'}</button>
+      </div>
+    `;
+  }).join('');
+
+  grid.querySelectorAll('.day-edit-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const key = btn.dataset.date;
+      editingDate = (editingDate === key) ? null : key;
+      renderHome();
+    });
+  });
+
+  renderDayEditor();
 }
+
+function renderDayEditor(){
+  const wrap = document.getElementById('dayEditorWrap');
+  if(!editingDate){ wrap.innerHTML = ''; return; }
+  const entry = state.usageLog[editingDate] || {products:[], note:''};
+  const dateObj = new Date(editingDate + 'T00:00:00');
+  const label = `${dateObj.getMonth()+1}월 ${dateObj.getDate()}일 (${KOR_DAYS[dateObj.getDay()]})`;
+
+  const targeted = state.products.filter(p=>p.weeklyTarget);
+  const others = state.products.filter(p=>!p.weeklyTarget);
+
+  function chipRow(list){
+    return list.map(p=>{
+      const on = entry.products.includes(p.name);
+      return `<button class="toggle-chip ${on?'on':''}" data-name="${p.name.replace(/"/g,'&quot;')}">${p.name}</button>`;
+    }).join('');
+  }
+
+  wrap.innerHTML = `
+    <div class="day-editor">
+      <div class="editor-head"><b>${label} 기록</b><button class="close-editor" id="closeEditorBtn">✕</button></div>
+      ${targeted.length ? `<div class="editor-sub">주간 목표가 있는 항목</div><div class="toggle-grid">${chipRow(targeted)}</div>` : ''}
+      <div class="editor-sub">그 외 제품</div>
+      <div class="toggle-grid">${chipRow(others)}</div>
+      <div class="editor-sub">메모 (선택)</div>
+      <textarea id="dayNoteInput" placeholder="피부 컨디션이나 특이사항을 짧게 적어두세요">${entry.note||''}</textarea>
+    </div>
+  `;
+
+  wrap.querySelectorAll('.toggle-chip').forEach(chip=>{
+    chip.addEventListener('click', ()=>{
+      const name = chip.dataset.name;
+      if(!state.usageLog[editingDate]) state.usageLog[editingDate] = {products:[], note:''};
+      const list = state.usageLog[editingDate].products;
+      const idx = list.indexOf(name);
+      if(idx >= 0) list.splice(idx,1); else list.push(name);
+      saveData(state);
+      renderHome();
+    });
+  });
+  wrap.querySelector('#dayNoteInput').addEventListener('change', (e)=>{
+    if(!state.usageLog[editingDate]) state.usageLog[editingDate] = {products:[], note:''};
+    state.usageLog[editingDate].note = e.target.value;
+    saveData(state);
+  });
+  wrap.querySelector('#closeEditorBtn').addEventListener('click', ()=>{
+    editingDate = null;
+    renderHome();
+  });
+}
+
+document.getElementById('prevWeekBtn').addEventListener('click', ()=>{ weekOffset--; editingDate=null; renderHome(); });
+document.getElementById('nextWeekBtn').addEventListener('click', ()=>{ weekOffset++; editingDate=null; renderHome(); });
+document.getElementById('thisWeekBtn').addEventListener('click', ()=>{ weekOffset=0; editingDate=null; renderHome(); });
 
 // ---------- PRODUCTS ----------
 const STATUS_STYLE = {
-  "사용중": "b-green",
-  "교체예정": "b-yellow",
+  "사용중": "b-acidic",
+  "교체예정": "b-active",
   "단종예정": "b-danger",
   "재구매X": "b-danger",
-  "가끔사용": "b-blue"
+  "가끔사용": "b-alkaline"
 };
 function renderProducts(){
   const grid = document.getElementById('productGrid');
+  document.getElementById('productCount').textContent = state.products.length + '개';
   grid.innerHTML = state.products.map(p=>`
-    <div class="card product-card">
+    <div class="card product-card st-${p.status}">
       <h4>${p.name}</h4>
-      <div class="status"><span class="badge ${STATUS_STYLE[p.status]||'b-blue'}">${p.status}</span></div>
+      <div class="status"><span class="badge ${STATUS_STYLE[p.status]||'b-alkaline'}">${p.status}</span></div>
+      ${p.weeklyTarget ? `<div class="target-note">주간 목표 ${p.weeklyTarget}회</div>` : ''}
       ${p.note ? `<div class="note">${p.note}</div>` : ''}
-      ${p.ingredients && p.ingredients.length ? `<div class="chip-row">${p.ingredients.map(i=>`<button class="chip" onclick="openIngredientByName('${i.replace(/'/g,"\\'")}')">${i}</button>`).join('')}</div>` : ''}
+      ${p.ingredients && p.ingredients.length ? `<div class="chip-row">${p.ingredients.map(i=>`<button class="chip" data-ing="${i.replace(/"/g,'&quot;')}">${i}</button>`).join('')}</div>` : ''}
     </div>
   `).join('');
+  grid.querySelectorAll('.chip').forEach(el=>{
+    el.addEventListener('click', ()=>openIngredientByName(el.dataset.ing));
+  });
 }
 
 // ---------- INGREDIENTS ----------
 function renderIngredients(){
   const grid = document.getElementById('ingGrid');
   grid.innerHTML = state.ingredients.map((ing, idx)=>`
-    <div class="ing-card" onclick="openIngredient(${idx})">
+    <button class="ing-card" data-idx="${idx}">
       <h4>${ing.name}</h4>
       <div>${ing.tags.map(t=>`<span class="badge b-accent">${t}</span>`).join('')}</div>
-    </div>
+    </button>
   `).join('');
+  grid.querySelectorAll('.ing-card').forEach(el=>{
+    el.addEventListener('click', ()=>openIngredient(Number(el.dataset.idx)));
+  });
 
   const tbody = document.querySelector('#mapTable tbody');
   tbody.innerHTML = state.products.filter(p=>p.ingredients && p.ingredients.length).map(p=>`
-    <tr><td>${p.name}</td><td>${p.ingredients.map(i=>`<span class="badge b-blue">${i}</span>`).join(' ')}</td></tr>
+    <tr><td>${p.name}</td><td>${p.ingredients.map(i=>`<span class="badge b-alkaline">${i}</span>`).join(' ')}</td></tr>
   `).join('');
 }
 
@@ -501,43 +726,43 @@ document.getElementById('modalBg').addEventListener('click', (e)=>{
 });
 
 // ---------- EDIT TAB ----------
-function renderEditRoutine(){
-  const el = document.getElementById('editRoutine');
-  el.innerHTML = `
-    <div class="edit-row" style="grid-template-columns:90px 1fr 1fr 1fr;">
-      <div class="edit-label">요일</div>
-      <div class="edit-label">클렌징</div>
-      <div class="edit-label">핵심 케어</div>
-      <div class="edit-label">기기 / 팩</div>
-    </div>
-  ` + state.days.map((d,i)=>`
-    <div class="edit-row" style="grid-template-columns:90px 1fr 1fr 1fr;">
-      <div>${d.day}<br><select onchange="state.days[${i}].cleanserType=this.value" style="margin-top:4px;">
-        <option value="alkaline" ${d.cleanserType==='alkaline'?'selected':''}>약알칼리</option>
-        <option value="acidic" ${d.cleanserType==='acidic'?'selected':''}>약산성</option>
-      </select></div>
-      <textarea onchange="state.days[${i}].cleanser=this.value">${d.cleanser}</textarea>
-      <textarea onchange="state.days[${i}].core=this.value">${d.core}</textarea>
-      <textarea onchange="state.days[${i}].device=this.value">${d.device}</textarea>
-    </div>
-  `).join('');
-}
-
 function renderEditProducts(){
   const el = document.getElementById('editProducts');
-  el.innerHTML = state.products.map((p,i)=>`
-    <div class="edit-row product-row">
-      <input value="${p.name}" onchange="state.products[${i}].name=this.value">
-      <select onchange="state.products[${i}].status=this.value">
+  el.innerHTML = `
+    <div class="edit-row">
+      <div class="edit-label">제품명</div>
+      <div class="edit-label">상태</div>
+      <div class="edit-label">메모</div>
+      <div class="edit-label">성분</div>
+      <div class="edit-label">주간목표</div>
+    </div>
+  ` + state.products.map((p,i)=>`
+    <div class="edit-row">
+      <input data-field="name" data-i="${i}" value="${p.name}">
+      <select data-field="status" data-i="${i}">
         ${["사용중","교체예정","단종예정","재구매X","가끔사용"].map(s=>`<option ${p.status===s?'selected':''}>${s}</option>`).join('')}
       </select>
-      <textarea onchange="state.products[${i}].note=this.value">${p.note||''}</textarea>
-      <input placeholder="성분,쉼표로구분" value="${(p.ingredients||[]).join(', ')}" onchange="state.products[${i}].ingredients=this.value.split(',').map(s=>s.trim()).filter(Boolean)">
+      <textarea data-field="note" data-i="${i}">${p.note||''}</textarea>
+      <input data-field="ingredients" data-i="${i}" placeholder="성분,쉼표로구분" value="${(p.ingredients||[]).join(', ')}">
+      <input type="number" min="0" max="7" data-field="weeklyTarget" data-i="${i}" placeholder="-" value="${p.weeklyTarget||''}">
     </div>
-  `).join('') + `<button class="btn secondary" onclick="addProduct()">+ 제품 추가</button>`;
+  `).join('') + `<button class="btn secondary" id="addProductBtn">+ 제품 추가</button>`;
+  el.querySelectorAll('[data-field]').forEach(elm=>{
+    elm.addEventListener('change', ()=>{
+      const i = Number(elm.dataset.i);
+      if(elm.dataset.field === 'ingredients'){
+        state.products[i].ingredients = elm.value.split(',').map(s=>s.trim()).filter(Boolean);
+      } else if(elm.dataset.field === 'weeklyTarget'){
+        state.products[i].weeklyTarget = elm.value ? Number(elm.value) : null;
+      } else {
+        state.products[i][elm.dataset.field] = elm.value;
+      }
+    });
+  });
+  el.querySelector('#addProductBtn').addEventListener('click', addProduct);
 }
 function addProduct(){
-  state.products.push({name:"새 제품", status:"사용중", note:"", ingredients:[]});
+  state.products.push({name:"새 제품", status:"사용중", note:"", ingredients:[], weeklyTarget:null});
   renderEditProducts();
 }
 
@@ -545,11 +770,22 @@ function renderEditIngredients(){
   const el = document.getElementById('editIngredients');
   el.innerHTML = state.ingredients.map((ing,i)=>`
     <div class="edit-row ing-row">
-      <input value="${ing.name}" onchange="state.ingredients[${i}].name=this.value">
-      <input placeholder="태그,쉼표로구분" value="${ing.tags.join(', ')}" onchange="state.ingredients[${i}].tags=this.value.split(',').map(s=>s.trim()).filter(Boolean)">
-      <textarea onchange="state.ingredients[${i}].mechanism=this.value">${ing.mechanism}</textarea>
+      <input data-field="name" data-i="${i}" value="${ing.name}">
+      <input data-field="tags" data-i="${i}" placeholder="태그,쉼표로구분" value="${ing.tags.join(', ')}">
+      <textarea data-field="mechanism" data-i="${i}">${ing.mechanism}</textarea>
     </div>
-  `).join('') + `<button class="btn secondary" onclick="addIngredient()">+ 성분 추가</button>`;
+  `).join('') + `<button class="btn secondary" id="addIngBtn">+ 성분 추가</button>`;
+  el.querySelectorAll('[data-field]').forEach(elm=>{
+    elm.addEventListener('change', ()=>{
+      const i = Number(elm.dataset.i);
+      if(elm.dataset.field === 'tags'){
+        state.ingredients[i].tags = elm.value.split(',').map(s=>s.trim()).filter(Boolean);
+      } else {
+        state.ingredients[i][elm.dataset.field] = elm.value;
+      }
+    });
+  });
+  el.querySelector('#addIngBtn').addEventListener('click', addIngredient);
 }
 function addIngredient(){
   state.ingredients.push({name:"새 성분", tags:[], mechanism:""});
@@ -566,7 +802,7 @@ function showToast(msg){
 document.getElementById('saveBtn').addEventListener('click', ()=>{
   saveData(state);
   renderAll();
-  showToast(storageAvailable ? '저장되었습니다 ✅' : '이 화면에서는 저장이 지원되지 않아요. 내보내기로 백업하세요.');
+  showToast(storageAvailable ? '저장되었습니다' : '이 화면에서는 저장이 지원되지 않아요. 내보내기로 백업하세요.');
 });
 document.getElementById('exportBtn').addEventListener('click', ()=>{
   const blob = new Blob([JSON.stringify(state, null, 2)], {type:'application/json'});
@@ -587,31 +823,48 @@ document.getElementById('importFile').addEventListener('change', (e)=>{
   reader.onload = (ev)=>{
     try{
       const parsed = JSON.parse(ev.target.result);
+      if(!parsed.usageLog) parsed.usageLog = {};
       state = parsed;
       saveData(state);
       renderAll();
-      showToast('불러오기 완료 ✅');
+      showToast('불러오기 완료');
     }catch(err){
       showToast('JSON 파일을 읽을 수 없어요');
     }
   };
   reader.readAsText(file);
 });
+document.getElementById('clearWeekBtn').addEventListener('click', ()=>{
+  if(confirm('이번주에 표시된 날짜의 기록만 지울까요? (제품/성분 정보는 유지돼요)')){
+    getWeekDates().forEach(d=>{ delete state.usageLog[dateKey(d)]; });
+    editingDate = null;
+    saveData(state);
+    renderAll();
+    showToast('이번주 기록을 지웠습니다');
+  }
+});
 document.getElementById('resetBtn').addEventListener('click', ()=>{
-  if(confirm('편집한 내용을 모두 지우고 기본값으로 되돌릴까요?')){
+  if(confirm('제품·성분·모든 사용 기록을 지우고 기본값으로 되돌릴까요?')){
     state = JSON.parse(JSON.stringify(DEFAULT_DATA));
+    weekOffset = 0;
+    editingDate = null;
     saveData(state);
     renderAll();
     showToast('기본값으로 초기화되었습니다');
   }
 });
 
+function renderToday(){
+  const now = new Date();
+  document.getElementById('todayLabel').textContent =
+    now.getFullYear()+"년 "+(now.getMonth()+1)+"월 "+now.getDate()+"일 ("+KOR_DAYS[now.getDay()]+")";
+}
+
 function renderAll(){
   renderToday();
-  renderWeek();
+  renderHome();
   renderProducts();
   renderIngredients();
-  renderEditRoutine();
   renderEditProducts();
   renderEditIngredients();
 }
