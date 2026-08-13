@@ -293,10 +293,46 @@
     position:fixed; bottom:24px; left:50%; transform:translateX(-50%);
     background:var(--ink); color:var(--paper); padding:11px 20px; border-radius:10px;
     font-size:0.84rem; z-index:200; opacity:0; pointer-events:none; transition:opacity .25s;
+    max-width:min(90vw, 420px); text-align:center; line-height:1.4;
   }
   .toast.show{opacity:1;}
   .small-note{font-size:0.76rem; color:var(--sub); margin-top:4px;}
   .field-actions{margin-top:16px;}
+
+  /* ---- calculator ---- */
+  .recipe-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:12px;}
+  .recipe-card{border-top:3px solid var(--accent); border-radius:var(--radius); transition:box-shadow .15s;}
+  .recipe-card:hover{box-shadow:var(--shadow-lift);}
+  .recipe-card h4{margin:0 0 6px; font-size:0.94rem; font-weight:700; text-wrap:balance;}
+  .recipe-card .base-line{font-size:0.76rem; color:var(--sub); margin-bottom:8px; font-family:var(--mono);}
+  .card-actions{display:flex; gap:8px; margin-top:12px;}
+  .day-editor.recipe-editor{border-color:var(--accent);}
+  .recipe-name-input{
+    font-size:1.05rem; font-weight:800; border:none; background:transparent; color:var(--ink);
+    padding:2px 0; width:70%; font-family:var(--sans); border-bottom:1px solid transparent;
+  }
+  .recipe-name-input:focus{outline:none; border-bottom-color:var(--accent);}
+  .material-rows-wrap{overflow-x:auto;}
+  .material-row{
+    display:grid; grid-template-columns:1.7fr 0.9fr 0.9fr 1.3fr auto; gap:8px; align-items:center;
+    margin-bottom:8px; min-width:640px;
+  }
+  .material-row.base-row{grid-template-columns:1.7fr 0.9fr; min-width:0;}
+  .material-row select, .material-row input{
+    width:100%; padding:7px 9px; border-radius:8px; border:1px solid var(--line);
+    background:var(--paper); color:var(--ink); font-size:0.82rem; font-family:var(--sans);
+  }
+  .row-result{display:flex; flex-wrap:wrap; gap:4px; align-items:center;}
+  .solve-all-btn{
+    background:var(--device); color:#fff; border:none; padding:10px 16px; border-radius:10px;
+    cursor:pointer; font-size:0.84rem; font-weight:700; margin-top:10px; margin-right:8px; font-family:var(--sans);
+    transition:filter .12s;
+  }
+  .solve-all-btn:hover{filter:brightness(1.08);}
+  .remove-material-btn{background:none; border:none; color:var(--danger); cursor:pointer; font-size:1.05rem; padding:4px; line-height:1;}
+  .total-line{font-family:var(--mono); font-size:0.85rem; margin-top:14px; color:var(--sub);}
+  .total-line b{color:var(--ink); font-size:1rem;}
+  .stock-note{font-size:0.7rem; color:var(--sub); margin:2px 0 12px;}
 </style>
 </head>
 <body>
@@ -315,6 +351,7 @@
       <button data-tab="home" class="active">이번주</button>
       <button data-tab="products">제품</button>
       <button data-tab="ingredients">성분</button>
+      <button data-tab="calc">계산기</button>
       <button data-tab="ideas">아이디어</button>
       <button data-tab="edit">편집</button>
     </nav>
@@ -371,6 +408,24 @@
     </div>
   </section>
 
+  <!-- CALCULATOR TAB -->
+  <section class="tab" id="tab-calc">
+    <div class="section-block">
+      <div class="head-row" style="margin-bottom:12px;">
+        <div class="section-title" style="margin:0;">배합 레시피<span class="count" id="recipeCount"></span></div>
+        <button class="btn" id="addRecipeBtn">+ 새 레시피</button>
+      </div>
+      <p class="small-note">원료를 추가하면 최종 배합 농도(%)가 자동으로 계산돼요. "목표%" 칸에 원하는 농도를 입력하고 "필요량"을 누르면 그 농도를 맞추는 데 필요한 원료량(g)을 역산해줘요.</p>
+      <div class="card" style="margin-bottom:16px;">
+        <div class="section-title" style="font-size:0.9rem;">보유 원료 농도</div>
+        <div class="chip-row" id="rawMaterialRef"></div>
+        <div class="stock-note">농도는 편집 탭에서 바꿀 수 있어요.</div>
+      </div>
+      <div class="recipe-grid" id="recipeGrid"></div>
+      <div id="recipeEditorWrap"></div>
+    </div>
+  </section>
+
   <!-- IDEAS TAB -->
   <section class="tab" id="tab-ideas">
     <div class="section-title">추가하면 좋을 아이디어</div>
@@ -395,6 +450,12 @@
     <div class="edit-block">
       <h3>성분 정보 수정</h3>
       <div id="editIngredients"></div>
+    </div>
+
+    <div class="edit-block">
+      <h3>보유 원료 · 농도 수정</h3>
+      <p class="small-note">ppm 단위는 10000ppm = 1%예요 (예: 5000ppm → 0.5).</p>
+      <div id="editRawMaterials"></div>
     </div>
 
     <div class="field-actions">
@@ -435,6 +496,7 @@ const DEFAULT_DATA = {
     {name:"아로마티카 알로에젤", status:"사용중", note:"알로에팩·모델링팩 베이스로 사용하며 나노레시피 원액과 섞어 씀.", ingredients:["알로에베라"], weeklyTarget:null},
     {name:"디오디너리 나이아신아마이드 10%+징크", status:"사용중", note:"아침 로션과 섞어서 사용.", ingredients:["나이아신아마이드", "징크PCA"], weeklyTarget:null},
     {name:"나노레시피 구아이아줄렌", status:"재구매X", note:"토너에 섞거나 알로에팩에 사용. 마데카소사이드와 효과가 겹쳐서 재구매 안 함.", ingredients:["구아이아줄렌"], weeklyTarget:null},
+    {name:"나노레시피 마데카소사이드", status:"사용중", note:"토너나 배합에 사용.", ingredients:["마데카소사이드"], weeklyTarget:null},
     {name:"나노레시피 세라마이드", status:"재구매X", note:"알로에팩·모델링팩에 사용. 제로이드 로션과 겹쳐서 재구매 안 함.", ingredients:["세라마이드"], weeklyTarget:null},
     {name:"나노레시피 히알루론산 (저/고분자)", status:"사용중", note:"알로에팩·모델링팩·토너에 두루 사용. 계속 재구매 예정.", ingredients:["히알루론산(저분자)", "히알루론산(고분자)"], weeklyTarget:null},
     {name:"디오디너리 락틱애씨드 5%+HA", status:"사용중", note:"저녁 사용 후 모델링팩 병행.", ingredients:["락틱애씨드", "히알루론산(저분자)"], weeklyTarget:null},
@@ -461,7 +523,22 @@ const DEFAULT_DATA = {
     {name:"레티놀", tags:["주름개선","모공","각질턴오버","트러블"],
      mechanism:"비타민A 유도체로, 표피 턴오버(각질 교체 주기)를 촉진하고 진피에서 콜라겐 생성을 자극해 주름 개선·모공 관리에 효과적이에요. 초기 사용 시 각질이 얇아지며 자극(레티노이드 반응, 홍조·건조)이 나타날 수 있어 저녁 단독 사용과 보습 병행이 중요해요."}
   ],
-  usageLog: {}
+  usageLog: {},
+  rawMaterials: [
+    {id:"ceramide", name:"나노레시피 세라마이드", components:[{label:"세라마이드", pct:0.5}], recommendedRange:{min:0.1, max:0.5}},
+    {id:"madeca", name:"나노레시피 마데카소사이드", components:[{label:"마데카소사이드", pct:1}], recommendedRange:{min:0.1, max:0.5}},
+    {id:"guaia", name:"나노레시피 구아이아줄렌", components:[{label:"구아이아줄렌", pct:1}], recommendedRange:{min:0.01, max:0.05}},
+    {id:"nia_zinc", name:"디오디너리 나이아신아마이드 10%+징크", components:[{label:"나이아신아마이드", pct:10},{label:"징크", pct:1}], recommendedRange:null},
+    {id:"lactic_ha", name:"디오디너리 락틱애씨드 5%+HA", components:[{label:"락틱애씨드", pct:5}], recommendedRange:null},
+    {id:"ha_low", name:"나노레시피 저분자 히알루론산", components:[{label:"히알루론산(저분자)", pct:1}], recommendedRange:{min:0.1, max:1}},
+    {id:"ha_high", name:"나노레시피 고분자 히알루론산", components:[{label:"히알루론산(고분자)", pct:1}], recommendedRange:{min:0.1, max:1}}
+  ],
+  recipes: [
+    {id:"r_madeca_toner", name:"마데카소사이드 토너", base:{label:"토너", amount:0}, items:[{materialId:"madeca", amount:0}]},
+    {id:"r_guaia_toner", name:"구아이아줄렌 토너", base:{label:"토너", amount:0}, items:[{materialId:"guaia", amount:0}]},
+    {id:"r_minitune_prep", name:"미니튠 전 사용 배합", base:{label:"알로에젤", amount:0}, items:[]},
+    {id:"r_modeling_pack", name:"모델링팩 배합", base:{label:"모델링 파우더+물", amount:0}, items:[]}
+  ]
 };
 
 let storageAvailable = true;
@@ -475,6 +552,17 @@ function loadData(){
   if(!data.usageLog) data.usageLog = {};
   if(!data.products) data.products = JSON.parse(JSON.stringify(DEFAULT_DATA.products));
   if(!data.ingredients) data.ingredients = JSON.parse(JSON.stringify(DEFAULT_DATA.ingredients));
+  if(!data.rawMaterials){
+    data.rawMaterials = JSON.parse(JSON.stringify(DEFAULT_DATA.rawMaterials));
+  } else {
+    data.rawMaterials.forEach(m=>{
+      if(m.recommendedRange === undefined){
+        const def = DEFAULT_DATA.rawMaterials.find(dm=>dm.id===m.id);
+        m.recommendedRange = def ? def.recommendedRange : null;
+      }
+    });
+  }
+  if(!data.recipes) data.recipes = JSON.parse(JSON.stringify(DEFAULT_DATA.recipes));
   return data;
 }
 function saveData(data){
@@ -486,6 +574,8 @@ function saveData(data){
 let state = loadData();
 let weekOffset = 0;
 let editingDate = null;
+let editingRecipeId = null;
+function genId(){ return 'r'+Date.now().toString(36)+Math.random().toString(36).slice(2,7); }
 
 // ---------- THEME ----------
 const themeToggle = document.getElementById('themeToggle');
@@ -725,6 +815,281 @@ document.getElementById('modalBg').addEventListener('click', (e)=>{
   if(e.target.id==='modalBg') e.target.classList.remove('show');
 });
 
+// ---------- CALCULATOR ----------
+function computeRecipe(recipe){
+  const baseAmount = Number(recipe.base.amount) || 0;
+  const rows = recipe.items.map(it=>{
+    const mat = state.rawMaterials.find(m=>m.id===it.materialId);
+    return { item:it, mat, amt:Number(it.amount) || 0 };
+  });
+  const totalWeight = baseAmount + rows.reduce((s,r)=>s+r.amt, 0);
+  const rowResults = rows.map(r=>{
+    if(!r.mat) return { ...r, components:[] };
+    const components = r.mat.components.map(c=>{
+      const activeGrams = r.amt * (c.pct/100);
+      const finalPct = totalWeight > 0 ? (activeGrams/totalWeight*100) : 0;
+      return { label:c.label, finalPct };
+    });
+    return { ...r, components };
+  });
+  return { baseAmount, totalWeight, rowResults };
+}
+
+function renderRawMaterialRef(){
+  const wrap = document.getElementById('rawMaterialRef');
+  if(!wrap) return;
+  wrap.innerHTML = state.rawMaterials.map(m=>{
+    const label = m.components.map(c=>`${c.label} ${c.pct}%`).join(' + ');
+    const recLabel = m.recommendedRange
+      ? `권장 ${m.recommendedRange.min}~${m.recommendedRange.max}%`
+      : '완제품 · 희석 비권장';
+    return `<span class="badge b-accent">${m.name} · ${label}</span><span class="badge b-alkaline">${recLabel}</span>`;
+  }).join('');
+}
+
+function renderRecipeGrid(){
+  const grid = document.getElementById('recipeGrid');
+  document.getElementById('recipeCount').textContent = state.recipes.length + '개';
+  grid.innerHTML = state.recipes.map(r=>{
+    const { totalWeight, rowResults } = computeRecipe(r);
+    const chips = rowResults.flatMap(rr => rr.components.map(c =>
+      `<span class="badge b-accent">${c.label} ${c.finalPct.toFixed(2)}%</span>`
+    )).join('');
+    return `
+      <div class="card recipe-card">
+        <h4>${r.name}</h4>
+        <div class="base-line">베이스 ${r.base.label || '-'} ${r.base.amount||0}g · 총 ${totalWeight.toFixed(1)}g</div>
+        <div class="chip-row">${chips || '<span class="empty-v">원료를 추가해보세요</span>'}</div>
+        <div class="card-actions">
+          <button class="btn secondary" data-edit="${r.id}">편집</button>
+          <button class="btn danger" data-del="${r.id}">삭제</button>
+        </div>
+      </div>
+    `;
+  }).join('');
+  grid.querySelectorAll('[data-edit]').forEach(b=>{
+    b.addEventListener('click', ()=>{ editingRecipeId = b.dataset.edit; renderCalc(); });
+  });
+  grid.querySelectorAll('[data-del]').forEach(b=>{
+    b.addEventListener('click', ()=>{
+      if(confirm('이 레시피를 삭제할까요?')){
+        state.recipes = state.recipes.filter(r=>r.id !== b.dataset.del);
+        if(editingRecipeId === b.dataset.del) editingRecipeId = null;
+        saveData(state);
+        renderCalc();
+      }
+    });
+  });
+}
+
+function renderRecipeEditor(){
+  const wrap = document.getElementById('recipeEditorWrap');
+  if(!editingRecipeId){ wrap.innerHTML = ''; return; }
+  const recipe = state.recipes.find(r=>r.id === editingRecipeId);
+  if(!recipe){ editingRecipeId = null; wrap.innerHTML = ''; return; }
+  const { totalWeight, rowResults } = computeRecipe(recipe);
+
+  const rowsHtml = recipe.items.map((it, idx)=>{
+    const rr = rowResults[idx];
+    const compHtml = rr.components.map(c=>`<span class="badge b-accent">${c.label} ${c.finalPct.toFixed(2)}%</span>`).join(' ');
+    const rowMat = state.rawMaterials.find(m=>m.id===it.materialId);
+    const targetPlaceholder = rowMat
+      ? (rowMat.recommendedRange ? `권장 ${rowMat.recommendedRange.min}~${rowMat.recommendedRange.max}` : '희석 비권장')
+      : '목표%';
+    return `
+      <div class="material-row">
+        <select data-idx="${idx}" data-field="materialId">
+          <option value="">원료 선택</option>
+          ${state.rawMaterials.map(m=>`<option value="${m.id}" ${it.materialId===m.id?'selected':''}>${m.name}</option>`).join('')}
+        </select>
+        <input type="number" min="0" step="0.01" data-idx="${idx}" data-field="targetPct" value="${it.targetPct||''}" placeholder="${targetPlaceholder}">
+        <input type="number" min="0" step="0.1" data-idx="${idx}" data-field="amount" value="${it.amount||''}" placeholder="g">
+        <div class="row-result">${compHtml || '<span class="empty-v">-</span>'}</div>
+        <button type="button" class="remove-material-btn" data-idx="${idx}" title="삭제">✕</button>
+      </div>
+    `;
+  }).join('');
+
+  wrap.innerHTML = `
+    <div class="day-editor recipe-editor">
+      <div class="editor-head">
+        <input class="recipe-name-input" id="recipeNameInput" value="${recipe.name}">
+        <button class="close-editor" id="closeRecipeEditorBtn">✕</button>
+      </div>
+      <div class="editor-sub">베이스</div>
+      <div class="material-rows-wrap">
+        <div class="material-row base-row">
+          <input id="baseLabelInput" value="${recipe.base.label||''}" placeholder="베이스 이름 (예: 알로에젤)">
+          <input type="number" min="0" step="0.1" id="baseAmountInput" value="${recipe.base.amount||''}" placeholder="g">
+        </div>
+      </div>
+      <div class="editor-sub">원료 · 목표% (원료명 옆 칸에 목표 %를 정하고 아래 "전체 계산"을 누르면, 베이스 무게 기준으로 모든 원료의 g을 한번에 동시 계산해요 — 비워두면 권장값의 중간값을 써요)</div>
+      <div class="material-rows-wrap" id="materialRows">${rowsHtml || '<div class="empty-v">아래 버튼으로 원료를 추가하세요</div>'}</div>
+      <button type="button" class="btn secondary" id="addMaterialBtn">+ 원료 추가</button>
+      <button type="button" class="solve-all-btn" id="solveAllBtn">🧮 전체 계산 (목표 %대로 g 산출)</button>
+      <div class="total-line">총 배합량 <b>${totalWeight.toFixed(1)}g</b></div>
+    </div>
+  `;
+
+  wrap.querySelector('#recipeNameInput').addEventListener('change', e=>{
+    recipe.name = e.target.value || '새 레시피';
+    saveData(state);
+    renderRecipeGrid();
+  });
+  wrap.querySelector('#baseLabelInput').addEventListener('change', e=>{
+    recipe.base.label = e.target.value;
+    saveData(state);
+    renderCalc();
+  });
+  wrap.querySelector('#baseAmountInput').addEventListener('change', e=>{
+    recipe.base.amount = Number(e.target.value) || 0;
+    saveData(state);
+    renderCalc();
+  });
+  wrap.querySelector('#closeRecipeEditorBtn').addEventListener('click', ()=>{
+    editingRecipeId = null;
+    renderCalc();
+  });
+  wrap.querySelector('#addMaterialBtn').addEventListener('click', ()=>{
+    recipe.items.push({ materialId:'', amount:0, targetPct:null });
+    saveData(state);
+    renderCalc();
+  });
+  wrap.querySelectorAll('select[data-field="materialId"]').forEach(sel=>{
+    sel.addEventListener('change', ()=>{
+      recipe.items[Number(sel.dataset.idx)].materialId = sel.value;
+      saveData(state);
+      renderCalc();
+    });
+  });
+  wrap.querySelectorAll('input[data-field="targetPct"]').forEach(inp=>{
+    inp.addEventListener('change', ()=>{
+      recipe.items[Number(inp.dataset.idx)].targetPct = inp.value ? Number(inp.value) : null;
+      saveData(state);
+    });
+  });
+  wrap.querySelectorAll('input[data-field="amount"]').forEach(inp=>{
+    inp.addEventListener('change', ()=>{
+      recipe.items[Number(inp.dataset.idx)].amount = Number(inp.value) || 0;
+      saveData(state);
+      renderCalc();
+    });
+  });
+  wrap.querySelectorAll('.remove-material-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      recipe.items.splice(Number(btn.dataset.idx), 1);
+      saveData(state);
+      renderCalc();
+    });
+  });
+  wrap.querySelector('#solveAllBtn').addEventListener('click', ()=>{
+    const result = solveRecipeAll(recipe);
+    if(result.error){ showToast(result.error); return; }
+    saveData(state);
+    renderCalc();
+    const breakdown = result.rows.map(r=>`${r.mat.name} ${r.it.amount}g`).join(' · ');
+    showToast(`전체 계산 완료 — 총 배합량 ${result.total.toFixed(1)}g (${breakdown})`);
+  });
+}
+
+// 베이스 무게를 고정값으로 두고, 여러 원료의 목표%를 동시에 만족하는 g을 한 번에 풀어요.
+// (원료를 하나씩 순서대로 계산하면 나중 원료가 추가될 때마다 총량이 늘어나 앞서 계산한 원료의 실제 %가 낮아지는 문제가 있어서, 연립방정식으로 한번에 계산해요.)
+function solveRecipeAll(recipe){
+  const base = Number(recipe.base.amount) || 0;
+  if(base <= 0) return { error: '베이스 무게를 먼저 입력하세요' };
+
+  const rows = recipe.items
+    .map(it => ({ it, mat: state.rawMaterials.find(m=>m.id===it.materialId) }))
+    .filter(r => r.mat);
+  if(rows.length === 0) return { error: '원료를 먼저 추가하고 선택하세요' };
+
+  for(const r of rows){
+    if(!r.it.targetPct){
+      if(r.mat.recommendedRange){
+        r.it.targetPct = Math.round(((r.mat.recommendedRange.min + r.mat.recommendedRange.max) / 2) * 1000) / 1000;
+      } else {
+        return { error: `"${r.mat.name}"의 목표 %를 입력하세요 (권장값이 없어요)` };
+      }
+    }
+  }
+
+  const sumRatio = rows.reduce((s,r)=> s + (Number(r.it.targetPct) / r.mat.components[0].pct), 0);
+  if(sumRatio >= 1){
+    return { error: '목표 %의 합이 원료 농도 대비 너무 높아요. 목표 %를 낮춰서 다시 시도하세요' };
+  }
+
+  const total = base / (1 - sumRatio);
+  rows.forEach(r=>{
+    const stockPct = r.mat.components[0].pct;
+    const needed = (Number(r.it.targetPct) * total) / stockPct;
+    r.it.amount = Math.round(needed * 100) / 100;
+  });
+
+  return { total, rows };
+}
+
+document.getElementById('addRecipeBtn').addEventListener('click', ()=>{
+  const newRecipe = { id:genId(), name:"새 레시피", base:{ label:"", amount:0 }, items:[] };
+  state.recipes.push(newRecipe);
+  editingRecipeId = newRecipe.id;
+  saveData(state);
+  renderCalc();
+});
+
+function renderCalc(){
+  renderRawMaterialRef();
+  renderRecipeGrid();
+  renderRecipeEditor();
+}
+
+function renderEditRawMaterials(){
+  const el = document.getElementById('editRawMaterials');
+  el.innerHTML = `
+    <div class="edit-row" style="grid-template-columns:1.1fr 1.7fr 1fr;">
+      <div class="edit-label">원료명</div>
+      <div class="edit-label">성분(라벨:농도% , 쉼표로 여러개)</div>
+      <div class="edit-label">권장 최종% (예: 0.1-0.5, 완제품은 비워두기)</div>
+    </div>
+  ` + state.rawMaterials.map((m,i)=>{
+    const rangeStr = m.recommendedRange ? `${m.recommendedRange.min}-${m.recommendedRange.max}` : '';
+    return `
+    <div class="edit-row" style="grid-template-columns:1.1fr 1.7fr 1fr;">
+      <input data-field="name" data-i="${i}" value="${m.name}">
+      <input data-field="components" data-i="${i}" placeholder="예: 세라마이드:0.5" value="${m.components.map(c=>`${c.label}:${c.pct}`).join(', ')}">
+      <input data-field="recommendedRange" data-i="${i}" placeholder="예: 0.1-0.5" value="${rangeStr}">
+    </div>
+  `;}).join('') + `<button class="btn secondary" id="addRawMaterialBtn">+ 원료 추가</button>`;
+  el.querySelectorAll('[data-field]').forEach(elm=>{
+    elm.addEventListener('change', ()=>{
+      const i = Number(elm.dataset.i);
+      if(elm.dataset.field === 'components'){
+        state.rawMaterials[i].components = elm.value.split(',').map(s=>s.trim()).filter(Boolean).map(pair=>{
+          const [label, pct] = pair.split(':').map(s=>s.trim());
+          return { label: label || '성분', pct: Number(pct) || 0 };
+        });
+      } else if(elm.dataset.field === 'recommendedRange'){
+        const v = elm.value.trim();
+        if(!v){
+          state.rawMaterials[i].recommendedRange = null;
+        } else {
+          const parts = v.split(/[-~]/).map(s=>Number(s.trim()));
+          if(parts.length === 2 && !isNaN(parts[0]) && !isNaN(parts[1])){
+            state.rawMaterials[i].recommendedRange = { min:parts[0], max:parts[1] };
+          }
+        }
+      } else {
+        state.rawMaterials[i][elm.dataset.field] = elm.value;
+      }
+      renderCalc();
+    });
+  });
+  el.querySelector('#addRawMaterialBtn').addEventListener('click', ()=>{
+    state.rawMaterials.push({ id:genId(), name:"새 원료", components:[{ label:"성분", pct:1 }], recommendedRange:null });
+    saveData(state);
+    renderEditRawMaterials();
+  });
+}
+
 // ---------- EDIT TAB ----------
 function renderEditProducts(){
   const el = document.getElementById('editProducts');
@@ -797,7 +1162,9 @@ function showToast(msg){
   const t = document.getElementById('toast');
   t.textContent = msg;
   t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'), 1800);
+  const duration = Math.min(6000, Math.max(1800, msg.length * 60));
+  clearTimeout(t._hideTimer);
+  t._hideTimer = setTimeout(()=>t.classList.remove('show'), duration);
 }
 document.getElementById('saveBtn').addEventListener('click', ()=>{
   saveData(state);
@@ -865,8 +1232,10 @@ function renderAll(){
   renderHome();
   renderProducts();
   renderIngredients();
+  renderCalc();
   renderEditProducts();
   renderEditIngredients();
+  renderEditRawMaterials();
 }
 renderAll();
 </script>
