@@ -1,0 +1,2679 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>내 스킨케어 루틴</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,380..600;1,9..144,400..600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f4ecd9;
+    --card:#fffbf1;
+    --line:#ddccac;
+    --ink:#2a2116;
+    --sub:#8a7a5c;
+    --accent:#b5541f;
+    --accent-soft:#f1ddc0;
+    --alkaline:#385f7d;
+    --alkaline-soft:#dde6ec;
+    --acidic:#3c7350;
+    --acidic-soft:#dde8e0;
+    --active:#96721a;
+    --active-soft:#ece2c4;
+    --device:#6a5490;
+    --device-soft:#e6e1ef;
+    --pack:#2c766e;
+    --pack-soft:#dce8e6;
+    --scrub:#9c5e21;
+    --scrub-soft:#ecdec3;
+    --danger:#963725;
+    --danger-soft:#ecdad2;
+    --grain: rgba(42,33,22,0.05);
+    --shadow: 0 1px 2px rgba(42,33,22,0.05), 0 6px 18px rgba(42,33,22,0.07);
+    --shadow-lift: 0 4px 6px rgba(42,33,22,0.06), 0 14px 30px rgba(42,33,22,0.12);
+    --radius:11px;
+    --mono: ui-monospace, "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    --sans: "Pretendard Variable", Pretendard, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    --display: "Fraunces", var(--sans);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#1e1811;
+      --card:#29221a;
+      --line:#4a3d29;
+      --ink:#f1e7d4;
+      --sub:#b4a37e;
+      --accent:#e2954f;
+      --accent-soft:#3d2e1c;
+      --alkaline:#87aec9;
+      --alkaline-soft:#25333e;
+      --acidic:#89bd97;
+      --acidic-soft:#24352a;
+      --active:#dbb45c;
+      --active-soft:#3c331b;
+      --device:#b3a0d6;
+      --device-soft:#332c44;
+      --pack:#79bcb2;
+      --pack-soft:#223936;
+      --scrub:#dba066;
+      --scrub-soft:#3d2f1c;
+      --danger:#dd8b70;
+      --danger-soft:#3e2a22;
+      --grain: rgba(241,231,212,0.045);
+      --shadow: 0 1px 2px rgba(0,0,0,0.35), 0 6px 18px rgba(0,0,0,0.35);
+      --shadow-lift: 0 4px 6px rgba(0,0,0,0.32), 0 16px 32px rgba(0,0,0,0.42);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#1e1811;
+    --card:#29221a;
+    --line:#4a3d29;
+    --ink:#f1e7d4;
+    --sub:#b4a37e;
+    --accent:#e2954f;
+    --accent-soft:#3d2e1c;
+    --alkaline:#87aec9;
+    --alkaline-soft:#25333e;
+    --acidic:#89bd97;
+    --acidic-soft:#24352a;
+    --active:#dbb45c;
+    --active-soft:#3c331b;
+    --device:#b3a0d6;
+    --device-soft:#332c44;
+    --pack:#79bcb2;
+    --pack-soft:#223936;
+    --scrub:#dba066;
+    --scrub-soft:#3d2f1c;
+    --danger:#dd8b70;
+    --danger-soft:#3e2a22;
+    --grain: rgba(241,231,212,0.045);
+    --shadow: 0 1px 2px rgba(0,0,0,0.35), 0 6px 18px rgba(0,0,0,0.35);
+    --shadow-lift: 0 4px 6px rgba(0,0,0,0.32), 0 16px 32px rgba(0,0,0,0.42);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background-color:var(--paper); color:var(--ink); font-family:var(--sans);
+    line-height:1.55;
+    background-image: radial-gradient(circle at 1px 1px, var(--grain) 1px, transparent 0);
+    background-size: 15px 15px;
+  }
+  .wrap{max-width:920px; margin:0 auto; padding:0 20px 64px;}
+  .top{
+    position:sticky; top:0; z-index:30; background:var(--paper);
+    border-bottom:1px solid var(--line); padding-top:22px;
+  }
+  .top-inner{max-width:920px; margin:0 auto; padding:0 20px;}
+  .eyebrow{
+    font-family:var(--display); font-style:italic; font-optical-sizing:auto;
+    font-size:0.85rem; letter-spacing:0.01em; color:var(--accent); font-weight:600; margin:0 0 4px;
+  }
+  .head-row{display:flex; justify-content:space-between; align-items:flex-end; gap:12px; flex-wrap:wrap;}
+  h1{font-family:var(--display); font-size:1.7rem; margin:0 0 2px; font-weight:600; letter-spacing:-0.01em; text-wrap:balance;}
+  .head-date{font-family:var(--mono); font-size:0.78rem; color:var(--sub);}
+  .theme-toggle{
+    border:1px solid var(--line); background:var(--card); color:var(--ink);
+    border-radius:20px; padding:7px 14px; cursor:pointer; font-size:0.8rem; font-family:var(--sans);
+    transition:background .12s;
+  }
+  .theme-toggle:hover{background:var(--paper);}
+  .theme-toggle:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible{
+    outline:2px solid var(--accent); outline-offset:2px;
+  }
+  nav{display:flex; gap:20px; margin-top:18px; padding-bottom:0; overflow-x:auto; border-bottom:1px solid var(--line);}
+  nav button, .subnav-pills button{
+    flex:0 0 auto; background:none; border:none; border-bottom:2px solid transparent; color:var(--sub);
+    font-family:var(--sans); padding:10px 1px; font-size:0.88rem; cursor:pointer; border-radius:0;
+    font-weight:600; white-space:nowrap; transition:color .15s, border-color .15s; margin-bottom:-1px;
+  }
+  nav button:hover, .subnav-pills button:hover{color:var(--ink);}
+  nav button.active, .subnav-pills button.active{color:var(--accent); border-bottom-color:var(--accent);}
+  nav button.active:hover, .subnav-pills button.active:hover{color:var(--accent);}
+  main{padding-top:22px;}
+  .tab{display:none;}
+  .tab.active{display:block;}
+  .subnav-pills{display:flex; gap:20px; margin-bottom:22px; overflow-x:auto; border-bottom:1px solid var(--line); padding-bottom:0;}
+  .settings-pane{display:none;}
+  .settings-pane.active{display:block;}
+  .default-tag{opacity:0.6; font-weight:500;}
+  .schedule-hint{font-size:0.78rem; color:var(--sub); margin:-6px 0 14px;}
+
+  .card{
+    background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+    box-shadow:var(--shadow); padding:18px 20px;
+  }
+  .badge{
+    display:inline-flex; align-items:center; gap:4px; padding:3px 10px; border-radius:999px;
+    font-size:0.74rem; font-weight:600; margin:2px 6px 2px 0;
+  }
+  .b-alkaline{background:var(--alkaline-soft); color:var(--alkaline);}
+  .b-acidic{background:var(--acidic-soft); color:var(--acidic);}
+  .b-active{background:var(--active-soft); color:var(--active);}
+  .b-device{background:var(--device-soft); color:var(--device);}
+  .b-danger{background:var(--danger-soft); color:var(--danger);}
+  .b-accent{background:var(--accent-soft); color:var(--accent);}
+
+  /* ---- home / weekly log ---- */
+  .week-nav{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:16px; flex-wrap:wrap;}
+  .week-nav .range{font-size:0.98rem; font-weight:700;}
+  .week-nav .range .tag{font-family:var(--mono); font-weight:500; font-size:0.74rem; color:var(--accent); margin-left:8px;}
+  .week-nav-btns{display:flex; gap:6px;}
+  .week-nav-btns button{
+    border:1px solid var(--line); background:var(--card); color:var(--ink); border-radius:8px;
+    padding:6px 12px; font-size:0.8rem; cursor:pointer; font-family:var(--sans); transition:background .12s;
+  }
+  .week-nav-btns button:hover{background:var(--paper);}
+
+  .section-block{margin-bottom:24px;}
+  .section-title{font-family:var(--display); font-size:1.2rem; font-weight:600; margin:0 0 12px; letter-spacing:-0.01em;}
+  .section-title .count{font-family:var(--mono); font-weight:500; font-size:0.78rem; color:var(--sub); margin-left:6px;}
+
+  .progress-list{display:flex; flex-direction:column; gap:18px;}
+  .progress-row{display:grid; grid-template-columns:1fr; gap:8px;}
+  .progress-top{display:flex; justify-content:space-between; align-items:center; gap:10px;}
+  .progress-label{font-size:0.92rem; font-weight:700; display:flex; align-items:center; gap:9px;}
+  .cat-dot{width:9px; height:9px; border-radius:50%; flex:0 0 auto;}
+  .progress-count{display:flex; align-items:center; gap:8px; font-variant-numeric:tabular-nums;}
+  .progress-count .num{font-family:var(--mono); font-size:1rem; font-weight:700; color:var(--ink);}
+  .progress-count .of{font-family:var(--mono); font-size:0.78rem; color:var(--sub);}
+  .done-pill{
+    background:var(--acidic-soft); color:var(--acidic); font-size:0.68rem; font-weight:700;
+    padding:2px 9px; border-radius:999px; letter-spacing:0.02em;
+  }
+  .progress-track{height:8px; border-radius:999px; background:var(--paper); border:1px solid var(--line); overflow:hidden;}
+  .progress-fill{height:100%; border-radius:999px; transition:width .25s ease;}
+  .progress-fill.done{background:var(--acidic);}
+
+  .week-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:12px;}
+  .day-card{
+    background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+    padding:15px 17px; box-shadow:var(--shadow); position:relative; display:flex; flex-direction:column; gap:10px;
+    transition:box-shadow .15s, border-color .15s;
+  }
+  .day-card:hover{box-shadow:var(--shadow-lift);}
+  .day-card.today{border-color:var(--accent); box-shadow:0 0 0 1.5px var(--accent);}
+  .day-card h3{margin:0; font-family:var(--display); font-weight:600; font-size:1.08rem; display:flex; align-items:baseline; gap:8px;}
+  .day-card h3 .idx{font-family:var(--mono); font-size:0.72rem; color:var(--sub); font-weight:500;}
+  .today-pill{
+    position:absolute; top:-9px; right:14px; background:var(--accent); color:#fff;
+    font-size:0.64rem; font-weight:700; padding:2px 9px; border-radius:999px; letter-spacing:0.03em;
+  }
+  .chip-row{display:flex; flex-wrap:wrap; gap:6px;}
+  .empty-v{color:var(--sub); font-size:0.82rem;}
+
+  .day-editor{
+    margin-top:0; background:var(--card); border:1px solid var(--device); border-radius:var(--radius);
+    padding:18px 20px; box-shadow:var(--shadow);
+  }
+  .day-editor .editor-head{display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;}
+  .day-editor .editor-head b{font-size:1rem;}
+  .day-editor .close-editor{background:none; border:none; font-size:1.05rem; cursor:pointer; color:var(--sub);}
+  .toggle-grid{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px;}
+  .toggle-chip{
+    border:1px solid var(--line); background:var(--paper); color:var(--ink); border-radius:999px;
+    padding:6px 13px; font-size:0.8rem; cursor:pointer; font-family:var(--sans); font-weight:600;
+  }
+  .toggle-chip.on{background:var(--acidic-soft); color:var(--acidic); border-color:var(--acidic);}
+  .editor-sub{font-size:0.7rem; color:var(--sub); text-transform:uppercase; letter-spacing:0.05em; font-family:var(--mono); font-weight:700; margin:12px 0 8px;}
+  .schedule-sub{font-size:0.7rem; color:var(--sub); text-transform:uppercase; letter-spacing:0.05em; font-family:var(--mono); font-weight:700; margin:10px 0 6px;}
+  .editor-sub:first-of-type{margin-top:0;}
+  .day-editor textarea{
+    width:100%; padding:9px 11px; border-radius:8px; border:1px solid var(--line);
+    background:var(--paper); color:var(--ink); font-size:0.84rem; font-family:var(--sans); min-height:44px; resize:vertical;
+  }
+
+  .chip{
+    background:var(--alkaline-soft); color:var(--alkaline); font-size:0.7rem; padding:3px 9px; border-radius:7px;
+    cursor:pointer; border:none; font-weight:600; font-family:var(--sans); transition:filter .12s; margin:2px 2px 2px 0;
+  }
+  .chip:hover{filter:brightness(0.94);}
+
+  .ing-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(190px,1fr)); gap:10px;}
+  .ing-card{
+    background:var(--card); border:1px solid var(--line); border-top:3px solid var(--line); border-radius:var(--radius);
+    padding:14px 16px; cursor:pointer; box-shadow:var(--shadow); transition:transform .12s, border-color .12s;
+    text-align:left; font-family:inherit; color:inherit; width:100%;
+  }
+  .ing-card:nth-of-type(6n+1){border-top-color:var(--accent);}
+  .ing-card:nth-of-type(6n+2){border-top-color:var(--alkaline);}
+  .ing-card:nth-of-type(6n+3){border-top-color:var(--acidic);}
+  .ing-card:nth-of-type(6n+4){border-top-color:var(--active);}
+  .ing-card:nth-of-type(6n+5){border-top-color:var(--device);}
+  .ing-card:nth-of-type(6n+0){border-top-color:var(--pack);}
+  .ing-card:hover{transform:translateY(-2px); box-shadow:var(--shadow-lift);}
+  .ing-card h4{margin:0 0 9px; font-family:var(--display); font-size:1rem; font-weight:600;}
+
+  table{width:100%; border-collapse:collapse; font-size:0.84rem;}
+  th,td{text-align:left; padding:9px 10px; border-bottom:1px solid var(--line); vertical-align:top;}
+  th{color:var(--sub); font-weight:700; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.04em; font-family:var(--mono);}
+  .table-wrap{overflow-x:auto;}
+
+  .modal-bg{
+    display:none; position:fixed; inset:0; background:rgba(30,24,17,0.55); z-index:100;
+    align-items:center; justify-content:center; padding:20px;
+  }
+  .modal-bg.show{display:flex;}
+  .modal{
+    background:var(--card); border-radius:var(--radius); padding:26px; max-width:460px; width:100%;
+    max-height:80vh; overflow-y:auto; box-shadow:var(--shadow-lift); border:1px solid var(--line);
+  }
+  .modal-head{display:flex; justify-content:space-between; align-items:flex-start; gap:12px;}
+  .modal h3{margin:0; font-family:var(--display); font-size:1.3rem; font-weight:600;}
+  .modal .close{background:none; border:none; font-size:1.1rem; cursor:pointer; color:var(--sub); line-height:1; padding:2px;}
+  .modal .mech-block{background:var(--device-soft); border-radius:10px; padding:14px 16px; margin-top:14px; font-size:0.87rem; color:var(--ink);}
+  .modal .mech-label{font-family:var(--mono); font-size:0.68rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--device); font-weight:700; margin-bottom:6px;}
+
+  .idea-card{border-left:3px solid var(--device); margin-bottom:10px;}
+  .idea-card b{font-size:0.9rem;}
+  .idea-card .small-note{margin-top:5px;}
+
+  .edit-block{margin-bottom:26px;}
+  .edit-block h3{font-family:var(--display); font-size:1.1rem; font-weight:600; border-bottom:1px solid var(--line); padding-bottom:8px; margin-bottom:12px;}
+  .schedule-day-row{margin-bottom:16px; padding-bottom:14px; border-bottom:1px solid var(--line);}
+  .schedule-day-row:last-child{border-bottom:none; margin-bottom:0; padding-bottom:0;}
+  .schedule-day-label{font-family:var(--display); font-weight:600; font-size:0.98rem; margin-bottom:8px; color:var(--accent);}
+  .schedule-ampm{font-size:0.86rem; margin-bottom:5px; color:var(--ink);}
+  .schedule-ampm:last-child{margin-bottom:0;}
+  .schedule-ampm.empty-v{margin:0;}
+  .sched-tag{
+    display:inline-block; font-family:var(--mono); font-size:0.62rem; font-weight:700; letter-spacing:0.05em;
+    padding:2px 7px; border-radius:5px; margin-right:8px; background:var(--line); color:var(--sub); vertical-align:middle;
+  }
+  .edit-row{display:grid; grid-template-columns:1.2fr 1fr 2fr 1.3fr 0.8fr; gap:8px; margin-bottom:8px; align-items:start;}
+  .edit-row.product-row{grid-template-columns:1.3fr 1.6fr 0.65fr 0.8fr 0.85fr 0.4fr;}
+  .edit-row.ing-row{grid-template-columns:1fr 1.4fr 2fr 0.36fr;}
+  .edit-row.raw-row{grid-template-columns:1.1fr 1.7fr 1fr 0.36fr;}
+  .edit-row input, .edit-row select, .edit-row textarea{
+    width:100%; padding:8px 10px; border-radius:8px; border:1px solid var(--line);
+    background:var(--paper); color:var(--ink); font-size:0.82rem; font-family:var(--sans);
+  }
+  .edit-row textarea{resize:vertical; min-height:38px;}
+  .edit-row .row-check{display:flex; align-items:center; justify-content:center; height:100%; padding-top:6px;}
+  .edit-row .row-check input{width:auto;}
+  .edit-label{font-size:0.68rem; color:var(--sub); font-weight:700; text-transform:uppercase; letter-spacing:0.04em; font-family:var(--mono);}
+  .field{display:contents;}
+
+  .btn{
+    background:var(--accent); color:#fff; border:none; padding:10px 16px; border-radius:10px;
+    cursor:pointer; font-size:0.84rem; font-weight:700; margin-right:8px; margin-top:8px; font-family:var(--sans);
+    transition:filter .12s, box-shadow .12s;
+  }
+  .btn:hover{filter:brightness(1.06); box-shadow:var(--shadow-lift);}
+  .btn.secondary{background:var(--card); color:var(--ink); border:1px solid var(--line);}
+  .btn.secondary:hover{background:var(--paper);}
+  .btn.danger{background:var(--danger);}
+
+  .toast{
+    position:fixed; bottom:24px; left:50%; transform:translateX(-50%);
+    background:var(--ink); color:var(--paper); padding:11px 20px; border-radius:10px;
+    font-size:0.84rem; z-index:200; opacity:0; pointer-events:none; transition:opacity .25s;
+    max-width:min(90vw, 420px); text-align:center; line-height:1.4;
+  }
+  .toast.show{opacity:1;}
+  .small-note{font-size:0.76rem; color:var(--sub); margin-top:4px;}
+  .field-actions{margin-top:16px;}
+
+  /* ---- calculator ---- */
+  .recipe-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:12px;}
+  .recipe-card{border-top:3px solid var(--accent); border-radius:var(--radius); transition:box-shadow .15s;}
+  .recipe-card:hover{box-shadow:var(--shadow-lift);}
+  .recipe-card h4{margin:0 0 6px; font-family:var(--display); font-size:1.05rem; font-weight:600; text-wrap:balance;}
+  .recipe-card .base-line{font-size:0.76rem; color:var(--sub); margin-bottom:8px; font-family:var(--mono);}
+  .card-actions{display:flex; gap:8px; margin-top:12px;}
+  .day-editor.recipe-editor{border-color:var(--accent);}
+  .recipe-name-input{
+    font-size:1.15rem; font-weight:600; border:none; background:transparent; color:var(--ink);
+    padding:2px 0; width:70%; font-family:var(--display); border-bottom:1px solid transparent;
+  }
+  .recipe-name-input:focus{outline:none; border-bottom-color:var(--accent);}
+  .material-rows-wrap{overflow-x:auto;}
+  .material-row{
+    display:grid; grid-template-columns:1.7fr 0.9fr 0.9fr 1.3fr auto; gap:8px; align-items:center;
+    margin-bottom:8px; min-width:640px;
+  }
+  .material-row.base-row{grid-template-columns:1.7fr 0.9fr; min-width:0;}
+  .material-row select, .material-row input{
+    width:100%; padding:7px 9px; border-radius:8px; border:1px solid var(--line);
+    background:var(--paper); color:var(--ink); font-size:0.82rem; font-family:var(--sans);
+  }
+  .row-result{display:flex; flex-wrap:wrap; gap:4px; align-items:center;}
+  .solve-all-btn{
+    background:var(--device); color:#fff; border:none; padding:10px 16px; border-radius:10px;
+    cursor:pointer; font-size:0.84rem; font-weight:700; margin-top:10px; margin-right:8px; font-family:var(--sans);
+    transition:filter .12s;
+  }
+  .solve-all-btn:hover{filter:brightness(1.08);}
+  .remove-material-btn{background:none; border:none; color:var(--danger); cursor:pointer; font-size:1.05rem; padding:4px; line-height:1;}
+  .total-line{font-family:var(--mono); font-size:0.85rem; margin-top:14px; color:var(--sub);}
+  .total-line b{color:var(--ink); font-size:1rem;}
+  .stock-note{font-size:0.7rem; color:var(--sub); margin:2px 0 12px;}
+
+  /* ---- mobile ---- */
+  @media (max-width:700px){
+    .wrap{padding:0 14px 56px;}
+    .top-inner{padding:0 14px;}
+    h1{font-size:1.4rem;}
+    .eyebrow{font-size:0.74rem;}
+    .card{padding:15px 16px;}
+    nav, .subnav-pills{gap:16px;}
+    nav button, .subnav-pills button{padding:10px 1px; font-size:0.86rem;}
+    .theme-toggle{padding:6px 11px; font-size:0.76rem;}
+
+    .week-grid, .ing-grid, .recipe-grid{grid-template-columns:1fr;}
+    .week-nav{gap:8px;}
+    .week-nav .range{font-size:0.92rem;}
+
+    .header-row{display:none;}
+    .edit-row.product-row, .edit-row.ing-row, .edit-row.raw-row{
+      grid-template-columns:1fr; gap:10px;
+      background:var(--card); border:1px solid var(--line); border-radius:10px;
+      padding:14px; margin-bottom:12px; box-shadow:var(--shadow);
+    }
+    .field{display:block;}
+    .field::before{
+      display:block; content:attr(data-label); font-family:var(--mono); font-size:0.66rem;
+      text-transform:uppercase; letter-spacing:0.04em; color:var(--sub); margin-bottom:4px; font-weight:700;
+    }
+    .edit-row .row-check{justify-content:flex-start; padding-top:2px;}
+    .edit-row .remove-material-btn{justify-self:end; font-size:1.2rem; padding:4px 8px;}
+
+    .material-row{min-width:0; grid-template-columns:1fr 1fr; row-gap:6px;}
+    .material-row.base-row{grid-template-columns:1fr 1fr;}
+
+    .field-actions .btn{display:block; width:100%; margin-right:0; text-align:center;}
+    .card-actions .btn{flex:1;}
+
+    .day-editor{padding:16px;}
+    .modal{padding:20px;}
+  }
+
+/* =========================================================
+   v5 MOBILE-FIRST REBUILD
+   Original data/functions preserved, new information architecture
+   ========================================================= */
+:root{
+  --paper:#f6f6f4;
+  --card:#ffffff;
+  --ink:#20211f;
+  --sub:#898a85;
+  --line:#e8e8e4;
+  --accent:#4d6757;
+  --accent-soft:#edf3ee;
+  --acidic:#4d6757;
+  --acidic-soft:#edf3ee;
+  --alkaline:#7c858d;
+  --alkaline-soft:#f0f2f3;
+}
+body{background:var(--paper); color:var(--ink); -webkit-font-smoothing:antialiased; letter-spacing:-.018em; padding-bottom:84px;}
+.top{background:rgba(246,246,244,.94); border-bottom:1px solid var(--line); position:sticky; top:0; z-index:30; backdrop-filter:blur(16px);}
+.top-inner{padding:14px 18px 0;}
+.eyebrow{font-family:var(--sans); font-style:normal; text-transform:uppercase; letter-spacing:.08em; font-size:.62rem; color:var(--sub);}
+h1{font-family:var(--sans); font-size:1.28rem; letter-spacing:-.055em;}
+.head-date{font-size:.7rem;}
+.top-tabs{border:0; gap:22px; margin-top:10px;}
+.top-tabs button{padding:9px 0 11px; font-size:.8rem; color:var(--sub);}
+.top-tabs button.active{color:var(--ink); border-bottom:2px solid var(--ink);}
+.wrap{max-width:760px; padding:18px 16px 30px;}
+.card{border:0; box-shadow:none; border-radius:18px; background:var(--card);}
+.section-title{font-family:var(--sans); font-size:1rem; font-weight:760; letter-spacing:-.04em;}
+.small-note{font-size:.74rem; line-height:1.5; color:var(--sub);}
+
+/* TODAY */
+.today-header{display:flex; align-items:flex-end; justify-content:space-between; gap:12px; padding:4px 2px 18px;}
+.today-date{font-size:.72rem; color:var(--sub); margin-bottom:4px;}
+.today-header h2{margin:0; font-size:1.72rem; line-height:1.05; letter-spacing:-.06em;}
+.today-header p{margin:6px 0 0; font-size:.78rem; color:var(--sub);}
+.today-more-btn{background:#fff; border:1px solid var(--line); border-radius:999px; padding:8px 11px; white-space:nowrap; font:650 .72rem var(--sans); color:var(--ink);}
+.today-header-actions{display:flex; flex-direction:column; align-items:flex-end; gap:8px;}
+.today-date-picker-row{display:flex; align-items:center; gap:6px;}
+.today-date-input{
+  font:inherit; font-size:0.78rem; color:var(--ink); background:var(--card);
+  border:1px solid var(--line); border-radius:8px; padding:6px 8px; cursor:pointer;
+}
+.today-jump-btn{
+  border:1px solid var(--line); background:var(--card); color:var(--accent); border-radius:999px;
+  padding:6px 11px; font-size:0.72rem; font-weight:650; cursor:pointer; font-family:var(--sans); white-space:nowrap;
+}
+.today-jump-btn:hover{background:var(--paper);}
+.today-editing-note{font-size:0.74rem; color:var(--accent); font-weight:650; margin:4px 0 0;}
+.day-card{cursor:pointer;}
+.day-card.selected{border-color:var(--accent); box-shadow:0 0 0 1.5px var(--accent);}
+.today-list{overflow:hidden; padding:0;}
+.today-group{padding:17px 18px; border-bottom:1px solid var(--line);}
+.today-group:last-of-type{border-bottom:0;}
+.today-group-label{font-size:.76rem; font-weight:750; margin-bottom:9px;}
+.today-check{width:100%; display:flex; align-items:center; gap:10px; background:transparent; border:0; padding:11px 2px; text-align:left; color:var(--ink); font:500 .9rem var(--sans);}
+.today-check + .today-check{border-top:1px solid #f2f2ef;}
+.today-box{width:22px; height:22px; border:1px solid #d9dad6; border-radius:50%; display:flex; align-items:center; justify-content:center; flex:0 0 auto; font-size:.72rem;}
+.today-check.done{color:var(--sub);}
+.today-check.done .today-box{background:var(--ink); border-color:var(--ink); color:#fff;}
+.today-check.done .today-name{text-decoration:line-through; text-decoration-color:#c8c9c5;}
+.today-summary{display:flex; justify-content:space-between; padding:12px 18px; background:#fafaf9; border-top:1px solid var(--line); color:var(--sub); font-size:.72rem;}
+.today-summary b{color:var(--ink); font-family:var(--mono);}
+.today-goals{margin-top:27px;}
+.section-row{display:flex; justify-content:space-between; align-items:flex-end; padding:0 2px 10px;}
+.link-btn{background:none; border:0; color:var(--sub); font:650 .72rem var(--sans); padding:4px 0;}
+.today-goal-card{padding:15px 18px;}
+.today-goal-card .progress-row{padding:7px 0;}
+.today-goal-card .progress-track{height:5px; background:#efefec;}
+.today-goal-card .progress-fill{background:var(--accent)!important; border-radius:999px;}
+.week-plan{margin-top:8px;}
+.week-plan summary{list-style:none; padding:15px 2px; font-size:.78rem; color:var(--sub); cursor:pointer;}
+.week-plan summary::-webkit-details-marker{display:none;}
+.week-plan summary::after{content:'⌄'; float:right;}
+.week-plan[open] summary::after{content:'⌃';}
+.week-plan .card{padding:13px 18px;}
+.today-plan-row{display:grid; grid-template-columns:45px 1fr; gap:8px; padding:9px 0; border-bottom:1px solid #f0f0ed;}
+.today-plan-row:last-child{border-bottom:0;}
+.today-plan-day{font-size:.76rem; font-weight:700; color:var(--sub);}
+.today-empty{font-size:.76rem; color:var(--sub);}
+
+/* RECORDS */
+.week-nav{background:transparent; border:0; padding:0 2px 12px;}
+.week-nav .range{font-family:var(--sans); font-size:1rem; font-weight:760;}
+.week-nav-btns button{background:#fff; border:1px solid var(--line); border-radius:999px; box-shadow:none; font-size:.7rem;}
+.week-grid{gap:9px;}
+.day-card{background:#fff; border:0; border-radius:15px; box-shadow:none;}
+.day-card.today{background:#fbfdfb; outline:1px solid #dbe5de;}
+.day-editor{border:0; border-radius:16px; box-shadow:none; background:#fff;}
+.progress-track{height:5px; background:#efefec;}
+.progress-fill{border-radius:999px;}
+.section-block{margin-bottom:25px;}
+
+/* INGREDIENTS */
+.ing-grid{gap:9px;}
+.ing-card{border:0; border-left:3px solid var(--accent); border-radius:15px; box-shadow:none; padding:16px;}
+.ing-card:hover{transform:none; box-shadow:none;}
+.table-wrap{border-radius:15px;}
+
+/* MANAGEMENT */
+.subnav-pills{border:0; gap:7px; overflow-x:auto; padding:0 0 3px; margin-bottom:18px;}
+.subnav-pills button{flex:0 0 auto; margin:0; padding:8px 13px; border:1px solid var(--line); border-radius:999px; background:#fff; font-size:.74rem; color:var(--sub);}
+.subnav-pills button.active{background:var(--ink); border-color:var(--ink); color:#fff;}
+#pane-edit>.small-note{margin-bottom:14px;}
+.edit-block{background:#fff; border:0; border-radius:17px; padding:17px; margin-bottom:10px;}
+.edit-block h3{border:0; padding:0; margin-bottom:8px; font-family:var(--sans); font-size:.92rem;}
+#ingredientEditBlock,#rawEditBlock{margin-top:10px;}
+.routine-card{padding:17px; margin-bottom:10px;}
+.routine-card-title{font-size:.9rem; font-weight:750; margin-bottom:10px;}
+.routine-day{padding:11px 0; border-bottom:1px solid var(--line);}
+.routine-day:last-child{border-bottom:0;}
+.routine-day-top{display:flex; align-items:center; justify-content:space-between; margin-bottom:7px;}
+.routine-day-name{font-size:.83rem; font-weight:700;}
+.routine-edit-btn{border:0; background:transparent; color:var(--sub); font:650 .72rem var(--sans);}
+.target-row{display:flex; align-items:center; justify-content:space-between; padding:10px 0; border-bottom:1px solid var(--line);}
+.target-row:last-child{border-bottom:0;}
+.target-name{font-size:.84rem; font-weight:650;}
+.target-input{display:flex; align-items:center; gap:5px; font-size:.75rem; color:var(--sub);}
+.target-input input{width:48px; padding:6px; text-align:center; border-radius:8px;}
+.manage-heading{padding:2px 2px 12px;}
+#pane-calc .card{border-radius:17px;}
+
+/* BOTTOM NAV */
+.mobile-bottom-nav{display:none;}
+@media(max-width:700px){
+  body{padding-bottom:80px;}
+  .top{position:relative; backdrop-filter:none;}
+  .top-inner{padding:14px 16px 0;}
+  .top-tabs{display:none;}
+  .wrap{padding:16px 14px 24px;}
+  .head-row{align-items:flex-start;}
+  h1{font-size:1.18rem;}
+  .theme-toggle{padding:7px 10px; font-size:.7rem;}
+  .week-grid,.ing-grid,.recipe-grid{grid-template-columns:1fr;}
+  .mobile-bottom-nav{position:fixed; left:0; right:0; bottom:0; z-index:100; height:68px; display:flex; justify-content:space-around; align-items:center; background:rgba(255,255,255,.97); border-top:1px solid var(--line); padding:5px 18px calc(5px + env(safe-area-inset-bottom)); backdrop-filter:blur(16px);}
+  .mobile-bottom-nav button{border:0; background:transparent; color:#a0a19d; min-width:54px; display:flex; flex-direction:column; align-items:center; gap:2px; font:650 .61rem var(--sans);}
+  .nav-symbol{height:26px; min-width:28px; display:flex; align-items:center; justify-content:center; border-radius:9px; font-size:.95rem;}
+  .mobile-bottom-nav button.active{color:var(--ink);}
+  .mobile-bottom-nav button.active .nav-symbol{background:#f0f0ed;}
+  .edit-row.product-row,.edit-row.ing-row,.edit-row.raw-row{background:#fafaf9; border:1px solid var(--line); border-radius:12px; padding:12px; margin-bottom:8px; box-shadow:none;}
+  .header-row{display:none;}
+  .field-actions{background:#fff; border:0; border-radius:16px;}
+}
+@media(min-width:701px){.mobile-bottom-nav{display:none;} body{padding-bottom:0;}}
+
+/* ---- ALLERGY TAB ---- */
+.field-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:14px;}
+.field-item{display:flex; flex-direction:column; gap:6px;}
+.field-item.span2{grid-column:span 2;}
+.field-item label{font-size:0.78rem; color:var(--sub); font-weight:700;}
+.field-item .hint{font-size:0.7rem; color:var(--sub); font-weight:400; margin-top:-3px;}
+.field-item input, .field-item select, .field-item textarea{
+  font:inherit; font-size:0.9rem; color:var(--ink); background:var(--paper);
+  border:1px solid var(--line); border-radius:8px; padding:9px 10px; width:100%;
+}
+.field-item textarea{resize:vertical; min-height:44px;}
+
+.check-row{display:flex; align-items:flex-start; gap:9px; background:var(--paper); border:1px solid var(--line); border-radius:8px; padding:12px; cursor:pointer;}
+.check-row input[type="checkbox"]{width:16px; height:16px; margin-top:2px; accent-color:var(--danger); flex:none;}
+.check-row.check-period input[type="checkbox"]{accent-color:var(--accent);}
+.check-row .txt{display:flex; flex-direction:column; gap:2px;}
+.check-row .txt b{font-size:0.86rem;}
+.check-row .txt span{font-size:0.72rem; color:var(--sub);}
+
+.pill-choice{display:flex; gap:8px; flex-wrap:wrap;}
+.pill-choice input{position:absolute; opacity:0; width:1px; height:1px;}
+.pill-choice label{display:flex; align-items:center; gap:6px; font-size:0.8rem; font-weight:700; color:var(--sub); background:var(--paper); border:1.5px solid var(--line); border-radius:999px; padding:7px 13px; cursor:pointer;}
+.pill-choice label .dot{width:9px; height:9px; border-radius:50%; background:var(--sub); flex:none;}
+.pill-choice input:checked + label{border-color:currentColor;}
+.pill-choice label[data-type="hives"]{color:var(--alkaline);}
+.pill-choice label[data-type="hives"] .dot{background:var(--alkaline);}
+.pill-choice input:checked + label[data-type="hives"]{background:var(--alkaline-soft);}
+.pill-choice label[data-type="burning"]{color:var(--accent);}
+.pill-choice label[data-type="burning"] .dot{background:var(--accent);}
+.pill-choice input:checked + label[data-type="burning"]{background:var(--accent-soft);}
+.pill-choice label[data-type="both"]{color:var(--device);}
+.pill-choice label[data-type="both"] .dot{background:var(--device);}
+.pill-choice input:checked + label[data-type="both"]{background:var(--device-soft);}
+
+.food-choice{display:flex; gap:8px; flex-wrap:wrap;}
+.food-choice input{position:absolute; opacity:0; width:1px; height:1px;}
+.food-choice label{font-size:0.76rem; font-weight:700; color:var(--sub); background:var(--paper); border:1.5px solid var(--line); border-radius:999px; padding:6px 12px; cursor:pointer;}
+.food-choice input:checked + label{background:var(--accent-soft); border-color:var(--accent); color:var(--accent);}
+.food-ref-chip{display:inline-flex; padding:4px 10px; border-radius:999px; background:var(--paper); border:1px solid var(--line); font-size:0.76rem; font-weight:700; color:var(--sub); margin:0 6px 6px 0;}
+
+.med-item{display:flex; justify-content:space-between; align-items:flex-start; gap:14px; padding:13px 0; border-bottom:1px solid var(--line); flex-wrap:wrap;}
+.med-item:last-child{border-bottom:none;}
+.med-item .name{font-size:0.95rem; font-weight:700;}
+.med-item .meta{color:var(--sub); font-size:0.78rem; margin-top:2px;}
+.med-item .actions{display:flex; gap:6px; flex:none;}
+.med-history{margin-top:14px; border-top:1px solid var(--line); padding-top:12px;}
+.med-history summary{cursor:pointer; font-size:0.76rem; color:var(--sub); font-weight:700;}
+.med-history ul{list-style:none; margin:10px 0 0; padding:0; display:flex; flex-direction:column; gap:6px;}
+.med-history li{font-size:0.78rem; color:var(--sub); display:flex; justify-content:space-between; align-items:center; gap:10px;}
+.med-history li b{color:var(--ink);}
+
+.photo-add-row{display:flex; align-items:center; gap:10px; flex-wrap:wrap;}
+.photo-preview{display:flex; gap:8px; flex-wrap:wrap; margin-top:10px;}
+.photo-preview .ph{position:relative; width:60px; height:60px;}
+.photo-preview .ph img{width:100%; height:100%; object-fit:cover; border-radius:8px; border:1px solid var(--line);}
+.photo-preview .ph button{position:absolute; top:-6px; right:-6px; width:20px; height:20px; border-radius:50%; background:var(--danger); color:#fff; border:none; font-size:12px; line-height:1; padding:0; display:flex; align-items:center; justify-content:center;}
+
+#allergyLogTable{width:100%; border-collapse:collapse; font-size:0.82rem; min-width:600px;}
+#allergyLogTable thead th{text-align:left; font-size:0.66rem; text-transform:uppercase; letter-spacing:0.05em; color:var(--sub); font-weight:700; padding:0 10px 8px; border-bottom:1px solid var(--line);}
+#allergyLogTable tbody td{padding:11px 10px; border-bottom:1px solid var(--line); vertical-align:top; color:var(--ink);}
+#allergyLogTable tbody tr:last-child td{border-bottom:none;}
+#allergyLogTable td.date{white-space:nowrap; font-variant-numeric:tabular-nums; color:var(--sub);}
+.chip-type{display:inline-flex; align-items:center; gap:5px; padding:3px 9px; border-radius:999px; font-size:0.72rem; font-weight:700; white-space:nowrap;}
+.chip-type.hives{background:var(--alkaline-soft); color:var(--alkaline);}
+.chip-type.burning{background:var(--accent-soft); color:var(--accent);}
+.chip-type.both{background:var(--device-soft); color:var(--device);}
+.tag-critical{display:inline-flex; align-items:center; gap:4px; background:var(--danger-soft); color:var(--danger); padding:3px 8px; border-radius:999px; font-size:0.68rem; font-weight:700; white-space:nowrap; margin-top:5px;}
+.tag-soft{display:inline-flex; align-items:center; background:var(--paper); color:var(--sub); padding:3px 8px; border-radius:999px; font-size:0.66rem; font-weight:700; white-space:nowrap; margin:5px 4px 0 0;}
+.sev{font-size:0.72rem; font-weight:700;}
+.sev.mild{color:var(--acidic);}
+.sev.mod{color:var(--active);}
+.sev.severe{color:var(--danger);}
+.note-cell{color:var(--sub); max-width:200px;}
+.note-cell .trig{color:var(--ink); font-weight:700;}
+.photo-thumbs{display:flex; gap:4px; flex-wrap:wrap; margin-top:6px;}
+.photo-thumbs img{width:28px; height:28px; object-fit:cover; border-radius:6px; cursor:pointer; border:1px solid var(--line);}
+.row-actions{display:flex; gap:4px; white-space:nowrap;}
+
+.stat-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:12px;}
+.stat-tile{background:var(--paper); border:1px solid var(--line); border-radius:10px; padding:13px 14px;}
+.stat-tile .label{font-size:0.66rem; color:var(--sub); font-weight:700; text-transform:uppercase; letter-spacing:0.04em;}
+.stat-tile .value{font-size:1.15rem; font-weight:700; margin-top:4px; font-variant-numeric:tabular-nums;}
+.stat-tile .sub{font-size:0.68rem; color:var(--sub); margin-top:2px;}
+
+.legend{display:flex; gap:16px; flex-wrap:wrap; margin-bottom:10px;}
+.legend .item{display:flex; align-items:center; gap:6px; font-size:0.72rem; color:var(--sub); font-weight:700;}
+.legend .sw{width:10px; height:10px; border-radius:3px;}
+#allergyTooltip{position:fixed; pointer-events:none; background:var(--ink); color:var(--paper); font-size:0.72rem; font-weight:700; padding:6px 9px; border-radius:6px; z-index:50; opacity:0; transition:opacity 0.08s ease; white-space:nowrap;}
+
+.btn.small{padding:7px 12px; font-size:0.76rem;}
+
+#photoLightbox{position:fixed; inset:0; background:rgba(0,0,0,0.78); display:none; align-items:center; justify-content:center; z-index:200; padding:30px;}
+#photoLightbox.open{display:flex;}
+#photoLightbox img{max-width:100%; max-height:100%; border-radius:8px; box-shadow:0 10px 40px rgba(0,0,0,0.5);}
+#photoLightbox .lb-close{position:absolute; top:18px; right:22px; color:#fff; font-size:30px; cursor:pointer; background:none; border:none; line-height:1; padding:4px 10px;}
+
+.footer-row{display:flex; flex-direction:column; gap:12px;}
+.footer-row .top{display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:space-between;}
+.footer-row .actions{display:flex; gap:8px; flex-wrap:wrap;}
+.footer-row p{font-size:0.72rem; color:var(--sub); margin:0;}
+
+@media (max-width:700px){
+  #allergyLogTable{min-width:0;}
+  #allergyLogTable thead{display:none;}
+  #allergyLogTable tbody, #allergyLogTable tbody tr, #allergyLogTable tbody td{display:block; width:100%;}
+  #allergyLogTable tbody tr{border:1px solid var(--line); border-radius:12px; background:var(--paper); padding:12px 14px; margin-bottom:12px;}
+  #allergyLogTable tbody tr:last-child{margin-bottom:0;}
+  #allergyLogTable tbody td{border-bottom:none; padding:6px 0; display:flex; gap:10px; align-items:flex-start;}
+  #allergyLogTable tbody td::before{content:attr(data-label); flex:0 0 56px; font-size:0.62rem; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:var(--sub); padding-top:2px;}
+  #allergyLogTable tbody td.note-cell{max-width:none;}
+  #allergyLogTable tbody td:last-child{padding-top:10px;}
+  #allergyLogTable tbody td:last-child::before{content:''; flex:0 0 0;}
+  .row-actions{width:100%; justify-content:flex-end;}
+  .field-item.span2{grid-column:auto;}
+}
+
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="top-inner">
+    <div class="head-row">
+      <div>
+        <div class="eyebrow">Personal skincare log</div>
+        <h1>내 스킨케어 루틴</h1>
+        <div class="head-date" id="todayLabel"></div>
+      </div>
+      <button class="theme-toggle" id="themeToggle">🌙 다크모드</button>
+    </div>
+    <nav class="top-tabs">
+      <button data-tab="today" class="active">오늘</button>
+      <button data-tab="allergy">알러지</button>
+      <button data-tab="ingredients">성분</button>
+      <button data-tab="settings">관리</button>
+    </nav>
+  </div>
+</div>
+
+<div class="wrap">
+<main>
+
+
+  <!-- TODAY TAB (merged with former weekly-records tab — the two overlapped almost completely) -->
+  <section class="tab active" id="tab-today">
+    <div class="today-header">
+      <div>
+        <div class="today-date" id="todayHeroDate"></div>
+        <h2 id="todayHeroTitle">오늘의 루틴</h2>
+        <p id="todayHeroHint">오늘 사용할 제품을 체크하세요.</p>
+      </div>
+      <div class="today-header-actions">
+        <div class="today-date-picker-row">
+          <input type="date" id="todayDatePicker" class="today-date-input" aria-label="기록할 날짜 선택">
+          <button type="button" class="today-jump-btn" id="todayJumpBtn">오늘로</button>
+        </div>
+        <button type="button" class="today-more-btn" id="toggleTodayAll">+ 다른 제품</button>
+      </div>
+    </div>
+
+    <div class="today-list card" id="todayChecklist"></div>
+
+    <section class="today-goals">
+      <div class="section-title">이번 주 목표</div>
+      <div class="small-note" style="margin:-6px 0 10px;">이번 주 사용 횟수</div>
+      <div class="card today-goal-card">
+        <div class="progress-list" id="todayProgress"></div>
+      </div>
+    </section>
+
+    <div class="section-block" style="margin-top:27px;">
+      <div class="week-nav">
+        <div class="range" id="weekRangeLabel"></div>
+        <div class="week-nav-btns">
+          <button id="prevWeekBtn">‹ 이전주</button>
+          <button id="thisWeekBtn">이번주</button>
+          <button id="nextWeekBtn">다음주 ›</button>
+        </div>
+      </div>
+      <div class="section-title">날짜별 기록</div>
+      <div class="week-grid" id="weekLogGrid"></div>
+    </div>
+
+    <details class="week-plan">
+      <summary>이번 주 계획 보기</summary>
+      <div class="card" id="todayWeekPlan"></div>
+    </details>
+  </section>
+
+  <!-- ALLERGY TAB (merged in from the standalone allergy tracker) -->
+  <section class="tab" id="tab-allergy">
+    <div class="section-block">
+      <div class="section-title">알러지 &amp; 항히스타민제 기록</div>
+      <p class="small-note">복용 중인 약과 알러지가 올라온 날, 증상 유형, 사진을 정리해요. 데이터(사진 포함)는 이 브라우저에만 저장돼요.</p>
+    </div>
+
+    <div class="section-block">
+      <div class="section-row">
+        <div class="section-title">복용 중인 약</div>
+        <button type="button" class="link-btn" id="medAddBtn">+ 약 추가</button>
+      </div>
+      <div class="card">
+        <div id="medList"></div>
+        <div id="medForm" style="display:none; margin-top:16px; border-top:1px solid var(--line); padding-top:16px;">
+          <div class="field-grid">
+            <div class="field-item"><label id="medFormTitle" for="medName">약 추가</label><input id="medName" placeholder="예: 세티리진 10mg"></div>
+            <div class="field-item"><label for="medFreq">복용 빈도</label>
+              <select id="medFreq">
+                <option value="매일 1회">매일 1회</option>
+                <option value="매일 2회">매일 2회</option>
+                <option value="필요시">필요시(증상 있을 때만)</option>
+                <option value="기타">기타</option>
+              </select>
+            </div>
+            <div class="field-item"><label for="medStart">복용 시작일</label><input type="date" id="medStart"></div>
+            <div class="field-item span2"><label for="medNote">메모</label><input id="medNote" placeholder="처방 병원, 변경 이유 등"></div>
+          </div>
+          <div class="field-actions">
+            <button class="btn small" id="medSaveBtn">저장</button>
+            <button class="btn secondary small" id="medCancelBtn">취소</button>
+          </div>
+        </div>
+        <div class="med-history">
+          <details>
+            <summary>복용을 중지한 약 이력 보기</summary>
+            <ul id="medHistoryList"></ul>
+          </details>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <div class="section-row">
+        <div class="section-title">지연성 알러지 검사 양성 음식군</div>
+        <button type="button" class="link-btn" id="foodRefEditBtn">목록 수정</button>
+      </div>
+      <div class="card">
+        <div id="foodRefDisplay"></div>
+        <div id="foodRefForm" style="display:none; margin-top:14px; border-top:1px solid var(--line); padding-top:14px;">
+          <div class="field-item"><label for="foodRefInput">음식군 (쉼표로 구분)</label>
+            <input id="foodRefInput" placeholder="예: 유제품, 카제인, 염소우유, 양우유, 아몬드">
+          </div>
+          <div class="field-actions">
+            <button class="btn small" id="foodRefSaveBtn">저장</button>
+            <button class="btn secondary small" id="foodRefCancelBtn">취소</button>
+            <p class="small-note">재검사 후 결과가 바뀌면 여기서 목록을 갱신하세요. 아래 기록 양식의 선택지도 함께 바뀌어요.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block" id="logFormCard">
+      <div class="section-title" id="logFormTitle">알러지 발생 기록 추가</div>
+      <div class="card">
+        <div class="field-grid">
+          <div class="field-item"><label for="logDate">날짜</label><input type="date" id="logDate"></div>
+          <div class="field-item"><label for="logTime">시간 <span class="hint" style="display:inline">(선택)</span></label><input type="time" id="logTime"></div>
+          <div class="field-item"><label for="logDuration">지속 시간(시간)</label><input type="number" id="logDuration" min="0" step="0.5" placeholder="예: 2"></div>
+          <div class="field-item"><label for="logSeverity">심각도</label>
+            <select id="logSeverity">
+              <option value="mild">경미</option>
+              <option value="mod">보통</option>
+              <option value="severe">심함</option>
+            </select>
+          </div>
+          <div class="field-item span2">
+            <label>증상 유형</label>
+            <div class="pill-choice">
+              <input type="radio" name="logType" id="typeHives" value="hives" checked>
+              <label data-type="hives" for="typeHives"><span class="dot"></span>두드러기형 (가려움 · 볼록 융기)</label>
+              <input type="radio" name="logType" id="typeBurning" value="burning">
+              <label data-type="burning" for="typeBurning"><span class="dot"></span>화끈형 (발적 · 화끈거림)</label>
+              <input type="radio" name="logType" id="typeBoth" value="both">
+              <label data-type="both" for="typeBoth"><span class="dot"></span>복합형 (둘 다)</label>
+            </div>
+          </div>
+          <div class="field-item span2">
+            <label class="check-row" for="logThroat">
+              <input type="checkbox" id="logThroat">
+              <div class="txt">
+                <b>목이나 혀가 부었나요?</b>
+                <span>기도 관련 증상은 병원 진료 시 중요한 단서가 될 수 있어 별도로 표시해둡니다.</span>
+              </div>
+            </label>
+          </div>
+          <div class="field-item span2">
+            <label class="check-row check-period" for="logPeriod">
+              <input type="checkbox" id="logPeriod">
+              <div class="txt">
+                <b>그 날 생리 중이었어요</b>
+                <span>호르몬 변화와의 연관성을 나중에 비교해볼 수 있어요.</span>
+              </div>
+            </label>
+          </div>
+          <div class="field-item span2"><label for="logTrigger">추정 원인 / 유발 요인</label>
+            <input id="logTrigger" list="triggerOptions" placeholder="예: 꽃가루, 스트레스, 원인불명">
+            <datalist id="triggerOptions">
+              <option value="꽃가루">
+              <option value="먼지·집먼지진드기">
+              <option value="온도 변화">
+              <option value="스트레스·피로">
+              <option value="운동">
+              <option value="화장품·세제">
+              <option value="원인불명">
+            </datalist>
+          </div>
+          <div class="field-item span2">
+            <label>섭취한 음식군 (지연성 알러지 양성)</label>
+            <div class="food-choice" id="foodChecks"></div>
+          </div>
+          <div class="field-item span2"><label for="logNote">메모</label><textarea id="logNote" placeholder="당시 상황, 대처, 추가 복용 등"></textarea></div>
+          <div class="field-item span2">
+            <label>사진 첨부 (선택)</label>
+            <div class="photo-add-row">
+              <button class="btn secondary small" type="button" id="photoAddBtn">사진 선택</button>
+              <input type="file" id="logPhotoInput" accept="image/*" multiple style="display:none;">
+              <span class="small-note">여러 장 선택 가능 · 자동으로 용량을 줄여서 저장해요.</span>
+            </div>
+            <div class="photo-preview" id="photoPreview"></div>
+          </div>
+        </div>
+        <div class="field-actions">
+          <button class="btn" id="logSaveBtn">기록 저장</button>
+          <button class="btn secondary" id="logCancelBtn" style="display:none;">취소</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <div class="section-title">요약</div>
+      <div class="card">
+        <div class="stat-grid" id="statGrid"></div>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <div class="section-title">최근 6개월 추이</div>
+      <div class="card">
+        <div class="legend" id="chartLegend"></div>
+        <div id="chartHolder"></div>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <div class="section-title">발생 기록 <span class="count" id="logCount"></span></div>
+      <div class="card">
+        <div class="subnav-pills" id="filterTabs" style="margin-bottom:14px;"></div>
+        <div class="table-wrap">
+          <table id="allergyLogTable">
+            <thead>
+              <tr><th>날짜</th><th>유형</th><th>심각도</th><th>지속</th><th>원인 · 메모 · 사진</th><th></th></tr>
+            </thead>
+            <tbody id="logTableBody"></tbody>
+          </table>
+          <div class="empty-v" id="emptyState" style="display:none; text-align:center; padding:30px 10px;">아직 기록이 없어요. 위 양식에서 첫 기록을 추가해보세요.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block footer-row">
+      <div class="card">
+        <div class="top">
+          <p>백업하거나 진료 시 공유할 때 사용하세요. 사진까지 포함해 브라우저 저장 공간을 쓰니, 가끔 JSON으로 내보내 백업해두는 걸 추천해요.</p>
+          <div class="actions">
+            <button class="btn secondary small" id="exportJsonBtn">JSON 내보내기</button>
+            <button class="btn secondary small" id="exportCsvBtn">CSV 내보내기</button>
+            <button class="btn secondary small" id="allergyImportBtn">JSON 가져오기</button>
+            <input type="file" id="allergyImportFile" accept="application/json" style="display:none;">
+          </div>
+        </div>
+        <div>
+          <div class="storage-line" id="storageLabel">저장 용량 계산 중…</div>
+          <div class="progress-track"><div class="progress-fill" id="storageFill" style="width:0%;"></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INGREDIENTS TAB -->
+  <section class="tab" id="tab-ingredients">
+    <div class="section-block">
+      <div class="section-title">핵심 성분 요약 <span class="small-note" style="font-weight:400;">— 클릭하면 상세 효과·기전을 볼 수 있어요</span></div>
+      <div class="ing-grid" id="ingGrid"></div>
+    </div>
+    <div class="section-block">
+      <div class="section-title">제품별 함유 성분</div>
+      <div class="card table-wrap">
+        <table id="mapTable">
+          <thead><tr><th>제품</th><th>주요 성분</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- SETTINGS TAB (calculator / ideas / edit live here now) -->
+  <section class="tab" id="tab-settings">
+    <div class="subnav-pills manage-tabs">
+      <button data-subtab="edit" class="active">제품</button>
+      <button data-subtab="routine">루틴</button>
+      <button data-subtab="calc">배합</button>
+    </div>
+
+    <div class="settings-pane active" id="pane-edit">
+      <div class="section-title">제품 관리</div>
+      <p class="small-note">제품 정보는 자동 저장돼요. 성분·원료 정보는 아래에서 필요할 때만 열어 수정할 수 있어요.</p>
+
+      <div class="edit-block" id="productEditBlock">
+        <h3>제품 정보 · 주간 목표 수정</h3>
+        <p class="schedule-hint">시간대를 아침/저녁으로 지정하면 홈 탭 기록 화면에서 항목이 나뉘어 표시돼요. "매일 기본"을 체크하면 매일 기록에 미리 체크된 채로 나와서, 안 쓴 날만 눌러서 해제하면 돼요.</p>
+        <div id="editProducts"></div>
+      </div>
+
+      <div class="edit-block" id="scheduleEditBlock">
+        <h3>요일별 스케줄</h3>
+        <p class="schedule-hint">여기서 지정한 스케줄은 이번주 탭 맨 위 "요일별 스케줄" 표에 참고용으로만 보여져요 — 자동으로 체크되진 않아요. 실제로 쓴 날은 요일 카드에서 직접 체크해주세요. (매일 기본 항목은 여기 목록에 안 나와요, 그건 매일 자동 체크되니까요.)</p>
+        <div id="editWeeklySchedule"></div>
+      </div>
+
+      <div class="edit-block" id="ingredientEditBlock">
+        <h3>성분 정보 수정</h3>
+        <div id="editIngredients"></div>
+      </div>
+
+      <div class="edit-block" id="rawEditBlock">
+        <h3>보유 원료 · 농도 수정</h3>
+        <p class="small-note">ppm 단위는 10000ppm = 1%예요 (예: 5000ppm → 0.5).</p>
+        <div id="editRawMaterials"></div>
+      </div>
+
+      <div class="field-actions">
+        <button class="btn" id="saveBtn">저장하기</button>
+        <button class="btn secondary" id="exportBtn">내보내기 (JSON)</button>
+        <button class="btn secondary" id="importBtn">가져오기 (JSON)</button>
+        <button class="btn danger" id="clearWeekBtn">이번주 기록 지우기</button>
+        <button class="btn danger" id="resetBtn">기본값으로 초기화</button>
+        <input type="file" id="importFile" accept="application/json" style="display:none;">
+      </div>
+    </div>
+
+
+    <div class="settings-pane" id="pane-routine">
+      <div class="manage-heading">
+        <div class="section-title">루틴</div>
+        <p class="small-note">요일별 계획과 주간 목표를 관리하세요.</p>
+      </div>
+      <div class="routine-card card">
+        <div class="routine-card-title">요일별 계획</div>
+        <div id="routineScheduleView"></div>
+      </div>
+      <div class="routine-card card">
+        <div class="routine-card-title">주간 목표</div>
+        <div id="routineTargetView"></div>
+      </div>
+    </div>
+
+    <div class="settings-pane" id="pane-calc">
+      <div class="section-block">
+        <div class="head-row" style="margin-bottom:12px;">
+          <div class="section-title" style="margin:0;">배합 레시피<span class="count" id="recipeCount"></span></div>
+          <button class="btn" id="addRecipeBtn">+ 새 레시피</button>
+        </div>
+        <p class="small-note">원료를 추가하면 최종 배합 농도(%)가 자동으로 계산돼요. "목표%" 칸에 원하는 농도를 입력하고 "필요량"을 누르면 그 농도를 맞추는 데 필요한 원료량(g)을 역산해줘요.</p>
+        <div class="card" style="margin-bottom:16px;">
+          <div class="section-title" style="font-size:0.9rem;">보유 원료 농도</div>
+          <div class="chip-row" id="rawMaterialRef"></div>
+          <div class="stock-note">농도는 편집 탭에서 바꿀 수 있어요.</div>
+        </div>
+        <div class="recipe-grid" id="recipeGrid"></div>
+        <div id="recipeEditorWrap"></div>
+      </div>
+    </div>
+
+  </section>
+
+</main>
+</div>
+
+<div class="modal-bg" id="modalBg">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="modalTitle"></h3>
+      <button class="close" id="modalClose">✕</button>
+    </div>
+    <div id="modalTags"></div>
+    <div class="mech-block"><div class="mech-label">작용 기전</div><div id="modalMech"></div></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<div id="allergyTooltip"></div>
+<div id="photoLightbox">
+  <button class="lb-close" id="photoLightboxClose" type="button">&times;</button>
+  <img id="photoLightboxImg" src="" alt="첨부 사진">
+</div>
+
+<script>
+const STORAGE_KEY = "skincare_tracker_v2";
+
+const DEFAULT_DATA = {
+  products: [
+    {name:"VT 시카 토너", status:"교체예정", note:"나노레시피 원액과 섞어 쓰기 좋았지만, 향료 없는 라운드랩 독도 토너로 교체 예정.", ingredients:["센텔라아시아티카 추출물"], weeklyTarget:null, period:null, dailyDefault:false},
+    {name:"더랩바이블랑두 그린플라로이드 크림", status:"단종예정", note:"잘 썼지만 제로이드 MD 로션과 제형이 겹쳐서 정리 예정.", ingredients:["마데카소사이드", "판테놀"], weeklyTarget:null, period:null, dailyDefault:false},
+    {name:"제로이드 MD 로션", status:"사용중", note:"", ingredients:["세라마이드"], weeklyTarget:null, period:"am", dailyDefault:true},
+    {name:"더마팩토리 베타시토스테롤 크림", status:"재구매X", note:"사은품으로 받아 가끔만 사용. 재구매 의사 없음.", ingredients:["베타시토스테롤"], weeklyTarget:null, period:null, dailyDefault:false},
+    {name:"아로마티카 알로에젤", status:"사용중", note:"알로에팩·모델링팩 베이스로 사용하며 나노레시피 원액과 섞어 씀.", ingredients:["알로에베라"], weeklyTarget:null, period:"pm", dailyDefault:false},
+    {name:"디오디너리 나이아신아마이드 10%+징크", status:"사용중", note:"아침 로션과 섞어서 사용.", ingredients:["나이아신아마이드", "징크PCA"], weeklyTarget:null, period:"am", dailyDefault:true},
+    {name:"나노레시피 구아이아줄렌", status:"재구매X", note:"토너에 섞거나 알로에팩에 사용. 마데카소사이드와 효과가 겹쳐서 재구매 안 함.", ingredients:["구아이아줄렌"], weeklyTarget:null, period:null, dailyDefault:false},
+    {name:"나노레시피 마데카소사이드", status:"사용중", note:"토너나 배합에 사용.", ingredients:["마데카소사이드"], weeklyTarget:null, period:null, dailyDefault:false},
+    {name:"나노레시피 세라마이드", status:"재구매X", note:"알로에팩·모델링팩에 사용. 제로이드 로션과 겹쳐서 재구매 안 함.", ingredients:["세라마이드"], weeklyTarget:null, period:null, dailyDefault:false},
+    {name:"나노레시피 히알루론산 (저/고분자)", status:"사용중", note:"알로에팩·모델링팩·토너에 두루 사용. 계속 재구매 예정.", ingredients:["히알루론산(저분자)", "히알루론산(고분자)"], weeklyTarget:null, period:null, dailyDefault:false},
+    {name:"디오디너리 락틱애씨드 5%+HA", status:"사용중", note:"저녁 사용 후 모델링팩 병행.", ingredients:["락틱애씨드", "히알루론산(저분자)"], weeklyTarget:null, period:"pm", dailyDefault:false},
+    {name:"쿼드쎄라 미니튠", status:"사용중", note:"알로에젤 바른 뒤 사용.", ingredients:[], weeklyTarget:3, period:"pm", dailyDefault:false},
+    {name:"린제이 티트리 모델링팩", status:"사용중", note:"미니튠 안 쓰는 날 사용.", ingredients:["티트리 추출물"], weeklyTarget:3, period:"pm", dailyDefault:false},
+    {name:"스킨푸드 블랙슈가 퍼펙트 에센셜 스크럽", status:"사용중", note:"", ingredients:["흑설탕 스크럽 입자"], weeklyTarget:1, period:"pm", dailyDefault:false},
+    {name:"라곰 마이크로 폼클렌저", status:"사용중", note:"약알칼리, 저녁에만 사용.", ingredients:[], weeklyTarget:null, period:"pm", dailyDefault:false},
+    {name:"메이크프렘 세이프미 릴리프 모이스처 클렌징 밀크", status:"사용중", note:"평일 화장 지울 때 1차 클렌징으로 사용.", ingredients:[], weeklyTarget:null, period:"pm", dailyDefault:false},
+    {name:"메이크프렘 세이프미 릴리프 모이스처 클렌징폼", status:"사용중", note:"약산성, 라곰 안 쓰는 날 저녁 사용.", ingredients:[], weeklyTarget:null, period:"pm", dailyDefault:false},
+    {name:"비타민C 세럼", status:"사용중", note:"", ingredients:["비타민C"], weeklyTarget:null, period:"am", dailyDefault:false},
+    {name:"더마팩토리 레티날 300ppm", status:"사용중", note:"", ingredients:["레티날(레티날데하이드)"], weeklyTarget:null, period:"pm", dailyDefault:false},
+    {name:"애크린겔", status:"사용중", note:"BHA. 락틱애씨드와 격주로 번갈아 사용.", ingredients:["BHA(살리실릭애씨드)"], weeklyTarget:null, period:"pm", dailyDefault:false}
+  ],
+  ingredients: [
+    {name:"나이아신아마이드 10%+징크", tags:["미백","모공","피지조절","진정"],
+     mechanism:"표피 각질형성세포에서 멜라노좀이 각질세포로 전달되는 것을 억제해 미백에 도움을 주고, 피지선 자극을 줄여 모공·피지 조절에 기여해요. 세라마이드 등 지질 합성을 촉진해 장벽 강화에도 도움이 됩니다. 징크(아연)는 항균·피지조절 작용이 있어 트러블 진정에 함께 작용해요."},
+    {name:"히알루론산 (저/고분자)", tags:["보습","수분감","탄력보조"],
+     mechanism:"고분자 히알루론산은 피부 표면에 얇은 필름(보습막)을 형성해 수분 증발을 막아주고, 저분자 히알루론산은 각질층 더 깊이 침투해 즉각적인 수분감과 촉촉함을 줘요. 저/고분자를 함께 쓰면 표면 보습막 + 속보습 두 가지 효과를 동시에 챙길 수 있어요."},
+    {name:"락틱애씨드 5%+HA", tags:["각질케어","미백","보습","톤개선"],
+     mechanism:"AHA(알파하이드록시애씨드) 계열로 각질세포 사이 결합력을 약화시켜 오래된 각질이 자연스럽게 탈락하도록 도와 턴오버를 정상화해요. 그 결과 칙칙함이 개선되고 미백·톤업 효과가 나타나며, 락틱애씨드 자체가 피부 천연보습인자(NMF) 성분이라 각질케어와 동시에 보습 효과도 있어요."},
+    {name:"구아이아줄렌", tags:["진정","항염","붉은기완화"],
+     mechanism:"카모마일에서 유래한 짙은 파란색 성분(아줄렌)으로, 염증 매개물질 생성을 억제해 붉은기와 자극을 가라앉히는 데 도움을 줘요. 모세혈관 확장으로 인한 홍조성 붉은기 완화에도 자주 사용됩니다."},
+    {name:"세라마이드", tags:["보습","장벽강화","저자극"],
+     mechanism:"각질층을 구성하는 지질 성분 중 하나로, 피부 장벽(라멜라 구조)을 재구성해 수분이 빠져나가는 것(경피수분손실, TEWL)을 막아줘요. 장벽이 튼튼해지면 외부 자극에 대한 민감도도 낮아져요."},
+    {name:"마데카소사이드", tags:["진정","재생","장벽강화"],
+     mechanism:"센텔라아시아티카(병풀)에서 추출되는 성분으로, 콜라겐 합성을 촉진해 상처·자극 부위의 재생을 돕고 항염 작용으로 진정 효과를 줘요. 장벽 강화 효과도 있어 구아이아줄렌·세라마이드와 기능이 일부 겹쳐요."},
+    {name:"레티놀", tags:["주름개선","모공","각질턴오버","트러블"],
+     mechanism:"비타민A 유도체로, 표피 턴오버(각질 교체 주기)를 촉진하고 진피에서 콜라겐 생성을 자극해 주름 개선·모공 관리에 효과적이에요. 초기 사용 시 각질이 얇아지며 자극(레티노이드 반응, 홍조·건조)이 나타날 수 있어 저녁 단독 사용과 보습 병행이 중요해요."},
+    {name:"레티날(레티날데하이드)", tags:["주름개선","모공","각질턴오버","트러블"],
+     mechanism:"레티놀보다 피부 내 전환 단계가 한 단계 적은 비타민A 유도체로, 레티노익애씨드로 더 빠르게 전환되어 효과가 비교적 빠르게 나타나요. 자극도는 레티놀보다 다소 강하고 트레티노인보다는 순한 편이라, 낮은 농도부터 서서히 늘려가며 사용하는 게 좋아요. 빛에 불안정하므로 저녁에만 사용하고 밀폐·차광 보관이 필요해요."},
+    {name:"비타민C", tags:["미백","항산화","콜라겐합성"],
+     mechanism:"강력한 항산화 작용으로 자외선·오염 등에 의한 활성산소를 중화시켜 광노화를 예방하고, 콜라겐 합성을 촉진해 탄력 개선에 도움을 줘요. 멜라닌 생성 효소(타이로시네이스)를 억제해 미백·색소침착 개선에도 쓰여요. 산화되기 쉬워 밀폐·차광 보관이 중요하고, 레티노이드와 같은 날 함께 쓰면 자극이 커질 수 있어 아침/저녁으로 나눠 쓰는 경우가 많아요."},
+    {name:"BHA(살리실릭애씨드)", tags:["각질케어","모공","피지조절","트러블"],
+     mechanism:"지용성 각질케어 성분으로 모공 속 피지층까지 침투해 각질을 녹여내요. 모공 안쪽까지 작용하기 때문에 블랙헤드·화이트헤드, 피지 트러블 관리에 특히 효과적이고 항염 작용도 있어요. 락틱애씨드(AHA)와 작용 부위·자극도가 달라 같은 날 함께 쓰면 자극이 누적될 수 있어 번갈아 사용하는 경우가 많아요."}
+  ],
+  usageLog: {},
+  weeklySchedule: {
+    0: [],
+    1: ["비타민C 세럼", "더마팩토리 레티날 300ppm"],
+    2: ["쿼드쎄라 미니튠", "린제이 티트리 모델링팩"],
+    3: ["디오디너리 락틱애씨드 5%+HA", "애크린겔"],
+    4: ["비타민C 세럼", "쿼드쎄라 미니튠", "린제이 티트리 모델링팩"],
+    5: ["더마팩토리 레티날 300ppm"],
+    6: ["스킨푸드 블랙슈가 퍼펙트 에센셜 스크럽", "쿼드쎄라 미니튠", "린제이 티트리 모델링팩"]
+  },
+  rawMaterials: [
+    {id:"ceramide", name:"나노레시피 세라마이드", components:[{label:"세라마이드", pct:0.5}], recommendedRange:{min:0.1, max:0.5}},
+    {id:"madeca", name:"나노레시피 마데카소사이드", components:[{label:"마데카소사이드", pct:1}], recommendedRange:{min:0.1, max:0.5}},
+    {id:"guaia", name:"나노레시피 구아이아줄렌", components:[{label:"구아이아줄렌", pct:1}], recommendedRange:{min:0.01, max:0.05}},
+    {id:"nia_zinc", name:"디오디너리 나이아신아마이드 10%+징크", components:[{label:"나이아신아마이드", pct:10},{label:"징크", pct:1}], recommendedRange:null},
+    {id:"lactic_ha", name:"디오디너리 락틱애씨드 5%+HA", components:[{label:"락틱애씨드", pct:5}], recommendedRange:null},
+    {id:"ha_low", name:"나노레시피 저분자 히알루론산", components:[{label:"히알루론산(저분자)", pct:1}], recommendedRange:{min:0.1, max:1}},
+    {id:"ha_high", name:"나노레시피 고분자 히알루론산", components:[{label:"히알루론산(고분자)", pct:1}], recommendedRange:{min:0.1, max:1}}
+  ],
+  recipes: [
+    {id:"r_madeca_toner", name:"마데카소사이드 토너", base:{label:"토너", amount:0}, items:[{materialId:"madeca", amount:0}]},
+    {id:"r_guaia_toner", name:"구아이아줄렌 토너", base:{label:"토너", amount:0}, items:[{materialId:"guaia", amount:0}]},
+    {id:"r_minitune_prep", name:"미니튠 전 사용 배합", base:{label:"알로에젤", amount:0}, items:[]},
+    {id:"r_modeling_pack", name:"모델링팩 배합", base:{label:"모델링 파우더+물", amount:0}, items:[]}
+  ]
+};
+
+let storageAvailable = true;
+function loadData(){
+  let data = null;
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(raw) data = JSON.parse(raw);
+  }catch(e){ storageAvailable = false; }
+  if(!data) data = JSON.parse(JSON.stringify(DEFAULT_DATA));
+  if(!data.usageLog) data.usageLog = {};
+  if(!data.weeklySchedule){
+    data.weeklySchedule = JSON.parse(JSON.stringify(DEFAULT_DATA.weeklySchedule));
+  } else {
+    for(let dow=0; dow<7; dow++){
+      if(!Array.isArray(data.weeklySchedule[dow])) data.weeklySchedule[dow] = [];
+    }
+  }
+  if(!data.products) data.products = JSON.parse(JSON.stringify(DEFAULT_DATA.products));
+  else {
+    data.products.forEach(p=>{
+      if(p.period === undefined) p.period = null;
+      if(p.dailyDefault === undefined) p.dailyDefault = false;
+    });
+  }
+  if(!data.ingredients) data.ingredients = JSON.parse(JSON.stringify(DEFAULT_DATA.ingredients));
+
+  // Merge in any products/ingredients that were added to the app's defaults after this
+  // browser's data was first saved (matched by name), so updates aren't silently hidden
+  // behind an already-existing (older) saved products/ingredients list.
+  const existingProductNames = new Set(data.products.map(p=>p.name));
+  const newlyAddedProductNames = [];
+  DEFAULT_DATA.products.forEach(defP=>{
+    if(!existingProductNames.has(defP.name)){
+      data.products.push(JSON.parse(JSON.stringify(defP)));
+      newlyAddedProductNames.push(defP.name);
+    }
+  });
+  const existingIngNames = new Set(data.ingredients.map(i=>i.name));
+  DEFAULT_DATA.ingredients.forEach(defI=>{
+    if(!existingIngNames.has(defI.name)){
+      data.ingredients.push(JSON.parse(JSON.stringify(defI)));
+    }
+  });
+  if(newlyAddedProductNames.length){
+    for(let dow=0; dow<7; dow++){
+      const defaultDayList = (DEFAULT_DATA.weeklySchedule && DEFAULT_DATA.weeklySchedule[dow]) || [];
+      defaultDayList.forEach(name=>{
+        if(newlyAddedProductNames.includes(name) && !data.weeklySchedule[dow].includes(name)){
+          data.weeklySchedule[dow].push(name);
+        }
+      });
+    }
+  }
+
+  if(!data.rawMaterials){
+    data.rawMaterials = JSON.parse(JSON.stringify(DEFAULT_DATA.rawMaterials));
+  } else {
+    data.rawMaterials.forEach(m=>{
+      if(m.recommendedRange === undefined){
+        const def = DEFAULT_DATA.rawMaterials.find(dm=>dm.id===m.id);
+        m.recommendedRange = def ? def.recommendedRange : null;
+      }
+    });
+  }
+  if(!data.recipes) data.recipes = JSON.parse(JSON.stringify(DEFAULT_DATA.recipes));
+  return data;
+}
+function saveData(data){
+  try{
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  }catch(e){ storageAvailable = false; }
+}
+
+let state = loadData();
+let weekOffset = 0;
+let editingRecipeId = null;
+function genId(){ return 'r'+Date.now().toString(36)+Math.random().toString(36).slice(2,7); }
+
+// ---------- THEME ----------
+const themeToggle = document.getElementById('themeToggle');
+function applyTheme(t){
+  if(t){ document.documentElement.setAttribute('data-theme', t); } else { document.documentElement.removeAttribute('data-theme'); }
+  const effectiveDark = t === 'dark' || (!t && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  themeToggle.textContent = effectiveDark ? '☀️ 라이트모드' : '🌙 다크모드';
+  try{ if(t) localStorage.setItem('skincare_theme', t); else localStorage.removeItem('skincare_theme'); }catch(e){}
+}
+let savedTheme = null;
+try{ savedTheme = localStorage.getItem('skincare_theme'); }catch(e){}
+applyTheme(savedTheme);
+themeToggle.addEventListener('click', ()=>{
+  const curDark = document.documentElement.getAttribute('data-theme') === 'dark' ||
+    (!document.documentElement.getAttribute('data-theme') && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  applyTheme(curDark ? 'light' : 'dark');
+});
+
+// ---------- TABS ----------
+document.querySelectorAll('nav button').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
+  });
+});
+
+// ---------- SETTINGS SUB-TABS (edit / calc / ideas) ----------
+document.querySelectorAll('.subnav-pills button').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('.subnav-pills button').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.settings-pane').forEach(p=>p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('pane-'+btn.dataset.subtab).classList.add('active');
+  });
+});
+
+// ---------- DATE HELPERS ----------
+const KOR_DAYS = ["일","월","화","수","목","금","토"];
+function pad2(n){ return String(n).padStart(2,'0'); }
+function dateKey(d){ return d.getFullYear()+'-'+pad2(d.getMonth()+1)+'-'+pad2(d.getDate()); }
+function startOfWeek(d){
+  const nd = new Date(d);
+  const day = nd.getDay();
+  const diff = (day === 0 ? -6 : 1 - day);
+  nd.setDate(nd.getDate() + diff);
+  nd.setHours(0,0,0,0);
+  return nd;
+}
+function getWeekDates(){
+  const base = new Date();
+  base.setDate(base.getDate() + weekOffset*7);
+  const mon = startOfWeek(base);
+  return Array.from({length:7}, (_,i)=>{ const d = new Date(mon); d.setDate(mon.getDate()+i); return d; });
+}
+
+// ---------- HOME / WEEKLY LOG ----------
+const PROGRESS_COLOR = {
+  "쿼드쎄라 미니튠": "device",
+  "린제이 티트리 모델링팩": "pack",
+  "스킨푸드 블랙슈가 퍼펙트 에센셜 스크럽": "scrub"
+};
+function colorFor(name){ return PROGRESS_COLOR[name] || "device"; }
+
+function defaultNamesFor(){
+  return state.products.filter(p=>p.dailyDefault).map(p=>p.name);
+}
+
+function renderHome(){
+  const dates = getWeekDates();
+  const todayKey = dateKey(new Date());
+
+  const rangeLabel = `${dates[0].getMonth()+1}월 ${dates[0].getDate()}일 – ${dates[6].getMonth()+1}월 ${dates[6].getDate()}일`;
+  document.getElementById('weekRangeLabel').innerHTML =
+    rangeLabel + (weekOffset===0 ? '<span class="tag">이번주</span>' : '');
+
+  const grid = document.getElementById('weekLogGrid');
+  const selectedKey = dateKey(selectedDate);
+  grid.innerHTML = dates.map(d=>{
+    const key = dateKey(d);
+    const entry = state.usageLog[key];
+    const used = (entry && entry.products) || [];
+    const isToday = key === todayKey;
+    const isSelected = key === selectedKey;
+    return `
+      <div class="day-card ${isToday?'today':''} ${isSelected?'selected':''}" data-day-key="${key}" role="button" tabindex="0" title="탭하여 이 날짜 기록을 보고 수정하기">
+        ${isToday ? '<span class="today-pill">오늘</span>' : ''}
+        <h3>${KOR_DAYS[d.getDay()]}요일 <span class="idx">${d.getMonth()+1}/${d.getDate()}</span></h3>
+        <div class="chip-row">
+          ${used.length ? used.map(u=>`<span class="badge b-alkaline">${u}</span>`).join('') : '<span class="empty-v">기록 없음</span>'}
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  grid.querySelectorAll('[data-day-key]').forEach(card=>{
+    const openDay = ()=>{ setSelectedDate(parseDateKey(card.dataset.dayKey)); };
+    card.addEventListener('click', openDay);
+    card.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); openDay(); } });
+  });
+}
+
+document.getElementById('prevWeekBtn').addEventListener('click', ()=>{ weekOffset--; renderHome(); });
+document.getElementById('nextWeekBtn').addEventListener('click', ()=>{ weekOffset++; renderHome(); });
+document.getElementById('thisWeekBtn').addEventListener('click', ()=>{ weekOffset=0; renderHome(); });
+
+document.getElementById('todayDatePicker').addEventListener('change', (e)=>{
+  if(!e.target.value) return;
+  setSelectedDate(parseDateKey(e.target.value));
+});
+document.getElementById('todayJumpBtn').addEventListener('click', ()=>{
+  setSelectedDate(new Date());
+});
+
+// ---------- INGREDIENTS ----------
+function renderIngredients(){
+  const grid = document.getElementById('ingGrid');
+  grid.innerHTML = state.ingredients.map((ing, idx)=>`
+    <button class="ing-card" data-idx="${idx}">
+      <h4>${ing.name}</h4>
+      <div>${ing.tags.map(t=>`<span class="badge b-accent">${t}</span>`).join('')}</div>
+    </button>
+  `).join('');
+  grid.querySelectorAll('.ing-card').forEach(el=>{
+    el.addEventListener('click', ()=>openIngredient(Number(el.dataset.idx)));
+  });
+
+  const tbody = document.querySelector('#mapTable tbody');
+  tbody.innerHTML = state.products.filter(p=>p.ingredients && p.ingredients.length).map(p=>`
+    <tr><td>${p.name}</td><td>${p.ingredients.map(i=>`<button class="chip" data-ing="${i.replace(/"/g,'&quot;')}">${i}</button>`).join(' ')}</td></tr>
+  `).join('');
+  tbody.querySelectorAll('.chip').forEach(el=>{
+    el.addEventListener('click', ()=>openIngredientByName(el.dataset.ing));
+  });
+}
+
+function openIngredient(idx){
+  const ing = state.ingredients[idx];
+  document.getElementById('modalTitle').textContent = ing.name;
+  document.getElementById('modalTags').innerHTML = ing.tags.map(t=>`<span class="badge b-accent">${t}</span>`).join('');
+  document.getElementById('modalMech').textContent = ing.mechanism;
+  document.getElementById('modalBg').classList.add('show');
+}
+function openIngredientByName(name){
+  let idx = state.ingredients.findIndex(i=>i.name === name);
+  if(idx<0) idx = state.ingredients.findIndex(i=>name.includes(i.name) || i.name.includes(name));
+  if(idx>=0) openIngredient(idx);
+  else{
+    document.getElementById('modalTitle').textContent = name;
+    document.getElementById('modalTags').innerHTML = '';
+    document.getElementById('modalMech').textContent = '아직 등록된 상세 정보가 없어요. 편집 탭에서 성분을 추가해보세요.';
+    document.getElementById('modalBg').classList.add('show');
+  }
+}
+document.getElementById('modalClose').addEventListener('click', ()=>{
+  document.getElementById('modalBg').classList.remove('show');
+});
+document.getElementById('modalBg').addEventListener('click', (e)=>{
+  if(e.target.id==='modalBg') e.target.classList.remove('show');
+});
+
+// ---------- CALCULATOR ----------
+function computeRecipe(recipe){
+  const baseAmount = Number(recipe.base.amount) || 0;
+  const rows = recipe.items.map(it=>{
+    const mat = state.rawMaterials.find(m=>m.id===it.materialId);
+    return { item:it, mat, amt:Number(it.amount) || 0 };
+  });
+  const totalWeight = baseAmount + rows.reduce((s,r)=>s+r.amt, 0);
+  const rowResults = rows.map(r=>{
+    if(!r.mat) return { ...r, components:[] };
+    const components = r.mat.components.map(c=>{
+      const activeGrams = r.amt * (c.pct/100);
+      const finalPct = totalWeight > 0 ? (activeGrams/totalWeight*100) : 0;
+      return { label:c.label, finalPct };
+    });
+    return { ...r, components };
+  });
+  return { baseAmount, totalWeight, rowResults };
+}
+
+function renderRawMaterialRef(){
+  const wrap = document.getElementById('rawMaterialRef');
+  if(!wrap) return;
+  wrap.innerHTML = state.rawMaterials.map(m=>{
+    const label = m.components.map(c=>`${c.label} ${c.pct}%`).join(' + ');
+    const recLabel = m.recommendedRange
+      ? `권장 ${m.recommendedRange.min}~${m.recommendedRange.max}%`
+      : '완제품 · 희석 비권장';
+    return `<span class="badge b-accent">${m.name} · ${label}</span><span class="badge b-alkaline">${recLabel}</span>`;
+  }).join('');
+}
+
+function renderRecipeGrid(){
+  const grid = document.getElementById('recipeGrid');
+  document.getElementById('recipeCount').textContent = state.recipes.length + '개';
+  grid.innerHTML = state.recipes.map(r=>{
+    const { totalWeight, rowResults } = computeRecipe(r);
+    const chips = rowResults.flatMap(rr => rr.components.map(c =>
+      `<span class="badge b-accent">${c.label} ${c.finalPct.toFixed(2)}%</span>`
+    )).join('');
+    return `
+      <div class="card recipe-card">
+        <h4>${r.name}</h4>
+        <div class="base-line">베이스 ${r.base.label || '-'} ${r.base.amount||0}g · 총 ${totalWeight.toFixed(1)}g</div>
+        <div class="chip-row">${chips || '<span class="empty-v">원료를 추가해보세요</span>'}</div>
+        <div class="card-actions">
+          <button class="btn secondary" data-edit="${r.id}">편집</button>
+          <button class="btn danger" data-del="${r.id}">삭제</button>
+        </div>
+      </div>
+    `;
+  }).join('');
+  grid.querySelectorAll('[data-edit]').forEach(b=>{
+    b.addEventListener('click', ()=>{ editingRecipeId = b.dataset.edit; renderCalc(); });
+  });
+  grid.querySelectorAll('[data-del]').forEach(b=>{
+    b.addEventListener('click', ()=>{
+      if(confirm('이 레시피를 삭제할까요?')){
+        state.recipes = state.recipes.filter(r=>r.id !== b.dataset.del);
+        if(editingRecipeId === b.dataset.del) editingRecipeId = null;
+        saveData(state);
+        renderCalc();
+      }
+    });
+  });
+}
+
+function renderRecipeEditor(){
+  const wrap = document.getElementById('recipeEditorWrap');
+  if(!editingRecipeId){ wrap.innerHTML = ''; return; }
+  const recipe = state.recipes.find(r=>r.id === editingRecipeId);
+  if(!recipe){ editingRecipeId = null; wrap.innerHTML = ''; return; }
+  const { totalWeight, rowResults } = computeRecipe(recipe);
+
+  const rowsHtml = recipe.items.map((it, idx)=>{
+    const rr = rowResults[idx];
+    const compHtml = rr.components.map(c=>`<span class="badge b-accent">${c.label} ${c.finalPct.toFixed(2)}%</span>`).join(' ');
+    const rowMat = state.rawMaterials.find(m=>m.id===it.materialId);
+    const targetPlaceholder = rowMat
+      ? (rowMat.recommendedRange ? `권장 ${rowMat.recommendedRange.min}~${rowMat.recommendedRange.max}` : '희석 비권장')
+      : '목표%';
+    return `
+      <div class="material-row">
+        <select data-idx="${idx}" data-field="materialId">
+          <option value="">원료 선택</option>
+          ${state.rawMaterials.map(m=>`<option value="${m.id}" ${it.materialId===m.id?'selected':''}>${m.name}</option>`).join('')}
+        </select>
+        <input type="number" min="0" step="0.01" data-idx="${idx}" data-field="targetPct" value="${it.targetPct||''}" placeholder="${targetPlaceholder}">
+        <input type="number" min="0" step="0.1" data-idx="${idx}" data-field="amount" value="${it.amount||''}" placeholder="g">
+        <div class="row-result">${compHtml || '<span class="empty-v">-</span>'}</div>
+        <button type="button" class="remove-material-btn" data-idx="${idx}" title="삭제">✕</button>
+      </div>
+    `;
+  }).join('');
+
+  wrap.innerHTML = `
+    <div class="day-editor recipe-editor">
+      <div class="editor-head">
+        <input class="recipe-name-input" id="recipeNameInput" value="${recipe.name}">
+        <button class="close-editor" id="closeRecipeEditorBtn">✕</button>
+      </div>
+      <div class="editor-sub">베이스</div>
+      <div class="material-rows-wrap">
+        <div class="material-row base-row">
+          <input id="baseLabelInput" value="${recipe.base.label||''}" placeholder="베이스 이름 (예: 알로에젤)">
+          <input type="number" min="0" step="0.1" id="baseAmountInput" value="${recipe.base.amount||''}" placeholder="g">
+        </div>
+      </div>
+      <div class="editor-sub">원료 · 목표% (원료명 옆 칸에 목표 %를 정하고 아래 "전체 계산"을 누르면, 베이스 무게 기준으로 모든 원료의 g을 한번에 동시 계산해요 — 비워두면 권장값의 중간값을 써요)</div>
+      <div class="material-rows-wrap" id="materialRows">${rowsHtml || '<div class="empty-v">아래 버튼으로 원료를 추가하세요</div>'}</div>
+      <button type="button" class="btn secondary" id="addMaterialBtn">+ 원료 추가</button>
+      <button type="button" class="solve-all-btn" id="solveAllBtn">🧮 전체 계산 (목표 %대로 g 산출)</button>
+      <div class="total-line">총 배합량 <b>${totalWeight.toFixed(1)}g</b></div>
+    </div>
+  `;
+
+  wrap.querySelector('#recipeNameInput').addEventListener('change', e=>{
+    recipe.name = e.target.value || '새 레시피';
+    saveData(state);
+    renderRecipeGrid();
+  });
+  wrap.querySelector('#baseLabelInput').addEventListener('change', e=>{
+    recipe.base.label = e.target.value;
+    saveData(state);
+    renderCalc();
+  });
+  wrap.querySelector('#baseAmountInput').addEventListener('change', e=>{
+    recipe.base.amount = Number(e.target.value) || 0;
+    saveData(state);
+    renderCalc();
+  });
+  wrap.querySelector('#closeRecipeEditorBtn').addEventListener('click', ()=>{
+    editingRecipeId = null;
+    renderCalc();
+  });
+  wrap.querySelector('#addMaterialBtn').addEventListener('click', ()=>{
+    recipe.items.push({ materialId:'', amount:0, targetPct:null });
+    saveData(state);
+    renderCalc();
+  });
+  wrap.querySelectorAll('select[data-field="materialId"]').forEach(sel=>{
+    sel.addEventListener('change', ()=>{
+      recipe.items[Number(sel.dataset.idx)].materialId = sel.value;
+      saveData(state);
+      renderCalc();
+    });
+  });
+  wrap.querySelectorAll('input[data-field="targetPct"]').forEach(inp=>{
+    inp.addEventListener('change', ()=>{
+      recipe.items[Number(inp.dataset.idx)].targetPct = inp.value ? Number(inp.value) : null;
+      saveData(state);
+    });
+  });
+  wrap.querySelectorAll('input[data-field="amount"]').forEach(inp=>{
+    inp.addEventListener('change', ()=>{
+      recipe.items[Number(inp.dataset.idx)].amount = Number(inp.value) || 0;
+      saveData(state);
+      renderCalc();
+    });
+  });
+  wrap.querySelectorAll('.remove-material-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      recipe.items.splice(Number(btn.dataset.idx), 1);
+      saveData(state);
+      renderCalc();
+    });
+  });
+  wrap.querySelector('#solveAllBtn').addEventListener('click', ()=>{
+    const result = solveRecipeAll(recipe);
+    if(result.error){ showToast(result.error); return; }
+    saveData(state);
+    renderCalc();
+    const breakdown = result.rows.map(r=>`${r.mat.name} ${r.it.amount}g`).join(' · ');
+    showToast(`전체 계산 완료 — 총 배합량 ${result.total.toFixed(1)}g (${breakdown})`);
+  });
+}
+
+// 베이스 무게를 고정값으로 두고, 여러 원료의 목표%를 동시에 만족하는 g을 한 번에 풀어요.
+// (원료를 하나씩 순서대로 계산하면 나중 원료가 추가될 때마다 총량이 늘어나 앞서 계산한 원료의 실제 %가 낮아지는 문제가 있어서, 연립방정식으로 한번에 계산해요.)
+function solveRecipeAll(recipe){
+  const base = Number(recipe.base.amount) || 0;
+  if(base <= 0) return { error: '베이스 무게를 먼저 입력하세요' };
+
+  const rows = recipe.items
+    .map(it => ({ it, mat: state.rawMaterials.find(m=>m.id===it.materialId) }))
+    .filter(r => r.mat);
+  if(rows.length === 0) return { error: '원료를 먼저 추가하고 선택하세요' };
+
+  for(const r of rows){
+    if(!r.it.targetPct){
+      if(r.mat.recommendedRange){
+        r.it.targetPct = Math.round(((r.mat.recommendedRange.min + r.mat.recommendedRange.max) / 2) * 1000) / 1000;
+      } else {
+        return { error: `"${r.mat.name}"의 목표 %를 입력하세요 (권장값이 없어요)` };
+      }
+    }
+  }
+
+  const sumRatio = rows.reduce((s,r)=> s + (Number(r.it.targetPct) / r.mat.components[0].pct), 0);
+  if(sumRatio >= 1){
+    return { error: '목표 %의 합이 원료 농도 대비 너무 높아요. 목표 %를 낮춰서 다시 시도하세요' };
+  }
+
+  const total = base / (1 - sumRatio);
+  rows.forEach(r=>{
+    const stockPct = r.mat.components[0].pct;
+    const needed = (Number(r.it.targetPct) * total) / stockPct;
+    r.it.amount = Math.round(needed * 100) / 100;
+  });
+
+  return { total, rows };
+}
+
+document.getElementById('addRecipeBtn').addEventListener('click', ()=>{
+  const newRecipe = { id:genId(), name:"새 레시피", base:{ label:"", amount:0 }, items:[] };
+  state.recipes.push(newRecipe);
+  editingRecipeId = newRecipe.id;
+  saveData(state);
+  renderCalc();
+});
+
+function renderCalc(){
+  renderRawMaterialRef();
+  renderRecipeGrid();
+  renderRecipeEditor();
+}
+
+function renderEditRawMaterials(){
+  const el = document.getElementById('editRawMaterials');
+  el.innerHTML = `
+    <div class="edit-row raw-row header-row">
+      <div class="edit-label">원료명</div>
+      <div class="edit-label">성분(라벨:농도% , 쉼표로 여러개)</div>
+      <div class="edit-label">권장 최종% (예: 0.1-0.5, 완제품은 비워두기)</div>
+      <div class="edit-label"></div>
+    </div>
+  ` + state.rawMaterials.map((m,i)=>{
+    const rangeStr = m.recommendedRange ? `${m.recommendedRange.min}-${m.recommendedRange.max}` : '';
+    return `
+    <div class="edit-row raw-row">
+      <div class="field" data-label="원료명"><input data-field="name" data-i="${i}" value="${m.name}"></div>
+      <div class="field" data-label="성분(라벨:농도%)"><input data-field="components" data-i="${i}" placeholder="예: 세라마이드:0.5" value="${m.components.map(c=>`${c.label}:${c.pct}`).join(', ')}"></div>
+      <div class="field" data-label="권장 최종%"><input data-field="recommendedRange" data-i="${i}" placeholder="예: 0.1-0.5" value="${rangeStr}"></div>
+      <button type="button" class="remove-material-btn" data-del-raw="${i}" title="삭제">✕</button>
+    </div>
+  `;}).join('') + `<button class="btn secondary" id="addRawMaterialBtn">+ 원료 추가</button>`;
+  el.querySelectorAll('[data-field]').forEach(elm=>{
+    elm.addEventListener('change', ()=>{
+      const i = Number(elm.dataset.i);
+      if(elm.dataset.field === 'components'){
+        state.rawMaterials[i].components = elm.value.split(',').map(s=>s.trim()).filter(Boolean).map(pair=>{
+          const [label, pct] = pair.split(':').map(s=>s.trim());
+          return { label: label || '성분', pct: Number(pct) || 0 };
+        });
+      } else if(elm.dataset.field === 'recommendedRange'){
+        const v = elm.value.trim();
+        if(!v){
+          state.rawMaterials[i].recommendedRange = null;
+        } else {
+          const parts = v.split(/[-~]/).map(s=>Number(s.trim()));
+          if(parts.length === 2 && !isNaN(parts[0]) && !isNaN(parts[1])){
+            state.rawMaterials[i].recommendedRange = { min:parts[0], max:parts[1] };
+          }
+        }
+      } else {
+        state.rawMaterials[i][elm.dataset.field] = elm.value;
+      }
+      saveData(state);
+      renderCalc();
+    });
+  });
+  el.querySelectorAll('[data-del-raw]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      if(confirm('이 원료를 삭제할까요? 이 원료를 쓰는 레시피 항목도 함께 정리해야 할 수 있어요.')){
+        const removed = state.rawMaterials[Number(btn.dataset.delRaw)];
+        state.rawMaterials.splice(Number(btn.dataset.delRaw), 1);
+        state.recipes.forEach(r=>{
+          r.items = r.items.filter(it=>it.materialId !== removed.id);
+        });
+        saveData(state);
+        renderAll();
+      }
+    });
+  });
+  el.querySelector('#addRawMaterialBtn').addEventListener('click', ()=>{
+    state.rawMaterials.push({ id:genId(), name:"새 원료", components:[{ label:"성분", pct:1 }], recommendedRange:null });
+    saveData(state);
+    renderEditRawMaterials();
+  });
+}
+
+// ---------- EDIT TAB ----------
+function renderEditProducts(){
+  const el = document.getElementById('editProducts');
+  el.innerHTML = `
+    <div class="edit-row product-row header-row">
+      <div class="edit-label">제품명</div>
+      <div class="edit-label">성분</div>
+      <div class="edit-label">주간목표</div>
+      <div class="edit-label">시간대</div>
+      <div class="edit-label">매일 기본</div>
+      <div class="edit-label"></div>
+    </div>
+  ` + state.products.map((p,i)=>`
+    <div class="edit-row product-row">
+      <div class="field" data-label="제품명"><input data-field="name" data-i="${i}" value="${p.name}"></div>
+      <div class="field" data-label="성분"><input data-field="ingredients" data-i="${i}" placeholder="성분,쉼표로구분" value="${(p.ingredients||[]).join(', ')}"></div>
+      <div class="field" data-label="주간목표"><input type="number" min="0" max="7" data-field="weeklyTarget" data-i="${i}" placeholder="-" value="${p.weeklyTarget||''}"></div>
+      <div class="field" data-label="시간대"><select data-field="period" data-i="${i}">
+        <option value="" ${!p.period?'selected':''}>-</option>
+        <option value="am" ${p.period==='am'?'selected':''}>아침</option>
+        <option value="pm" ${p.period==='pm'?'selected':''}>저녁</option>
+      </select></div>
+      <div class="field" data-label="매일 기본"><div class="row-check"><input type="checkbox" data-field="dailyDefault" data-i="${i}" ${p.dailyDefault?'checked':''}></div></div>
+      <button type="button" class="remove-material-btn" data-del-product="${i}" title="삭제">✕</button>
+    </div>
+  `).join('') + `<button class="btn secondary" id="addProductBtn">+ 제품 추가</button>`;
+  el.querySelectorAll('[data-field]').forEach(elm=>{
+    elm.addEventListener('change', ()=>{
+      const i = Number(elm.dataset.i);
+      const field = elm.dataset.field;
+      if(field === 'ingredients'){
+        state.products[i].ingredients = elm.value.split(',').map(s=>s.trim()).filter(Boolean);
+      } else if(field === 'weeklyTarget'){
+        state.products[i].weeklyTarget = elm.value ? Number(elm.value) : null;
+      } else if(field === 'dailyDefault'){
+        state.products[i].dailyDefault = elm.checked;
+      } else if(field === 'name'){
+        const oldName = state.products[i].name;
+        const newName = elm.value;
+        if(state.weeklySchedule && oldName !== newName){
+          Object.keys(state.weeklySchedule).forEach(dow=>{
+            state.weeklySchedule[dow] = state.weeklySchedule[dow].map(n=>n===oldName?newName:n);
+          });
+        }
+        state.products[i].name = newName;
+      } else {
+        state.products[i][field] = elm.value;
+      }
+      saveData(state);
+      renderAll();
+    });
+  });
+  el.querySelectorAll('[data-del-product]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      if(confirm('이 제품을 삭제할까요?')){
+        const removed = state.products[Number(btn.dataset.delProduct)];
+        state.products.splice(Number(btn.dataset.delProduct), 1);
+        if(state.weeklySchedule){
+          Object.keys(state.weeklySchedule).forEach(dow=>{
+            state.weeklySchedule[dow] = state.weeklySchedule[dow].filter(n=>n!==removed.name);
+          });
+        }
+        saveData(state);
+        renderAll();
+      }
+    });
+  });
+  el.querySelector('#addProductBtn').addEventListener('click', addProduct);
+}
+function addProduct(){
+  state.products.push({name:"새 제품", status:"사용중", note:"", ingredients:[], weeklyTarget:null, period:null, dailyDefault:false});
+  saveData(state);
+  renderAll();
+}
+
+function renderEditWeeklySchedule(){
+  const el = document.getElementById('editWeeklySchedule');
+  const schedulable = state.products.filter(p=>!p.dailyDefault);
+  const amList = schedulable.filter(p=>p.period==='am');
+  const pmList = schedulable.filter(p=>p.period==='pm');
+  const flexList = schedulable.filter(p=>!p.period);
+
+  function chipsFor(list, dow, scheduled){
+    return list.map(p=>`<button type="button" class="toggle-chip ${scheduled.includes(p.name)?'on':''}" data-dow="${dow}" data-name="${p.name.replace(/"/g,'&quot;')}">${p.name}</button>`).join('');
+  }
+
+  el.innerHTML = KOR_DAYS.map((label, dow)=>{
+    const scheduled = (state.weeklySchedule && state.weeklySchedule[dow]) || [];
+    const groups = [
+      amList.length ? `<div class="schedule-sub">아침</div><div class="toggle-grid">${chipsFor(amList, dow, scheduled)}</div>` : '',
+      pmList.length ? `<div class="schedule-sub">저녁</div><div class="toggle-grid">${chipsFor(pmList, dow, scheduled)}</div>` : '',
+      flexList.length ? `<div class="schedule-sub">기타</div><div class="toggle-grid">${chipsFor(flexList, dow, scheduled)}</div>` : ''
+    ].join('');
+    return `
+      <div class="schedule-day-row">
+        <div class="schedule-day-label">${label}요일</div>
+        ${groups || '<span class="empty-v">등록된 제품이 없어요</span>'}
+      </div>
+    `;
+  }).join('');
+  el.querySelectorAll('.toggle-chip').forEach(chip=>{
+    chip.addEventListener('click', ()=>{
+      const dow = Number(chip.dataset.dow);
+      const name = chip.dataset.name;
+      if(!state.weeklySchedule) state.weeklySchedule = {};
+      if(!state.weeklySchedule[dow]) state.weeklySchedule[dow] = [];
+      const list = state.weeklySchedule[dow];
+      const idx = list.indexOf(name);
+      if(idx >= 0) list.splice(idx,1); else list.push(name);
+      saveData(state);
+      chip.classList.toggle('on');
+      renderScheduleTable();
+    });
+  });
+}
+
+function renderEditIngredients(){
+  const el = document.getElementById('editIngredients');
+  el.innerHTML = state.ingredients.map((ing,i)=>`
+    <div class="edit-row ing-row">
+      <div class="field" data-label="성분명"><input data-field="name" data-i="${i}" value="${ing.name}"></div>
+      <div class="field" data-label="태그"><input data-field="tags" data-i="${i}" placeholder="태그,쉼표로구분" value="${ing.tags.join(', ')}"></div>
+      <div class="field" data-label="작용 기전"><textarea data-field="mechanism" data-i="${i}">${ing.mechanism}</textarea></div>
+      <button type="button" class="remove-material-btn" data-del-ing="${i}" title="삭제">✕</button>
+    </div>
+  `).join('') + `<button class="btn secondary" id="addIngBtn">+ 성분 추가</button>`;
+  el.querySelectorAll('[data-field]').forEach(elm=>{
+    elm.addEventListener('change', ()=>{
+      const i = Number(elm.dataset.i);
+      if(elm.dataset.field === 'tags'){
+        state.ingredients[i].tags = elm.value.split(',').map(s=>s.trim()).filter(Boolean);
+      } else {
+        state.ingredients[i][elm.dataset.field] = elm.value;
+      }
+      saveData(state);
+      renderAll();
+    });
+  });
+  el.querySelectorAll('[data-del-ing]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      if(confirm('이 성분을 삭제할까요?')){
+        state.ingredients.splice(Number(btn.dataset.delIng), 1);
+        saveData(state);
+        renderAll();
+      }
+    });
+  });
+  el.querySelector('#addIngBtn').addEventListener('click', addIngredient);
+}
+function addIngredient(){
+  state.ingredients.push({name:"새 성분", tags:[], mechanism:""});
+  saveData(state);
+  renderAll();
+}
+
+
+// ---------- TODAY DASHBOARD ----------
+let todayShowAll = false;
+let selectedDate = new Date();
+selectedDate.setHours(0,0,0,0);
+
+function parseDateKey(str){
+  const [y,m,d] = str.split('-').map(Number);
+  return new Date(y, m-1, d);
+}
+function isSameDay(a,b){ return dateKey(a) === dateKey(b); }
+
+function todayEntry(){
+  const key = dateKey(selectedDate);
+  if(!state.usageLog[key]) state.usageLog[key] = { products: defaultNamesFor(), note:'' };
+  return {key, entry:state.usageLog[key]};
+}
+function plannedTodayProducts(){
+  const dow = selectedDate.getDay();
+  const scheduled = (state.weeklySchedule && state.weeklySchedule[dow]) || [];
+  const defaults = defaultNamesFor();
+  return state.products.filter(p => scheduled.includes(p.name) || defaults.includes(p.name));
+}
+function setSelectedDate(d){
+  selectedDate = d;
+  selectedDate.setHours(0,0,0,0);
+  renderTodayDashboard();
+  renderHome();
+  document.getElementById('tab-today').scrollIntoView({behavior:'smooth', block:'start'});
+}
+function renderTodayDashboard(){
+  const heroDate = document.getElementById('todayHeroDate');
+  if(!heroDate) return;
+  const todayReal = new Date();
+  const isToday = isSameDay(selectedDate, todayReal);
+  heroDate.textContent = `${selectedDate.getFullYear()}년 ${selectedDate.getMonth()+1}월 ${selectedDate.getDate()}일 · ${KOR_DAYS[selectedDate.getDay()]}요일`;
+
+  const title = document.getElementById('todayHeroTitle');
+  const hint = document.getElementById('todayHeroHint');
+  if(title) title.textContent = isToday ? '오늘의 루틴' : `${selectedDate.getMonth()+1}월 ${selectedDate.getDate()}일의 루틴`;
+  if(hint) hint.textContent = isToday ? '오늘 사용할 제품을 체크하세요.' : '이 날짜에 사용한 제품을 체크해 기록을 수정하세요.';
+
+  const picker = document.getElementById('todayDatePicker');
+  if(picker) picker.value = dateKey(selectedDate);
+  const jumpBtn = document.getElementById('todayJumpBtn');
+  if(jumpBtn) jumpBtn.style.visibility = isToday ? 'hidden' : 'visible';
+
+  const data = todayEntry();
+  const visible = todayShowAll ? state.products : plannedTodayProducts();
+  const fallback = visible.length ? visible : state.products.filter(p=>p.period);
+  const groups = [
+    ['아침', fallback.filter(p=>p.period==='am')],
+    ['저녁', fallback.filter(p=>p.period==='pm')],
+    ['추가 루틴', fallback.filter(p=>!p.period)]
+  ].filter(g=>g[1].length);
+
+  const checkedCount = fallback.filter(p=>data.entry.products.includes(p.name)).length;
+  const list = document.getElementById('todayChecklist');
+  list.innerHTML = groups.map(([label, products])=>`
+    <div class="today-group">
+      <div class="today-group-label">${label}</div>
+      ${products.map(p=>{
+        const done = data.entry.products.includes(p.name);
+        return `<button type="button" class="today-check ${done?'done':''}" data-today-product="${p.name.replace(/"/g,'&quot;')}">
+          <span class="today-box">${done?'✓':''}</span><span class="today-name">${p.name}</span>
+        </button>`;
+      }).join('')}
+    </div>`).join('') +
+    `<div class="today-summary"><span>${todayShowAll?'전체 제품':'오늘 계획'}</span><b>${checkedCount} / ${fallback.length}</b></div>`;
+
+  list.querySelectorAll('[data-today-product]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const name = btn.dataset.todayProduct;
+      const i = data.entry.products.indexOf(name);
+      if(i>=0) data.entry.products.splice(i,1); else data.entry.products.push(name);
+      saveData(state);
+      renderTodayDashboard();
+      renderHome();
+    });
+  });
+
+  const toggle = document.getElementById('toggleTodayAll');
+  toggle.textContent = todayShowAll ? (isToday ? '오늘 계획만' : '이 날짜 계획만') : '+ 다른 제품';
+  toggle.onclick = ()=>{todayShowAll=!todayShowAll; renderTodayDashboard();};
+
+  const dates = getWeekDates();
+  const targets = state.products.filter(p=>p.weeklyTarget);
+  document.getElementById('todayProgress').innerHTML = targets.map(p=>{
+    const count = dates.filter(d=>{
+      const e = state.usageLog[dateKey(d)];
+      return e && e.products && e.products.includes(p.name);
+    }).length;
+    const pct = Math.min(100, Math.round(count/p.weeklyTarget*100));
+    const done = count >= p.weeklyTarget;
+    const colorVar = colorFor(p.name);
+    return `<div class="progress-row">
+      <div class="progress-top"><div class="progress-label"><span class="cat-dot" style="background:var(--${colorVar})"></span>${p.name}</div>
+      <div class="progress-count"><span class="num">${count}</span><span class="of">/${p.weeklyTarget}회</span>${done?'<span class="done-pill">완료</span>':''}</div></div>
+      <div class="progress-track"><div class="progress-fill ${done?'done':''}" style="width:${pct}%; ${done?'':`background:var(--${colorVar})`}"></div></div>
+    </div>`;
+  }).join('') || '<div class="empty-v">주간 목표를 설정하면 여기에 표시돼요.</div>';
+
+  const plan = document.getElementById('todayWeekPlan');
+  plan.innerHTML = KOR_DAYS.map((d,idx)=>{
+    const names = (state.weeklySchedule && state.weeklySchedule[idx]) || [];
+    return `<div class="today-plan-row"><div class="today-plan-day">${d}요일</div><div>${
+      names.length ? `<div class="chip-row">${names.map(n=>`<span class="badge b-alkaline">${n}</span>`).join('')}</div>` : '<span class="today-empty">계획 없음</span>'
+    }</div></div>`;
+  }).join('');
+}
+
+function renderRoutineManager(){
+  const schedule = document.getElementById('routineScheduleView');
+  const targets = document.getElementById('routineTargetView');
+  if(!schedule || !targets) return;
+
+  schedule.innerHTML = KOR_DAYS.map((day,dow)=>{
+    const names=(state.weeklySchedule && state.weeklySchedule[dow])||[];
+    return `<div class="routine-day">
+      <div class="routine-day-top"><span class="routine-day-name">${day}요일</span><button type="button" class="routine-edit-btn" data-routine-day="${dow}">수정</button></div>
+      ${names.length?`<div class="chip-row">${names.map(n=>`<span class="badge b-alkaline">${n}</span>`).join('')}</div>`:'<span class="small-note">계획 없음</span>'}
+    </div>`;
+  }).join('');
+
+  schedule.querySelectorAll('[data-routine-day]').forEach(btn=>btn.addEventListener('click',()=>{
+    const dow=Number(btn.dataset.routineDay);
+    const existing=(state.weeklySchedule[dow]||[]).join(', ');
+    const available=state.products.map(p=>p.name).join(', ');
+    const next=prompt(`${KOR_DAYS[dow]}요일 제품을 쉼표로 구분해 입력하세요.\n\n가능한 제품: ${available}`,existing);
+    if(next===null) return;
+    state.weeklySchedule[dow]=next.split(',').map(v=>v.trim()).filter(v=>state.products.some(p=>p.name===v));
+    saveData(state); renderRoutineManager(); renderTodayDashboard(); renderHome();
+  }));
+
+  targets.innerHTML = state.products.filter(p=>p.weeklyTarget || p.status==='사용중').map(p=>`
+    <div class="target-row"><span class="target-name">${p.name}</span>
+      <label class="target-input"><input type="number" min="0" max="7" value="${p.weeklyTarget||0}" data-target="${p.name.replace(/"/g,'&quot;')}"> 회</label>
+    </div>`).join('');
+
+  targets.querySelectorAll('[data-target]').forEach(inp=>inp.addEventListener('change',()=>{
+    const p=state.products.find(x=>x.name===inp.dataset.target);
+    if(!p) return;
+    p.weeklyTarget=Math.max(0,Math.min(7,Number(inp.value)||0))||null;
+    saveData(state); renderRoutineManager(); renderTodayDashboard(); renderHome();
+  }));
+}
+
+// ---------- MOBILE NAV ----------
+function syncMobileNav(tab){
+  document.querySelectorAll('.mobile-bottom-nav [data-mobile-tab]').forEach(b=>b.classList.toggle('active',b.dataset.mobileTab===tab));
+}
+document.querySelectorAll('.mobile-bottom-nav [data-mobile-tab]').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const target=document.querySelector(`.top-tabs button[data-tab="${btn.dataset.mobileTab}"]`);
+    if(target) target.click();
+    syncMobileNav(btn.dataset.mobileTab);
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+
+// ---------- SAVE / EXPORT / IMPORT / RESET ----------
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  const duration = Math.min(6000, Math.max(1800, msg.length * 60));
+  clearTimeout(t._hideTimer);
+  t._hideTimer = setTimeout(()=>t.classList.remove('show'), duration);
+}
+document.getElementById('saveBtn').addEventListener('click', ()=>{
+  saveData(state);
+  renderAll();
+  showToast(storageAvailable ? '저장되었습니다' : '이 화면에서는 저장이 지원되지 않아요. 내보내기로 백업하세요.');
+});
+document.getElementById('exportBtn').addEventListener('click', ()=>{
+  const blob = new Blob([JSON.stringify(state, null, 2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'skincare_data.json';
+  a.click();
+  URL.revokeObjectURL(url);
+});
+document.getElementById('importBtn').addEventListener('click', ()=>{
+  document.getElementById('importFile').click();
+});
+document.getElementById('importFile').addEventListener('change', (e)=>{
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = (ev)=>{
+    try{
+      const parsed = JSON.parse(ev.target.result);
+      if(!parsed.usageLog) parsed.usageLog = {};
+      state = parsed;
+      saveData(state);
+      renderAll();
+      showToast('불러오기 완료');
+    }catch(err){
+      showToast('JSON 파일을 읽을 수 없어요');
+    }
+  };
+  reader.readAsText(file);
+});
+document.getElementById('clearWeekBtn').addEventListener('click', ()=>{
+  if(confirm('이번주에 표시된 날짜의 기록만 지울까요? (제품/성분 정보는 유지돼요)')){
+    getWeekDates().forEach(d=>{ delete state.usageLog[dateKey(d)]; });
+    saveData(state);
+    renderAll();
+    showToast('이번주 기록을 지웠습니다');
+  }
+});
+document.getElementById('resetBtn').addEventListener('click', ()=>{
+  if(confirm('제품·성분·모든 사용 기록을 지우고 기본값으로 되돌릴까요?')){
+    state = JSON.parse(JSON.stringify(DEFAULT_DATA));
+    weekOffset = 0;
+    saveData(state);
+    renderAll();
+    showToast('기본값으로 초기화되었습니다');
+  }
+});
+
+function renderToday(){
+  const now = new Date();
+  document.getElementById('todayLabel').textContent =
+    now.getFullYear()+"년 "+(now.getMonth()+1)+"월 "+now.getDate()+"일 ("+KOR_DAYS[now.getDay()]+")";
+}
+
+function renderAll(){
+  renderToday();
+  renderTodayDashboard();
+  renderHome();
+  renderIngredients();
+  renderCalc();
+  renderEditProducts();
+  renderEditWeeklySchedule();
+  renderEditIngredients();
+  renderEditRawMaterials();
+  renderRoutineManager();
+}
+renderAll();
+</script>
+
+<script>
+(function () {
+  var LS_MEDS = 'atk_meds_v2';
+  var LS_MED_LEGACY = 'atk_med_v1';
+  var LS_MED_HISTORY_LEGACY = 'atk_medHistory_v1';
+  var LS_FOOD_PROFILE = 'atk_foodProfile_v1';
+  var LS_LOGS = 'atk_logs_v1';
+  var DEFAULT_FOODS = ['유제품', '카제인', '염소우유', '양우유', '아몬드'];
+  var STORAGE_CAP_BYTES = 5 * 1024 * 1024;
+
+  var TYPE_META = {
+    hives:   { label: '두드러기형', className: 'hives',   varColor: '--alkaline' },
+    burning: { label: '화끈형',     className: 'burning', varColor: '--accent' },
+    both:    { label: '복합형',     className: 'both',    varColor: '--device' }
+  };
+  var SEV_META = {
+    mild:   { label: '경미', className: 'mild' },
+    mod:    { label: '보통', className: 'mod' },
+    severe: { label: '심함', className: 'severe' }
+  };
+
+  function load(key, fallback) {
+    try {
+      var raw = localStorage.getItem(key);
+      return raw ? JSON.parse(raw) : fallback;
+    } catch (e) { return fallback; }
+  }
+  function save(key, value) {
+    try { localStorage.setItem(key, JSON.stringify(value)); return true; }
+    catch (e) { return false; }
+  }
+  function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 8); }
+  function todayStr() {
+    var d = new Date();
+    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+  }
+  function fmtDate(s) {
+    if (!s) return '';
+    var p = s.split('-');
+    return p[0] + '.' + p[1] + '.' + p[2];
+  }
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  function migrateMeds() {
+    var existing = load(LS_MEDS, null);
+    if (existing) return existing;
+    var arr = [];
+    var oldMed = load(LS_MED_LEGACY, null);
+    var oldHistory = load(LS_MED_HISTORY_LEGACY, []);
+    if (oldMed) {
+      arr.push({ id: uid(), name: oldMed.name, freq: oldMed.freq || '', startDate: oldMed.startDate || '', endDate: null, note: oldMed.note || '', active: true });
+    }
+    oldHistory.forEach(function (h) {
+      arr.push({ id: uid(), name: h.name, freq: '', startDate: h.startDate || '', endDate: h.endDate || '', note: '', active: false });
+    });
+    return arr;
+  }
+
+  var meds = migrateMeds();
+  save(LS_MEDS, meds);
+  var foodProfile = load(LS_FOOD_PROFILE, DEFAULT_FOODS.slice());
+  var logs = load(LS_LOGS, []);
+  var activeFilter = 'all';
+  var editingLogId = null;
+  var editingMedId = null;
+  var photoDraft = [];
+
+  // ---------- Medication ----------
+  var medListEl = document.getElementById('medList');
+  var medForm = document.getElementById('medForm');
+  var medAddBtn = document.getElementById('medAddBtn');
+  var medSaveBtn = document.getElementById('medSaveBtn');
+  var medCancelBtn = document.getElementById('medCancelBtn');
+
+  function renderMeds() {
+    var activeMeds = meds.filter(function (m) { return m.active; });
+    if (!activeMeds.length) {
+      medListEl.innerHTML = '<div class="med-item"><div><div class="name" style="color:var(--sub); font-weight:600;">등록된 약물이 없어요</div><div class="meta">"+ 약 추가"에서 지금 먹는 약을 입력해보세요.</div></div></div>';
+    } else {
+      medListEl.innerHTML = activeMeds.map(function (m) {
+        return '<div class="med-item"><div>' +
+          '<div class="name">' + esc(m.name) + '</div>' +
+          '<div class="meta">' + esc(m.freq || '') + (m.startDate ? ' · ' + fmtDate(m.startDate) + '부터' : '') + '</div>' +
+          (m.note ? '<div class="meta">' + esc(m.note) + '</div>' : '') +
+          '</div><div class="actions"><button class="btn secondary small" data-med-edit="' + m.id + '">수정</button><button class="btn secondary small" data-med-stop="' + m.id + '">복용 중지</button></div></div>';
+      }).join('');
+    }
+    Array.from(medListEl.querySelectorAll('[data-med-edit]')).forEach(function (b) {
+      b.addEventListener('click', function () { openMedForm(b.getAttribute('data-med-edit')); });
+    });
+    Array.from(medListEl.querySelectorAll('[data-med-stop]')).forEach(function (b) {
+      b.addEventListener('click', function () { stopMed(b.getAttribute('data-med-stop')); });
+    });
+  }
+
+  function renderMedHistory() {
+    var ended = meds.filter(function (m) { return !m.active; });
+    var ul = document.getElementById('medHistoryList');
+    if (!ended.length) {
+      ul.innerHTML = '<li style="color:var(--sub);">이전 이력이 없어요.</li>';
+      return;
+    }
+    ul.innerHTML = ended.slice().reverse().map(function (m) {
+      return '<li><span><b>' + esc(m.name) + '</b> <span style="color:var(--sub);">' + fmtDate(m.startDate) + ' ~ ' + fmtDate(m.endDate) + '</span></span>' +
+        '<button class="btn secondary small" data-med-del="' + m.id + '">삭제</button></li>';
+    }).join('');
+    Array.from(ul.querySelectorAll('[data-med-del]')).forEach(function (b) {
+      b.addEventListener('click', function () {
+        if (!confirm('이 이력을 완전히 삭제할까요?')) return;
+        meds = meds.filter(function (m) { return m.id !== b.getAttribute('data-med-del'); });
+        save(LS_MEDS, meds);
+        renderAllergyAll();
+      });
+    });
+  }
+
+  function openMedForm(id) {
+    editingMedId = id;
+    var m = id ? meds.find(function (x) { return x.id === id; }) : null;
+    document.getElementById('medFormTitle').textContent = id ? '약 정보 수정' : '약 추가';
+    document.getElementById('medName').value = m ? m.name : '';
+    document.getElementById('medFreq').value = m ? (m.freq || '매일 1회') : '매일 1회';
+    document.getElementById('medStart').value = m ? (m.startDate || todayStr()) : todayStr();
+    document.getElementById('medNote').value = m ? (m.note || '') : '';
+    medForm.style.display = 'block';
+    medForm.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+  function closeMedForm() { medForm.style.display = 'none'; editingMedId = null; }
+
+  medAddBtn.addEventListener('click', function () { openMedForm(null); });
+  medCancelBtn.addEventListener('click', closeMedForm);
+
+  medSaveBtn.addEventListener('click', function () {
+    var name = document.getElementById('medName').value.trim();
+    if (!name) { document.getElementById('medName').focus(); return; }
+    var fields = {
+      name: name,
+      freq: document.getElementById('medFreq').value,
+      startDate: document.getElementById('medStart').value || todayStr(),
+      note: document.getElementById('medNote').value.trim()
+    };
+    if (editingMedId) {
+      var idx = meds.findIndex(function (m) { return m.id === editingMedId; });
+      if (idx > -1) meds[idx] = Object.assign({}, meds[idx], fields);
+    } else {
+      meds.push(Object.assign({ id: uid(), active: true, endDate: null }, fields));
+    }
+    save(LS_MEDS, meds);
+    closeMedForm();
+    renderAllergyAll();
+  });
+
+  function stopMed(id) {
+    if (!confirm('이 약의 복용을 중지할까요? 이력에는 남아요.')) return;
+    var m = meds.find(function (x) { return x.id === id; });
+    if (!m) return;
+    m.active = false;
+    m.endDate = todayStr();
+    save(LS_MEDS, meds);
+    renderAllergyAll();
+  }
+
+  // ---------- Food profile ----------
+  var foodRefDisplay = document.getElementById('foodRefDisplay');
+  var foodRefForm = document.getElementById('foodRefForm');
+  document.getElementById('foodRefEditBtn').addEventListener('click', function () {
+    document.getElementById('foodRefInput').value = foodProfile.join(', ');
+    foodRefForm.style.display = 'block';
+  });
+  document.getElementById('foodRefCancelBtn').addEventListener('click', function () { foodRefForm.style.display = 'none'; });
+  document.getElementById('foodRefSaveBtn').addEventListener('click', function () {
+    var raw = document.getElementById('foodRefInput').value;
+    var parsed = raw.split(',').map(function (s) { return s.trim(); }).filter(Boolean);
+    foodProfile = Array.from(new Set(parsed));
+    save(LS_FOOD_PROFILE, foodProfile);
+    foodRefForm.style.display = 'none';
+    renderAllergyAll();
+  });
+  function renderFoodRef() {
+    foodRefDisplay.innerHTML = foodProfile.length
+      ? foodProfile.map(function (f) { return '<span class="food-ref-chip">' + esc(f) + '</span>'; }).join('')
+      : '<span style="color:var(--sub); font-size:13px;">등록된 항목이 없어요.</span>';
+  }
+  function renderFoodChecks(checkedList) {
+    var container = document.getElementById('foodChecks');
+    container.innerHTML = foodProfile.map(function (f, i) {
+      var id = 'food_' + i;
+      var checked = checkedList && checkedList.indexOf(f) > -1 ? ' checked' : '';
+      return '<input type="checkbox" value="' + esc(f) + '" id="' + id + '" class="foodCheckbox"' + checked + ' /><label for="' + id + '">' + esc(f) + '</label>';
+    }).join('');
+  }
+
+  // ---------- Photos ----------
+  var photoPreview = document.getElementById('photoPreview');
+  document.getElementById('photoAddBtn').addEventListener('click', function () { document.getElementById('logPhotoInput').click(); });
+
+  function resizeImageFile(file) {
+    return new Promise(function (resolve, reject) {
+      var reader = new FileReader();
+      reader.onload = function () {
+        var img = new Image();
+        img.onload = function () {
+          var maxDim = 1000;
+          var w = img.width, h = img.height;
+          if (w > maxDim || h > maxDim) {
+            if (w >= h) { h = Math.round(h * maxDim / w); w = maxDim; }
+            else { w = Math.round(w * maxDim / h); h = maxDim; }
+          }
+          var canvas = document.createElement('canvas');
+          canvas.width = w; canvas.height = h;
+          canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+          resolve(canvas.toDataURL('image/jpeg', 0.72));
+        };
+        img.onerror = reject;
+        img.src = reader.result;
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  document.getElementById('logPhotoInput').addEventListener('change', function (e) {
+    var files = Array.from(e.target.files || []);
+    Promise.all(files.map(resizeImageFile)).then(function (results) {
+      photoDraft = photoDraft.concat(results);
+      renderPhotoPreview();
+    }).catch(function () { showToast('사진을 처리하는 중 문제가 생겼어요.'); });
+    e.target.value = '';
+  });
+
+  function renderPhotoPreview() {
+    photoPreview.innerHTML = photoDraft.map(function (src, i) {
+      return '<div class="ph"><img src="' + src + '" /><button type="button" data-photo-remove="' + i + '">&times;</button></div>';
+    }).join('');
+    Array.from(photoPreview.querySelectorAll('[data-photo-remove]')).forEach(function (b) {
+      b.addEventListener('click', function () {
+        photoDraft.splice(parseInt(b.getAttribute('data-photo-remove'), 10), 1);
+        renderPhotoPreview();
+      });
+    });
+  }
+
+  // ---------- Lightbox ----------
+  var lightbox = document.getElementById('photoLightbox');
+  function openLightbox(src) {
+    document.getElementById('photoLightboxImg').src = src;
+    lightbox.classList.add('open');
+  }
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    document.getElementById('photoLightboxImg').src = '';
+  }
+  document.getElementById('photoLightboxClose').addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', function (e) { if (e.target === lightbox) closeLightbox(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeLightbox(); });
+
+  // ---------- Log form ----------
+  var logSaveBtn = document.getElementById('logSaveBtn');
+  var logCancelBtn = document.getElementById('logCancelBtn');
+  var logFormTitle = document.getElementById('logFormTitle');
+  document.getElementById('logDate').value = todayStr();
+
+  function resetLogForm() {
+    editingLogId = null;
+    photoDraft = [];
+    document.getElementById('logDate').value = todayStr();
+    document.getElementById('logTime').value = '';
+    document.getElementById('logDuration').value = '';
+    document.getElementById('logSeverity').value = 'mild';
+    document.getElementById('typeHives').checked = true;
+    document.getElementById('logThroat').checked = false;
+    document.getElementById('logPeriod').checked = false;
+    document.getElementById('logTrigger').value = '';
+    document.getElementById('logNote').value = '';
+    renderFoodChecks([]);
+    renderPhotoPreview();
+    logFormTitle.textContent = '알러지 발생 기록 추가';
+    logSaveBtn.textContent = '기록 저장';
+    logCancelBtn.style.display = 'none';
+  }
+
+  function startEditLog(id) {
+    var entry = logs.find(function (l) { return l.id === id; });
+    if (!entry) return;
+    editingLogId = id;
+    document.getElementById('logDate').value = entry.date;
+    document.getElementById('logTime').value = entry.time || '';
+    document.getElementById('logDuration').value = entry.duration || '';
+    document.getElementById('logSeverity').value = entry.severity;
+    document.getElementById('type' + entry.type.charAt(0).toUpperCase() + entry.type.slice(1)).checked = true;
+    document.getElementById('logThroat').checked = !!entry.throat;
+    document.getElementById('logPeriod').checked = !!entry.period;
+    document.getElementById('logTrigger').value = entry.trigger || '';
+    document.getElementById('logNote').value = entry.note || '';
+    renderFoodChecks(entry.foods || []);
+    photoDraft = (entry.photos || []).slice();
+    renderPhotoPreview();
+    logFormTitle.textContent = '기록 수정';
+    logSaveBtn.textContent = '수정 완료';
+    logCancelBtn.style.display = 'inline-block';
+    document.getElementById('logFormCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  logCancelBtn.addEventListener('click', resetLogForm);
+
+  logSaveBtn.addEventListener('click', function () {
+    var date = document.getElementById('logDate').value;
+    if (!date) { document.getElementById('logDate').focus(); return; }
+    var type = document.querySelector('input[name="logType"]:checked').value;
+    var foods = Array.from(document.querySelectorAll('.foodCheckbox:checked')).map(function (cb) { return cb.value; });
+    var activeMedNames = meds.filter(function (m) { return m.active; }).map(function (m) { return m.name; });
+    var entry = {
+      id: editingLogId || uid(),
+      date: date,
+      time: document.getElementById('logTime').value,
+      type: type,
+      throat: document.getElementById('logThroat').checked,
+      period: document.getElementById('logPeriod').checked,
+      severity: document.getElementById('logSeverity').value,
+      duration: document.getElementById('logDuration').value,
+      trigger: document.getElementById('logTrigger').value.trim(),
+      foods: foods,
+      note: document.getElementById('logNote').value.trim(),
+      photos: photoDraft.slice(),
+      medSnapshot: activeMedNames.join(', ')
+    };
+    if (editingLogId) {
+      var idx = logs.findIndex(function (l) { return l.id === editingLogId; });
+      logs[idx] = entry;
+    } else {
+      logs.push(entry);
+    }
+    var savedOk = save(LS_LOGS, logs);
+    if (!savedOk) {
+      showToast('브라우저 저장 공간이 가득 차서 이번 기록이 저장되지 않았어요. 지금 "JSON 내보내기"로 백업한 뒤, 오래된 기록의 사진을 정리하고 다시 시도해주세요.');
+    }
+    resetLogForm();
+    renderAllergyAll();
+  });
+
+  function deleteLog(id) {
+    if (!confirm('이 기록을 삭제할까요?')) return;
+    logs = logs.filter(function (l) { return l.id !== id; });
+    save(LS_LOGS, logs);
+    renderAllergyAll();
+  }
+
+  // ---------- Filter tabs ----------
+  var filterTabs = document.getElementById('filterTabs');
+  var FILTERS = [
+    { key: 'all', label: '전체' },
+    { key: 'hives', label: '두드러기형' },
+    { key: 'burning', label: '화끈형' },
+    { key: 'both', label: '복합형' }
+  ];
+  filterTabs.innerHTML = FILTERS.map(function (f) {
+    return '<button data-key="' + f.key + '" class="' + (f.key === activeFilter ? 'active' : '') + '">' + f.label + '</button>';
+  }).join('');
+  filterTabs.addEventListener('click', function (e) {
+    var btn = e.target.closest('button');
+    if (!btn) return;
+    activeFilter = btn.getAttribute('data-key');
+    Array.from(filterTabs.children).forEach(function (b) { b.classList.toggle('active', b === btn); });
+    renderAllergyTable();
+  });
+
+  // ---------- Table ----------
+  function renderAllergyTable() {
+    var body = document.getElementById('logTableBody');
+    var sorted = logs.slice().sort(function (a, b) { return (b.date + (b.time||'')).localeCompare(a.date + (a.time||'')); });
+    var filtered = activeFilter === 'all' ? sorted : sorted.filter(function (l) { return l.type === activeFilter; });
+    document.getElementById('logCount').textContent = '(' + filtered.length + ')';
+    document.getElementById('emptyState').style.display = filtered.length ? 'none' : 'block';
+    body.innerHTML = filtered.map(function (l) {
+      var tm = TYPE_META[l.type];
+      var sv = SEV_META[l.severity] || SEV_META.mild;
+      var triggerHtml = l.trigger ? '<span class="trig">' + esc(l.trigger) + '</span>' : '';
+      var noteHtml = l.note ? esc(l.note) : '';
+      var mainLine = (triggerHtml || noteHtml) ? (triggerHtml + (triggerHtml && noteHtml ? ' · ' : '') + noteHtml) : '—';
+      var foodsHtml = (l.foods && l.foods.length) ? l.foods.map(function (f) { return '<span class="tag-soft">' + esc(f) + '</span>'; }).join('') : '';
+      var periodHtml = l.period ? '<span class="tag-soft">생리 중</span>' : '';
+      var photosHtml = (l.photos && l.photos.length)
+        ? '<div class="photo-thumbs">' + l.photos.map(function (src) { return '<img src="' + src + '" data-lightbox-src="' + src.replace(/"/g, '&quot;') + '" />'; }).join('') + '</div>'
+        : '';
+      return '<tr>' +
+        '<td class="date" data-label="날짜">' + fmtDate(l.date) + (l.time ? '<br>' + esc(l.time) : '') + '</td>' +
+        '<td data-label="유형"><span class="chip-type ' + tm.className + '">' + tm.label + '</span>' + (l.throat ? '<br><span class="tag-critical">⚠ 목·혀 부음</span>' : '') + '</td>' +
+        '<td data-label="심각도"><span class="sev ' + sv.className + '">' + sv.label + '</span></td>' +
+        '<td data-label="지속">' + (l.duration ? l.duration + '시간' : '—') + '</td>' +
+        '<td class="note-cell" data-label="메모">' + mainLine + '<div>' + foodsHtml + periodHtml + '</div>' + photosHtml + '</td>' +
+        '<td data-label=""><div class="row-actions"><button class="btn secondary small" data-edit="' + l.id + '">수정</button><button class="btn danger small" data-del="' + l.id + '">삭제</button></div></td>' +
+        '</tr>';
+    }).join('');
+    Array.from(body.querySelectorAll('[data-edit]')).forEach(function (b) {
+      b.addEventListener('click', function () { startEditLog(b.getAttribute('data-edit')); });
+    });
+    Array.from(body.querySelectorAll('[data-del]')).forEach(function (b) {
+      b.addEventListener('click', function () { deleteLog(b.getAttribute('data-del')); });
+    });
+    Array.from(body.querySelectorAll('[data-lightbox-src]')).forEach(function (img) {
+      img.addEventListener('click', function () { openLightbox(img.getAttribute('data-lightbox-src')); });
+    });
+  }
+
+  // ---------- Stats ----------
+  function renderAllergyStats() {
+    var grid = document.getElementById('statGrid');
+    var now = new Date();
+    var thisMonthKey = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0');
+    var totalCount = logs.length;
+    var monthCount = logs.filter(function (l) { return l.date.slice(0, 7) === thisMonthKey; }).length;
+
+    var typeCounts = { hives: 0, burning: 0, both: 0 };
+    logs.forEach(function (l) { if (typeCounts[l.type] != null) typeCounts[l.type]++; });
+    var topType = Object.keys(typeCounts).sort(function (a, b) { return typeCounts[b] - typeCounts[a]; })[0];
+    var topTypeLabel = totalCount ? TYPE_META[topType].label + ' (' + typeCounts[topType] + '건)' : '—';
+
+    var foodCounts = {};
+    logs.forEach(function (l) { (l.foods || []).forEach(function (f) { foodCounts[f] = (foodCounts[f] || 0) + 1; }); });
+    var foodKeys = Object.keys(foodCounts);
+    var topFood = foodKeys.length ? foodKeys.sort(function (a, b) { return foodCounts[b] - foodCounts[a]; })[0] : null;
+    var topFoodLabel = topFood ? topFood + ' (' + foodCounts[topFood] + '건)' : '—';
+
+    var throatCount = logs.filter(function (l) { return l.throat; }).length;
+
+    var sortedDates = logs.map(function (l) { return l.date; }).sort();
+    var lastDate = sortedDates.length ? sortedDates[sortedDates.length - 1] : null;
+    var daysSince = lastDate ? Math.floor((now - new Date(lastDate + 'T00:00:00')) / 86400000) : null;
+
+    var tiles = [
+      { label: '전체 기록', value: totalCount + '건', sub: '누적' },
+      { label: '이번 달', value: monthCount + '건', sub: (now.getMonth() + 1) + '월 기준' },
+      { label: '가장 잦은 유형', value: topTypeLabel, sub: '' },
+      { label: '가장 잦은 음식군', value: topFoodLabel, sub: '동반 섭취 기준' },
+      { label: '목·혀 부음 동반', value: throatCount + '건', sub: '전체 중' },
+      { label: '마지막 발생 후', value: daysSince == null ? '—' : daysSince + '일', sub: lastDate ? fmtDate(lastDate) : '기록 없음' }
+    ];
+    grid.innerHTML = tiles.map(function (t) {
+      return '<div class="stat-tile"><div class="label">' + t.label + '</div><div class="value">' + t.value + '</div>' + (t.sub ? '<div class="sub">' + t.sub + '</div>' : '') + '</div>';
+    }).join('');
+  }
+
+  // ---------- Chart (last 6 months, grouped bars by type) ----------
+  function monthKey(y, m) { return y + '-' + String(m + 1).padStart(2, '0'); }
+  function monthLabel(y, m) { return (m + 1) + '월'; }
+
+  function renderAllergyChart() {
+    var holder = document.getElementById('chartHolder');
+    var legend = document.getElementById('chartLegend');
+    legend.innerHTML = Object.keys(TYPE_META).map(function (k) {
+      return '<div class="item"><span class="sw" style="background:var(' + TYPE_META[k].varColor + ')"></span>' + TYPE_META[k].label + '</div>';
+    }).join('');
+
+    var now = new Date();
+    var months = [];
+    for (var i = 5; i >= 0; i--) {
+      var d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+      months.push({ y: d.getFullYear(), m: d.getMonth(), key: monthKey(d.getFullYear(), d.getMonth()), label: monthLabel(d.getFullYear(), d.getMonth()) });
+    }
+    var counts = months.map(function (mo) {
+      var c = { hives: 0, burning: 0, both: 0 };
+      logs.forEach(function (l) { if (l.date.slice(0, 7) === mo.key && c[l.type] != null) c[l.type]++; });
+      return c;
+    });
+    var maxVal = Math.max(1, Math.max.apply(null, counts.map(function (c) { return Math.max(c.hives, c.burning, c.both); })));
+
+    var W = 680, H = 200, padL = 28, padR = 10, padT = 10, padB = 26;
+    var plotW = W - padL - padR, plotH = H - padT - padB;
+    var groupW = plotW / months.length;
+    var barW = Math.min(16, groupW / 5);
+    var gridLines = 4;
+    var svgParts = [];
+
+    for (var g = 0; g <= gridLines; g++) {
+      var gy = padT + plotH - (plotH * g / gridLines);
+      var val = Math.round(maxVal * g / gridLines);
+      svgParts.push('<line x1="' + padL + '" x2="' + (W - padR) + '" y1="' + gy + '" y2="' + gy + '" stroke="var(--line)" stroke-width="1"/>');
+      svgParts.push('<text x="' + (padL - 8) + '" y="' + (gy + 3) + '" text-anchor="end" font-size="10" fill="var(--sub)">' + val + '</text>');
+    }
+
+    months.forEach(function (mo, i) {
+      var gx = padL + i * groupW;
+      var types = ['hives', 'burning', 'both'];
+      types.forEach(function (t, ti) {
+        var val = counts[i][t];
+        var bh = (val / maxVal) * plotH;
+        var bx = gx + (groupW - barW * 3 - 4) / 2 + ti * (barW + 2);
+        var by = padT + plotH - bh;
+        svgParts.push(
+          '<rect data-tip="' + mo.label + ' ' + TYPE_META[t].label + ': ' + val + '건" ' +
+          'x="' + bx.toFixed(1) + '" y="' + by.toFixed(1) + '" width="' + barW + '" height="' + Math.max(bh, val > 0 ? 2 : 0).toFixed(1) + '" rx="3" ' +
+          'fill="var(' + TYPE_META[t].varColor + ')" class="bar-rect" style="cursor:pointer;"/>'
+        );
+      });
+      svgParts.push('<text x="' + (gx + groupW / 2) + '" y="' + (H - 8) + '" text-anchor="middle" font-size="11" fill="var(--sub)">' + mo.label + '</text>');
+    });
+
+    svgParts.push('<line x1="' + padL + '" x2="' + (W - padR) + '" y1="' + (padT + plotH) + '" y2="' + (padT + plotH) + '" stroke="var(--line)" stroke-width="1"/>');
+
+    holder.innerHTML = '<svg viewBox="0 0 ' + W + ' ' + H + '" style="width:100%; height:auto; display:block;">' + svgParts.join('') + '</svg>';
+
+    var tooltip = document.getElementById('allergyTooltip');
+    Array.from(holder.querySelectorAll('.bar-rect')).forEach(function (rect) {
+      rect.addEventListener('mousemove', function (e) {
+        tooltip.textContent = rect.getAttribute('data-tip');
+        tooltip.style.left = (e.clientX + 12) + 'px';
+        tooltip.style.top = (e.clientY + 12) + 'px';
+        tooltip.style.opacity = '1';
+      });
+      rect.addEventListener('mouseleave', function () { tooltip.style.opacity = '0'; });
+    });
+  }
+
+  // ---------- Storage usage ----------
+  function updateAllergyStorageUsage() {
+    var label = document.getElementById('storageLabel');
+    var fill = document.getElementById('storageFill');
+    var total = 0;
+    try {
+      [LS_MEDS, LS_FOOD_PROFILE, LS_LOGS].forEach(function (k) {
+        var v = localStorage.getItem(k);
+        if (v) total += new Blob([v]).size;
+      });
+    } catch (e) {
+      label.textContent = '이 브라우저에서는 저장 용량을 확인할 수 없어요.';
+      fill.style.width = '0%';
+      return;
+    }
+    var pct = Math.min(100, (total / STORAGE_CAP_BYTES) * 100);
+    var sizeStr = total > 1024 * 1024 ? (total / 1024 / 1024).toFixed(2) + 'MB' : (total / 1024).toFixed(0) + 'KB';
+    label.textContent = '저장 용량 약 ' + sizeStr + ' 사용 중 (참고 상한 약 5MB, 브라우저마다 다를 수 있어요)';
+    fill.style.width = pct + '%';
+    fill.style.background = pct > 85 ? 'var(--danger)' : (pct > 60 ? 'var(--active)' : 'var(--acidic)');
+  }
+
+  // ---------- Export / Import ----------
+  document.getElementById('exportJsonBtn').addEventListener('click', function () {
+    var payload = { meds: meds, foodProfile: foodProfile, logs: logs, exportedAt: todayStr() };
+    var blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'allergy-tracker-backup.json';
+    a.click();
+  });
+
+  document.getElementById('exportCsvBtn').addEventListener('click', function () {
+    var header = ['날짜','시간','유형','목혀부음','생리','심각도','지속시간(h)','원인','음식군','사진수','메모','당시복용약'];
+    var rows = logs.slice().sort(function (a,b) { return a.date.localeCompare(b.date); }).map(function (l) {
+      return [l.date, l.time||'', TYPE_META[l.type].label, l.throat ? 'Y' : 'N', l.period ? 'Y' : 'N', SEV_META[l.severity].label, l.duration||'', l.trigger||'', (l.foods||[]).join('/'), (l.photos||[]).length, l.note||'', l.medSnapshot||''];
+    });
+    var csv = [header].concat(rows).map(function (r) {
+      return r.map(function (v) { return '"' + String(v).replace(/"/g, '""') + '"'; }).join(',');
+    }).join('\r\n');
+    var blob = new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8;' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'allergy-tracker-log.csv';
+    a.click();
+  });
+
+  document.getElementById('allergyImportBtn').addEventListener('click', function () {
+    document.getElementById('allergyImportFile').click();
+  });
+  document.getElementById('allergyImportFile').addEventListener('change', function (e) {
+    var file = e.target.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function () {
+      try {
+        var data = JSON.parse(reader.result);
+        if (!confirm('현재 알러지 기록 데이터를 가져온 파일 내용으로 덮어쓸까요?')) return;
+        if (data.meds) {
+          meds = data.meds;
+        } else {
+          meds = [];
+          if (data.med) meds.push({ id: uid(), name: data.med.name, freq: data.med.freq || '', startDate: data.med.startDate || '', endDate: null, note: data.med.note || '', active: true });
+          (data.medHistory || []).forEach(function (h) {
+            meds.push({ id: uid(), name: h.name, freq: '', startDate: h.startDate || '', endDate: h.endDate || '', note: '', active: false });
+          });
+        }
+        foodProfile = data.foodProfile || DEFAULT_FOODS.slice();
+        logs = data.logs || [];
+        save(LS_MEDS, meds);
+        save(LS_FOOD_PROFILE, foodProfile);
+        save(LS_LOGS, logs);
+        renderAllergyAll();
+        showToast('불러오기 완료');
+      } catch (err) {
+        showToast('파일을 읽을 수 없어요. 올바른 백업 JSON 파일인지 확인해주세요.');
+      }
+    };
+    reader.readAsText(file);
+    e.target.value = '';
+  });
+
+  function renderAllergyAll() {
+    renderMeds();
+    renderMedHistory();
+    renderFoodRef();
+    renderFoodChecks(editingLogId ? (logs.find(function (l) { return l.id === editingLogId; }) || {}).foods : []);
+    renderAllergyTable();
+    renderAllergyStats();
+    renderAllergyChart();
+    updateAllergyStorageUsage();
+  }
+
+  renderAllergyAll();
+})();
+</script>
+
+<nav class="mobile-bottom-nav" aria-label="메인 메뉴">
+  <button type="button" data-mobile-tab="today" class="active"><span class="nav-symbol">☀</span><span>오늘</span></button>
+  <button type="button" data-mobile-tab="allergy"><span class="nav-symbol">✚</span><span>알러지</span></button>
+  <button type="button" data-mobile-tab="ingredients"><span class="nav-symbol">✦</span><span>성분</span></button>
+  <button type="button" data-mobile-tab="settings"><span class="nav-symbol">•••</span><span>관리</span></button>
+</nav>
+
+
+<script>
+document.querySelectorAll('.top-tabs button[data-tab]').forEach(function(btn){
+  btn.addEventListener('click', function(){ if(typeof syncMobileNav==='function') syncMobileNav(btn.dataset.tab); });
+});
+</script>
+
+
+<script>
+(function(){
+  var mobileButtons=document.querySelectorAll('.mobile-bottom-nav [data-mobile-tab]');
+  mobileButtons.forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var tab=btn.dataset.mobileTab;
+      var target=document.querySelector('.top-tabs button[data-tab="'+tab+'"]');
+      if(target) target.click();
+      mobileButtons.forEach(function(b){b.classList.toggle('active',b.dataset.mobileTab===tab);});
+      window.scrollTo({top:0,behavior:'smooth'});
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
